@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3E1DD699-6585-4DB8-93CF-8CB5E48FF655}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExcelFormulaParser.Engine</RootNamespace>
+    <AssemblyName>ExcelFormulaParser.Engine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExpressionGraph\AtomicExpression.cs" />
+    <Compile Include="ExpressionGraph\Expression.cs" />
+    <Compile Include="ExpressionGraph\ExpressionCompiler.cs" />
+    <Compile Include="ExpressionGraph\ExpressionFactory.cs" />
+    <Compile Include="ExpressionGraph\ExpressionGraph.cs" />
+    <Compile Include="ExpressionGraph\ExpressionGraphBuilder.cs" />
+    <Compile Include="ExpressionGraph\GroupExpression.cs" />
+    <Compile Include="ExpressionGraph\IExpressionCompiler.cs" />
+    <Compile Include="ExpressionGraph\IExpressionFactory.cs" />
+    <Compile Include="ExpressionGraph\IExpressionGraphBuilder.cs" />
+    <Compile Include="ExpressionGraph\IntegerExpression.cs" />
+    <Compile Include="ExpressionGraph\StringExpression.cs" />
+    <Compile Include="FormulaParser.cs" />
+    <Compile Include="LexicalAnalysis\ILexer.cs" />
+    <Compile Include="LexicalAnalysis\ISourceCodeTokenizer.cs" />
+    <Compile Include="LexicalAnalysis\ISyntacticAnalyzer.cs" />
+    <Compile Include="LexicalAnalysis\ITokenFactory.cs" />
+    <Compile Include="LexicalAnalysis\Lexer.cs" />
+    <Compile Include="LexicalAnalysis\SourceCodeTokenizer.cs" />
+    <Compile Include="LexicalAnalysis\ITokenSeparatorProvider.cs" />
+    <Compile Include="LexicalAnalysis\SyntacticAnalyzer.cs" />
+    <Compile Include="LexicalAnalysis\Token.cs" />
+    <Compile Include="LexicalAnalysis\TokenFactory.cs" />
+    <Compile Include="LexicalAnalysis\TokenizerContext.cs" />
+    <Compile Include="LexicalAnalysis\TokenSeparatorProvider.cs" />
+    <Compile Include="LexicalAnalysis\TokenType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VBA\Operators\IOperator.cs" />
+    <Compile Include="VBA\Operators\Operator.cs" />
+    <Compile Include="VBA\Operators\Operators.cs" />
+    <Compile Include="VBA\Operators\OperatorsDict.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
