@@ -20,7 +20,9 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             switch (compileResult.DataType)
             {
                 case DataType.Integer:
-                    return new IntegerExpression(compileResult.Result.ToString());;
+                    return new IntegerExpression(compileResult.Result.ToString());
+                case DataType.String:
+                    return new StringExpression(compileResult.Result.ToString());
             }
             return null;
         }

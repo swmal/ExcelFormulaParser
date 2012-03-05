@@ -45,5 +45,14 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             Assert.IsInstanceOfType(result, typeof(IntegerExpression));
             Assert.AreEqual(1, result.Compile().Result);
         }
+
+        [TestMethod]
+        public void FromCompileResultShouldCreateStringExpressionIfCompileResultIsString()
+        {
+            var compileResult = new CompileResult("abc", DataType.String);
+            var result = _converter.FromCompileResult(compileResult);
+            Assert.IsInstanceOfType(result, typeof(StringExpression));
+            Assert.AreEqual("abc", result.Compile().Result);
+        }
     }
 }
