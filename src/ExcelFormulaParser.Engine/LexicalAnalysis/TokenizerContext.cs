@@ -47,6 +47,11 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             get { return _currentToken.ToString(); }
         }
 
+        public bool CurrentTokenHasValue
+        {
+            get { return !string.IsNullOrEmpty(CurrentToken.Trim()); }
+        }
+
         public void NewToken()
         {
             _currentToken = new StringBuilder();

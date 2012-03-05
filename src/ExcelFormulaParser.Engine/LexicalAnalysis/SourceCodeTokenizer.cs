@@ -42,9 +42,9 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                     {
                         context.ToggleIsInString();
                     }
-                    if (context.CurrentToken.Trim().Length > 0)
+                    if (context.CurrentTokenHasValue)
                     {
-                        context.AddToken(_tokenFactory.Create(context.Result, context.CurrentToken));
+                        context.AddToken(CreateToken(context));
                     }
                     context.AddToken(tokenSeparator);
                     context.NewToken();
@@ -52,11 +52,16 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                 }
                 context.AppendToCurrentToken(c);
             }
-            if (context.CurrentToken.Trim().Length > 0)
+            if (context.CurrentTokenHasValue)
             {
-                context.AddToken(_tokenFactory.Create(context.Result, context.CurrentToken));
+                context.AddToken(CreateToken(context));
             }
             return context.Result;
+        }
+
+        private Token CreateToken(TokenizerContext context)
+        {
+            return _tokenFactory.Create(context.Result, context.CurrentToken);
         }
 
         private bool CharIsTokenSeparator(char c, out Token token)
