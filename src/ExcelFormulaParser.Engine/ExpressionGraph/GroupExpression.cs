@@ -20,7 +20,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         private readonly IExpressionCompiler _expressionCompiler;
 
-        public override object Compile()
+        public override CompileResult Compile()
         {
             return _expressionCompiler.Compile(Children);
         }

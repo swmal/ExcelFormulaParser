@@ -13,9 +13,9 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         }
 
-        public override object Compile()
+        public override CompileResult Compile()
         {
-            return int.Parse(ExpressionString);
+            return new CompileResult(int.Parse(ExpressionString), DataType.Integer);
         }
     }
 }

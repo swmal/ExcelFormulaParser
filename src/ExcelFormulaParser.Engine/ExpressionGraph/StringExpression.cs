@@ -13,9 +13,9 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         }
 
-        public override object Compile()
+        public override CompileResult Compile()
         {
-            return ExpressionString;
+            return new CompileResult(ExpressionString, DataType.String);
         }
     }
 }

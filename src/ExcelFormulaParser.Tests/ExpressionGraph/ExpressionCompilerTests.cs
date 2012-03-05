@@ -33,7 +33,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             var result = _expressionCompiler.Compile(_graph.Expressions);
 
-            Assert.AreEqual(4, result);
+            Assert.AreEqual(4, result.Result);
         }
 
 
@@ -51,7 +51,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             var result = _expressionCompiler.Compile(_graph.Expressions);
 
-            Assert.AreEqual(10, result);
+            Assert.AreEqual(10, result.Result);
         }
     }
 }

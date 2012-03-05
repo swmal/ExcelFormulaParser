@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionGraph\ExpressionCompilerTests.cs" />
+    <Compile Include="ExpressionGraph\ExpressionConverterTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionFactoryTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilderTests.cs" />
     <Compile Include="ExpressionGraph\IntegerExpressionTests.cs" />

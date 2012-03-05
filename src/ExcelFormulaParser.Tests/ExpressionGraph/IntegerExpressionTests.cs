@@ -21,7 +21,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             exp1.MergeWithNext();
 
-            Assert.AreEqual(3, exp1.Compile());
+            Assert.AreEqual(3, exp1.Compile().Result);
         }
 
         [TestMethod]

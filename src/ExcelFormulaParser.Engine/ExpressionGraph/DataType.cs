@@ -5,8 +5,9 @@ using System.Text;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
-    public interface IExpressionCompiler
+    public enum DataType
     {
-        CompileResult Compile(IEnumerable<Expression> expressions);
+        Integer,
+        String
     }
 }

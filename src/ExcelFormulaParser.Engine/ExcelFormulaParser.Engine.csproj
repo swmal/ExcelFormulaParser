@@ -41,13 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionGraph\AtomicExpression.cs" />
+    <Compile Include="ExpressionGraph\CompileResult.cs" />
+    <Compile Include="ExpressionGraph\DataType.cs" />
     <Compile Include="ExpressionGraph\Expression.cs" />
     <Compile Include="ExpressionGraph\ExpressionCompiler.cs" />
+    <Compile Include="ExpressionGraph\ExpressionConverter.cs" />
     <Compile Include="ExpressionGraph\ExpressionFactory.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraph.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilder.cs" />
     <Compile Include="ExpressionGraph\GroupExpression.cs" />
     <Compile Include="ExpressionGraph\IExpressionCompiler.cs" />
+    <Compile Include="ExpressionGraph\IExpressionConverter.cs" />
     <Compile Include="ExpressionGraph\IExpressionFactory.cs" />
     <Compile Include="ExpressionGraph\IExpressionGraphBuilder.cs" />
     <Compile Include="ExpressionGraph\IntegerExpression.cs" />

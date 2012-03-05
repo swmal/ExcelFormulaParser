@@ -9,14 +9,26 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     public class ExpressionCompiler : IExpressionCompiler
     {
         private IEnumerable<Expression> _expressions;
+        private IExpressionConverter _expressionConverter;
 
-        public object Compile(IEnumerable<Expression> expressions)
+        public ExpressionCompiler()
+            : this(new ExpressionConverter())
+        {
+
+        }
+
+        public ExpressionCompiler(IExpressionConverter expressionConverter)
+        {
+            _expressionConverter = expressionConverter;
+        }
+
+        public CompileResult Compile(IEnumerable<Expression> expressions)
         {
             _expressions = expressions;
             return PerformCompilation();
         }
 
-        private object PerformCompilation()
+        private CompileResult PerformCompilation()
         {
             var compiledExpressions = HandleGroupedExpressions();
             while(compiledExpressions.Any(x => x.Operator != null))
@@ -34,7 +46,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             foreach(var groupedExpression in groupedExpressions)
             {
                 var result = groupedExpression.Compile();
-                var newExp = new IntegerExpression(result.ToString());
+                var newExp = _expressionConverter.FromCompileResult(result);
                 newExp.Operator = groupedExpression.Operator;
                 newExp.Prev = groupedExpression.Prev;
                 newExp.Next = groupedExpression.Next;
@@ -58,8 +70,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 if (expression.Operator.Operator == Operators.Concat)
                 {
-                    var newExp = new StringExpression(expression.Compile().ToString());
-                    newExp.Operator = expression.Operator;
+                    var newExp = _expressionConverter.ToStringExpression(expression);
                     newExp.Prev = expression.Prev;
                     newExp.Next = expression.Next;
                     if (expression.Prev != null)

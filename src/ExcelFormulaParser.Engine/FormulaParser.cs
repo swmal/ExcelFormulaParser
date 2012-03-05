@@ -32,7 +32,7 @@ namespace ExcelFormulaParser.Tests
         {
             var tokens = _lexer.Tokenize(formula);
             var graph = _graphBuilder.Build(tokens);
-            return _compiler.Compile(graph.Expressions);
+            return _compiler.Compile(graph.Expressions).Result;
         }
     }
 }

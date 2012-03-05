@@ -59,17 +59,15 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         private void CreateAndAppendExpression(Expression parent, Token token)
         {
-            if (!IsWaste(token))
+            if (IsWaste(token)) return;
+            var expression = _expressionFactory.Create(token);
+            if (parent == null)
             {
-                var expression = _expressionFactory.Create(token);
-                if (parent == null)
-                {
-                    _graph.Add(expression);
-                }
-                else
-                {
-                    parent.AddChild(expression);
-                }
+                _graph.Add(expression);
+            }
+            else
+            {
+                parent.AddChild(expression);
             }
         }
 
