@@ -16,6 +16,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                     return new IntegerExpression(token.Value);
                 case TokenType.String:
                     return new StringExpression(token.Value);
+                case TokenType.Decimal:
+                    return new DecimalExpression(token.Value);
                 default:
                     return new StringExpression(token.Value);
             }

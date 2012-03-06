@@ -43,6 +43,7 @@
     <Compile Include="ExpressionGraph\AtomicExpression.cs" />
     <Compile Include="ExpressionGraph\CompileResult.cs" />
     <Compile Include="ExpressionGraph\DataType.cs" />
+    <Compile Include="ExpressionGraph\DecimalExpression.cs" />
     <Compile Include="ExpressionGraph\Expression.cs" />
     <Compile Include="ExpressionGraph\ExpressionCompiler.cs" />
     <Compile Include="ExpressionGraph\ExpressionConverter.cs" />

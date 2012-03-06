@@ -26,5 +26,13 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var expression = _factory.Create(token);
             Assert.IsInstanceOfType(expression, typeof(IntegerExpression));
         }
+
+        [TestMethod]
+        public void ShouldReturnDecimalExpressionWhenTokenIsDecimal()
+        {
+            var token = new Token("2.5", TokenType.Decimal);
+            var expression = _factory.Create(token);
+            Assert.IsInstanceOfType(expression, typeof(DecimalExpression));
+        }
     }
 }

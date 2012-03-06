@@ -8,6 +8,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     public enum DataType
     {
         Integer,
+        Decimal,
         String
     }
 }

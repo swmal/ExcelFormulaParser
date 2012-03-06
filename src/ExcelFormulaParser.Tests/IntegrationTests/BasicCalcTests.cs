@@ -16,31 +16,39 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         }
 
         [TestMethod]
-        public void ShouldAddCorrectly()
+        public void ShouldAddIntegersCorrectly()
         {
             var result = _parser.Parse("1 + 2");
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
-        public void ShouldSubtractCorrectly()
+        public void ShouldSubtractIntegersCorrectly()
         {
             var result = _parser.Parse("2 - 1");
             Assert.AreEqual(1, result);
         }
 
         [TestMethod]
-        public void ShouldMultiplyCorrectly()
+        public void ShouldMultiplyIntegersCorrectly()
         {
             var result = _parser.Parse("2 * 3");
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
-        public void ShouldDivideCorrectly()
+        public void ShouldDivideIntegersCorrectly()
         {
             var result = _parser.Parse("8 / 4");
             Assert.AreEqual(2, result);
+        }
+
+        [TestMethod, Ignore]
+        public void ShouldDivideDecimalWithIntegerCorrectly()
+        {
+            // TODO: handle current casting to in the operator
+            var result = _parser.Parse("2.5/2");
+            Assert.AreEqual(1.25m, result);
         }
     }
 }

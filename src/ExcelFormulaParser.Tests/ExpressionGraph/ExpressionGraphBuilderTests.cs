@@ -36,6 +36,21 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         }
 
         [TestMethod]
+        public void BuildShouldNotEvaluateExpressionsWithinAString()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("'", TokenType.String),
+                new Token("1 + 2", TokenType.StringContent),
+                new Token("'", TokenType.String)
+            };
+
+            var result = _graphBuilder.Build(tokens);
+
+            Assert.AreEqual("1 + 2", result.Expressions.First().Compile().Result);
+        }
+
+        [TestMethod]
         public void BuildShouldSetOperatorOnGroupExpressionCorrectly()
         {
             var tokens = new List<Token>

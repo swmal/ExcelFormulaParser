@@ -23,6 +23,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                     return new IntegerExpression(compileResult.Result.ToString());
                 case DataType.String:
                     return new StringExpression(compileResult.Result.ToString());
+                case DataType.Decimal:
+                    return new DecimalExpression(compileResult.Result.ToString());
             }
             return null;
         }
