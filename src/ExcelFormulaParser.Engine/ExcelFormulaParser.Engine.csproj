@@ -50,6 +50,7 @@
     <Compile Include="ExpressionGraph\ExpressionFactory.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraph.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilder.cs" />
+    <Compile Include="ExpressionGraph\FunctionExpression.cs" />
     <Compile Include="ExpressionGraph\GroupExpression.cs" />
     <Compile Include="ExpressionGraph\IExpressionCompiler.cs" />
     <Compile Include="ExpressionGraph\IExpressionConverter.cs" />
@@ -72,6 +73,11 @@
     <Compile Include="LexicalAnalysis\TokenSeparatorProvider.cs" />
     <Compile Include="LexicalAnalysis\TokenType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VBA\BuiltInFunctions.cs" />
+    <Compile Include="VBA\FunctionRepository.cs" />
+    <Compile Include="VBA\Functions\CStr.cs" />
+    <Compile Include="VBA\IVBAModule.cs" />
+    <Compile Include="VBA\VBAFunction.cs" />
     <Compile Include="VBA\Operators\IOperator.cs" />
     <Compile Include="VBA\Operators\Operator.cs" />
     <Compile Include="VBA\Operators\Operators.cs" />

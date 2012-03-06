@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.VBA.Operators;
+using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.VBA.Functions;
 
 namespace ExcelFormulaParser.Tests.ExpressionGraph
 {
@@ -17,7 +19,14 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         [TestInitialize]
         public void Setup()
         {
-            _graphBuilder = new ExpressionGraphBuilder();    
+            _graphBuilder = new ExpressionGraphBuilder();
+            FunctionRepository.LoadModule(new BuiltInFunctions());
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            FunctionRepository.Clear();
         }
 
         [TestMethod]
@@ -106,6 +115,39 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             Assert.IsNotNull(result.Expressions.First().Next);
             Assert.IsInstanceOfType(result.Expressions.First().Next, typeof(IntegerExpression));
 
+        }
+
+        [TestMethod]
+        public void BuildShouldBuildFunctionExpressionIfFirstTokenIsFunction()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("CStr", TokenType.Function),
+                new Token("(", TokenType.OpeningBracket),
+                new Token("2", TokenType.Integer),
+                new Token(")", TokenType.ClosingBracket),
+            };
+            var result = _graphBuilder.Build(tokens);
+
+            Assert.AreEqual(1, result.Expressions.Count());
+            Assert.IsInstanceOfType(result.Expressions.First(), typeof(FunctionExpression));
+        }
+
+        [TestMethod]
+        public void BuildShouldSetChildrenOnFunctionExpression()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("CStr", TokenType.Function),
+                new Token("(", TokenType.OpeningBracket),
+                new Token("2", TokenType.Integer),
+                new Token(")", TokenType.ClosingBracket),
+            };
+            var result = _graphBuilder.Build(tokens);
+
+            Assert.AreEqual(1, result.Expressions.First().Children.Count());
+            Assert.IsInstanceOfType(result.Expressions.First().Children.First(), typeof(IntegerExpression));
+            Assert.AreEqual(2, result.Expressions.First().Children.First().Compile().Result);
         }
     }
 }

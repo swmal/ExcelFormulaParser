@@ -40,6 +40,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 {
                     SetOperatorOnExpression(parent, op);
                 }
+                else if (token.TokenType == TokenType.Function)
+                {
+                    _tokenIndex++;
+                    BuildFunctionExpression(tokens, parent, token.Value);
+                }
                 else if (token.TokenType == TokenType.OpeningBracket)
                 {
                     _tokenIndex++;
@@ -78,6 +83,22 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 return true;
             }
             return false;
+        }
+
+        private void BuildFunctionExpression(IEnumerable<Token> tokens, Expression parent, string funcName)
+        {
+            if (parent == null)
+            {
+                if (_graph.Current == null)
+                {
+                    _graph.Add(new FunctionExpression(funcName));
+                }
+                BuildUp(tokens, _graph.Current);
+            }
+            else
+            {
+                BuildUp(tokens, parent);
+            }
         }
 
         private void BuildGroupExpression(IEnumerable<Token> tokens, Expression parent)

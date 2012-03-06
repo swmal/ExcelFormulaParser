@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
+using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.VBA.Functions;
 
 namespace ExcelFormulaParser.Tests.LexicalAnalysis
 {
@@ -16,6 +18,13 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         public void Setup()
         {
             _tokenFactory = new TokenFactory();
+            FunctionRepository.LoadModule(new BuiltInFunctions());
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            FunctionRepository.Clear();
         }
 
         [TestMethod]
@@ -86,6 +95,15 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
 
             Assert.AreEqual("23.3", token.Value);
             Assert.AreEqual(TokenType.Decimal, token.TokenType);
+        }
+
+        [TestMethod]
+        public void CreateShouldReadFunctionsFromFuncRepository()
+        {
+            var input = "CStr";
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+            Assert.AreEqual(TokenType.Function, token.TokenType);
+            Assert.AreEqual("CStr", token.Value);
         }
     }
 }

@@ -6,6 +6,8 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine;
 using ExcelFormulaParser.Engine.VBA.Operators;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
+using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.VBA.Functions;
 
 namespace ExcelFormulaParser.Tests
 {
@@ -22,6 +24,8 @@ namespace ExcelFormulaParser.Tests
             _lexer = lexer;
             _graphBuilder = graphBuilder;
             _compiler = compiler;
+            FunctionRepository.Clear();
+            FunctionRepository.LoadModule(new BuiltInFunctions());
         }
 
         private readonly ILexer _lexer;

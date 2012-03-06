@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ExcelFormulaParser.Engine.VBA;
 
 namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
@@ -43,6 +44,10 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             if(Regex.IsMatch(token, @"^[0-9]+$"))
             {
                 return new Token(token, TokenType.Integer);
+            }
+            if (FunctionRepository.Exists(token))
+            {
+                return new Token(token, TokenType.Function);
             }
             return new Token(token, TokenType.Undefined);
 

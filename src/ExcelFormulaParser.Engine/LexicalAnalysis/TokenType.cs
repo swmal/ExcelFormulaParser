@@ -14,6 +14,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         StringContent,
         Integer,
         Decimal,
+        Function,
         Undefined
     }
 }
