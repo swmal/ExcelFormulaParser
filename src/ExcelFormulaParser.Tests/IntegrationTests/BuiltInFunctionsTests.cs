@@ -22,12 +22,18 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             Assert.AreEqual("2", result);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void CstrShouldConcatenateWithNextExpression()
         {
-            // TODO: in this test Parse returns "2"
             var result = _parser.Parse("Cstr(2) & 'a'");
             Assert.AreEqual("2a", result);
+        }
+
+        [TestMethod]
+        public void LenShouldAddLengthUsingSuppliedOperator()
+        {
+            var result = _parser.Parse("Len('abc') + 2");
+            Assert.AreEqual(5, result);
         }
     }
 }

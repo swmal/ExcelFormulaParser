@@ -141,13 +141,31 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
                 new Token("CStr", TokenType.Function),
                 new Token("(", TokenType.OpeningBracket),
                 new Token("2", TokenType.Integer),
-                new Token(")", TokenType.ClosingBracket),
+                new Token(")", TokenType.ClosingBracket)
             };
             var result = _graphBuilder.Build(tokens);
 
             Assert.AreEqual(1, result.Expressions.First().Children.Count());
             Assert.IsInstanceOfType(result.Expressions.First().Children.First(), typeof(IntegerExpression));
             Assert.AreEqual(2, result.Expressions.First().Children.First().Compile().Result);
+        }
+
+        [TestMethod]
+        public void BuildShouldAddOperatorToFunctionExpression()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("CStr", TokenType.Function),
+                new Token("(", TokenType.OpeningBracket),
+                new Token("2", TokenType.Integer),
+                new Token(")", TokenType.ClosingBracket),
+                new Token("&", TokenType.Operator),
+                new Token("A", TokenType.StringContent)
+            };
+            var result = _graphBuilder.Build(tokens);
+
+            Assert.AreEqual(1, result.Expressions.First().Children.Count());
+            Assert.AreEqual(2, result.Expressions.Count());
         }
     }
 }

@@ -75,7 +75,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VBA\BuiltInFunctions.cs" />
     <Compile Include="VBA\FunctionRepository.cs" />
-    <Compile Include="VBA\Functions\CStr.cs" />
+    <Compile Include="VBA\Functions\Numeric\CInt.cs" />
+    <Compile Include="VBA\Functions\Text\CStr.cs" />
+    <Compile Include="VBA\Functions\Text\Len.cs" />
     <Compile Include="VBA\IVBAModule.cs" />
     <Compile Include="VBA\VBAFunction.cs" />
     <Compile Include="VBA\Operators\IOperator.cs" />

@@ -89,7 +89,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 }
                 else
                 {
-                    expression.MergeWithNext();
+                    var mergedExp = expression.MergeWithNext();
+                    if (expression == first)
+                    {
+                        first = mergedExp;
+                    }
                 }
             }
             return RefreshList(first);

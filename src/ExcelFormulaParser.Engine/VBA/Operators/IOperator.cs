@@ -10,7 +10,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
     {
         Operators Operator { get; }
 
-        object Apply(CompileResult left, CompileResult right);
+        CompileResult Apply(CompileResult left, CompileResult right);
 
         int Precedence { get; }
     }

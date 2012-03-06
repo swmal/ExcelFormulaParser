@@ -58,7 +58,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\BasicCalcTests.cs" />
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />
-    <Compile Include="VBA\BuiltInFunctionsTests.cs" />
+    <Compile Include="VBA\Functions\NumberFunctionsTests.cs" />
+    <Compile Include="VBA\Functions\TextFunctionsTests.cs" />
     <Compile Include="VBA\OperatorsTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,14 +15,14 @@ namespace ExcelFormulaParser.Tests.VBA
         public void OperatorConcatShouldConcatTwoStrings()
         {
             var result = Operator.Concat.Apply(new CompileResult("a", DataType.String), new CompileResult("b", DataType.String));
-            Assert.AreEqual("ab", result);
+            Assert.AreEqual("ab", result.Result);
         }
 
         [TestMethod]
         public void OperatorConcatShouldConcatANumberAndAString()
         {
             var result = Operator.Concat.Apply(new CompileResult(12, DataType.Integer), new CompileResult("b", DataType.String));
-            Assert.AreEqual("12b", result);
+            Assert.AreEqual("12b", result.Result);
         }
     }
 }

@@ -21,5 +21,27 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             var function = FunctionRepository.GetFunction(ExpressionString);
             return function.Execute(args);
         }
+
+        public override Expression MergeWithNext()
+        {
+            Expression returnValue = null;
+            if (Next != null && Operator != null)
+            {
+                var result = Operator.Apply(Compile(), Next.Compile());
+                var expressionString = result.Result.ToString();
+                var converter = new ExpressionConverter();
+                returnValue = converter.FromCompileResult(result);
+                if (Next != null)
+                {
+                    Operator = Next.Operator;
+                }
+                else
+                {
+                    Operator = null;
+                }
+                Next = Next.Next;
+            }
+            return returnValue;
+        }
     }
 }

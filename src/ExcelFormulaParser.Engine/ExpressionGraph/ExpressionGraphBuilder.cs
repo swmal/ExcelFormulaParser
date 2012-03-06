@@ -49,6 +49,10 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 {
                     _tokenIndex++;
                     BuildGroupExpression(tokens, parent);
+                    if (parent is FunctionExpression)
+                    {
+                        return;
+                    }
                 }
                 else if (token.TokenType == TokenType.ClosingBracket)
                 {
