@@ -43,12 +43,18 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             Assert.AreEqual(2, result);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ShouldDivideDecimalWithIntegerCorrectly()
         {
-            // TODO: handle current casting to in the operator
             var result = _parser.Parse("2.5/2");
             Assert.AreEqual(1.25m, result);
+        }
+
+        [TestMethod]
+        public void ShouldMultiplyDecimalWithDecimalCorrectly()
+        {
+            var result = _parser.Parse("2.5 * 1.5");
+            Assert.AreEqual(3.75m, result);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.VBA.Operators
 {
@@ -9,7 +10,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
     {
         Operators Operator { get; }
 
-        object Apply(object left, object right);
+        object Apply(CompileResult left, CompileResult right);
 
         int Precedence { get; }
     }

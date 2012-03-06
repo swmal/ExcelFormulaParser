@@ -42,7 +42,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             if (Next != null && Operator != null)
             {
-                var result = Operator.Apply(Compile().Result, Next.Compile().Result);
+                var result = Operator.Apply(Compile(), Next.Compile());
                 ExpressionString = result.ToString();
                 if (Next != null)
                 {
