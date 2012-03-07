@@ -78,6 +78,8 @@
     <Compile Include="VBA\Functions\Numeric\CInt.cs" />
     <Compile Include="VBA\Functions\Text\CStr.cs" />
     <Compile Include="VBA\Functions\Text\Len.cs" />
+    <Compile Include="VBA\Functions\Text\Lower.cs" />
+    <Compile Include="VBA\Functions\Text\Upper.cs" />
     <Compile Include="VBA\IVBAModule.cs" />
     <Compile Include="VBA\VBAFunction.cs" />
     <Compile Include="VBA\Operators\IOperator.cs" />

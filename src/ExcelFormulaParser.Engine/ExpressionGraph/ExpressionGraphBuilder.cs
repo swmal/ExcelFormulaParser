@@ -93,15 +93,14 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             if (parent == null)
             {
-                if (_graph.Current == null)
-                {
-                    _graph.Add(new FunctionExpression(funcName));
-                }
+                _graph.Add(new FunctionExpression(funcName));
                 BuildUp(tokens, _graph.Current);
             }
             else
             {
-                BuildUp(tokens, parent);
+                var func = new FunctionExpression(funcName);
+                parent.AddChild(func);
+                BuildUp(tokens, func);
             }
         }
 
@@ -109,10 +108,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             if (parent == null)
             {
-                if (_graph.Current == null)
-                {
-                    _graph.Add(new GroupExpression());
-                }
+                _graph.Add(new GroupExpression());
                 BuildUp(tokens, _graph.Current);
             }
             else

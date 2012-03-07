@@ -14,6 +14,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             // Text
             _functions["cstr"] = new CStr();
             _functions["len"] = new Len();
+            _functions["lower"] = new Lower();
+            _functions["upper"] = new Upper();
             // Numbers
             _functions["cint"] = new CInt();
         }

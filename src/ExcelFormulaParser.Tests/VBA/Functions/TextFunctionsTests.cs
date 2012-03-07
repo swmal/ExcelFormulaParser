@@ -28,5 +28,21 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
             var result = func.Execute(new object[] { "abc" });
             Assert.AreEqual(3, result.Result);
         }
+
+        [TestMethod]
+        public void LowerShouldReturnLowerCaseString()
+        {
+            var func = new Lower();
+            var result = func.Execute(new object[] { "ABC" });
+            Assert.AreEqual("abc", result.Result);
+        }
+
+        [TestMethod]
+        public void UpperShouldReturnUpperCaseString()
+        {
+            var func = new Upper();
+            var result = func.Execute(new object[] { "abc" });
+            Assert.AreEqual("ABC", result.Result);
+        }
     }
 }

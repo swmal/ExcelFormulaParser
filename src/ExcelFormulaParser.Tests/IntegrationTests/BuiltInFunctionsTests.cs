@@ -35,5 +35,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             var result = _parser.Parse("Len('abc') + 2");
             Assert.AreEqual(5, result);
         }
+
+        [TestMethod]
+        public void LowerShouldReturnALowerCaseString()
+        {
+            var result = _parser.Parse("Lower('ABC')");
+            Assert.AreEqual("abc", result);
+        }
+
+        [TestMethod]
+        public void UpperShouldReturnAnUpperCaseString()
+        {
+            var result = _parser.Parse("Upper('abc')");
+            Assert.AreEqual("ABC", result);
+        }
     }
 }
