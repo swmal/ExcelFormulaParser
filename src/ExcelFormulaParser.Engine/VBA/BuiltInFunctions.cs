@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.VBA.Functions.Text;
+using ExcelFormulaParser.Engine.VBA.Functions.Math;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions
 {
@@ -20,6 +21,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["right"] = new Right();
             // Numbers
             _functions["cint"] = new CInt();
+            // Math
+            _functions["power"] = new Power();
+            _functions["sqrt"] = new Sqrt();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

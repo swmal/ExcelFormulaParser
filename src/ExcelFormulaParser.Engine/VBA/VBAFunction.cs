@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
+using System.Globalization;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions
 {
@@ -38,6 +39,19 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
         {
             var obj = arguments.ElementAt(index);
             return obj != null ? obj.ToString() : string.Empty;
+        }
+
+        protected decimal ArgToDecimal(IEnumerable<object> arguments, int index)
+        {
+            var obj = arguments.ElementAt(index);
+            var str = obj != null ? obj.ToString() : string.Empty;
+            var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
+            if (decimalSeparator == ",")
+            {
+                
+                str = str.Replace('.', ',');
+            }
+            return decimal.Parse(str);
         }
     }
 }

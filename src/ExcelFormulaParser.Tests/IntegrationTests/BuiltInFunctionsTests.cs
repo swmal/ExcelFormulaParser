@@ -63,5 +63,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             var result = _parser.Parse("RIGHT('abcd', 2)");
             Assert.AreEqual("cd", result);
         }
+
+        [TestMethod]
+        public void PowerShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("Power(3, 3)");
+            Assert.AreEqual(27m, result);
+        }
+
+        [TestMethod]
+        public void SqrtShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("sqrt(9)");
+            Assert.AreEqual(3m, result);
+        }
     }
 }
