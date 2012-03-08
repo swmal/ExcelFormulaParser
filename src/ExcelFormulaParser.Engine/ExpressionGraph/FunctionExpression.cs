@@ -16,8 +16,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         public override CompileResult Compile()
         {
             var args = new List<object>();
-            var arg = Children.First().Compile().Result;
-            args.Add(arg);
+            foreach (var child in Children)
+            {
+                var arg = child.Compile().Result;
+                args.Add(arg);
+            }
             var function = FunctionRepository.GetFunction(ExpressionString);
             return function.Execute(args);
         }

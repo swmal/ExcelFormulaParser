@@ -28,6 +28,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             _tokens.Add(")", new Token(")", TokenType.ClosingBracket));
             _tokens.Add("'", new Token("'", TokenType.String));
             _tokens.Add("\"", new Token("\"", TokenType.String));
+            _tokens.Add(",", new Token(",", TokenType.Comma));
         }
 
         private static Dictionary<string, Token> _tokens = new Dictionary<string, Token>();

@@ -82,7 +82,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         private bool IsWaste(Token token)
         {
-            if (token.TokenType == TokenType.String)
+            if (token.TokenType == TokenType.String  || token.TokenType == TokenType.Comma)
             {
                 return true;
             }

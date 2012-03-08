@@ -167,5 +167,25 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             Assert.AreEqual(1, result.Expressions.First().Children.Count());
             Assert.AreEqual(2, result.Expressions.Count());
         }
+
+        [TestMethod]
+        public void BuildShouldAddCommaSeparatedFunctionArgumentsAsChildrenToFunctionExpression()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("CStr", TokenType.Function),
+                new Token("(", TokenType.OpeningBracket),
+                new Token("2", TokenType.Integer),
+                new Token(",", TokenType.Comma),
+                new Token("3", TokenType.Integer),
+                new Token(")", TokenType.ClosingBracket),
+                new Token("&", TokenType.Operator),
+                new Token("A", TokenType.StringContent)
+            };
+
+            var result = _graphBuilder.Build(tokens);
+
+            Assert.AreEqual(2, result.Expressions.First().Children.Count());
+        }
     }
 }

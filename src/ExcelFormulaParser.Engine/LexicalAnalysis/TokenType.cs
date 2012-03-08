@@ -10,6 +10,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         Operator,
         OpeningBracket,
         ClosingBracket,
+        Comma,
         String,
         StringContent,
         Integer,

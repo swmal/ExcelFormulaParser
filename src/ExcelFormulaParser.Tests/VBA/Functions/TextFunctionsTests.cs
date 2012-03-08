@@ -44,5 +44,21 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
             var result = func.Execute(new object[] { "abc" });
             Assert.AreEqual("ABC", result.Result);
         }
+
+        [TestMethod]
+        public void LeftShouldReturnSubstringFromLeft()
+        {
+            var func = new Left();
+            var result = func.Execute(new object[] { "abcd", 2 });
+            Assert.AreEqual("ab", result.Result);
+        }
+
+        [TestMethod]
+        public void RightShouldReturnSubstringFromRight()
+        {
+            var func = new Right();
+            var result = func.Execute(new object[] { "abcd", 2 });
+            Assert.AreEqual("cd", result.Result);
+        }
     }
 }

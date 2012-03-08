@@ -49,5 +49,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             var result = _parser.Parse("Upper('abc')");
             Assert.AreEqual("ABC", result);
         }
+
+        [TestMethod]
+        public void LeftShouldReturnSubstringFromLeft()
+        {
+            var result = _parser.Parse("Left('abcd', 2)");
+            Assert.AreEqual("ab", result);
+        }
+
+        [TestMethod]
+        public void RightShouldReturnSubstringFromRight()
+        {
+            var result = _parser.Parse("RIGHT('abcd', 2)");
+            Assert.AreEqual("cd", result);
+        }
     }
 }
