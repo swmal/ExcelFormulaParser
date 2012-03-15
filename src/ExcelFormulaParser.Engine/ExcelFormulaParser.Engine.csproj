@@ -115,6 +115,7 @@
     <Compile Include="VBA\Functions\Math\Min.cs" />
     <Compile Include="VBA\Functions\Math\Pi.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
+    <Compile Include="VBA\Functions\Math\Product.cs" />
     <Compile Include="VBA\Functions\Math\Rand.cs" />
     <Compile Include="VBA\Functions\Math\RandBetween.cs" />
     <Compile Include="VBA\Functions\Math\Round.cs" />

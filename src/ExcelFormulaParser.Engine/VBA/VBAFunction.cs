@@ -125,5 +125,21 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
         {
             return new CompileResult(result, dataType);
         }
+
+        protected virtual double CalculateCollection(IEnumerable<object> collection, double result, Func<object,double,double> action)
+        {
+            foreach (var item in collection)
+            {
+                if (item is IEnumerable<object>)
+                {
+                    result = CalculateCollection((IEnumerable<object>)item, result, action);
+                }
+                else
+                {
+                    result = action(item, result);
+                }
+            }
+            return result;
+        }
     }
 }

@@ -70,7 +70,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var compileResult = new CompileResult("2.5", DataType.Decimal);
             var result = _converter.FromCompileResult(compileResult);
             Assert.IsInstanceOfType(result, typeof(DecimalExpression));
-            Assert.AreEqual(2.5m, result.Compile().Result);
+            Assert.AreEqual(2.5d, result.Compile().Result);
         }
 
         [TestMethod]

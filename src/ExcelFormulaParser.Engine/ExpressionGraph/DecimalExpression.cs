@@ -23,7 +23,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 
                 exp = ExpressionString.Replace('.', ',');
             }
-            return new CompileResult(decimal.Parse(exp), DataType.Decimal);
+            return new CompileResult(double.Parse(exp), DataType.Decimal);
         }
     }
 }

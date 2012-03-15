@@ -29,7 +29,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         public void SqrtShouldReturnCorrectResult()
         {
             var result = _parser.Parse("sqrt(9)");
-            Assert.AreEqual(3m, result);
+            Assert.AreEqual(3d, result);
         }
 
         [TestMethod]

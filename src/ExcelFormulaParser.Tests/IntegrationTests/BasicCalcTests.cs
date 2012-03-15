@@ -51,14 +51,14 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         public void ShouldDivideDecimalWithIntegerCorrectly()
         {
             var result = _parser.Parse("2.5/2");
-            Assert.AreEqual(1.25m, result);
+            Assert.AreEqual(1.25d, result);
         }
 
         [TestMethod]
         public void ShouldMultiplyDecimalWithDecimalCorrectly()
         {
             var result = _parser.Parse("2.5 * 1.5");
-            Assert.AreEqual(3.75m, result);
+            Assert.AreEqual(3.75d, result);
         }
 
         [TestMethod]

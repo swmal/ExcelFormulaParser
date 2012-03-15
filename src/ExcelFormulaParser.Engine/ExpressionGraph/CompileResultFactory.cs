@@ -18,7 +18,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 return new CompileResult(obj, DataType.Integer);
             }
-            if (obj.GetType().Equals(typeof(decimal)))
+            if (obj.GetType().Equals(typeof(double)))
             {
                 return new CompileResult(obj, DataType.Decimal);
             }

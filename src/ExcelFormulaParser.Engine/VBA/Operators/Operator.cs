@@ -55,11 +55,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((decimal)l.Result) + ((int)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) + ((int)r.Result), DataType.Decimal);
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                     {
-                        return new CompileResult(((decimal)l.Result) + ((decimal)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) + ((double)r.Result), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 }); 
@@ -78,11 +78,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((decimal)l.Result) - ((int)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) - ((int)r.Result), DataType.Decimal);
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                     {
-                        return new CompileResult(((decimal)l.Result) - ((decimal)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) - ((double)r.Result), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
@@ -101,11 +101,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((decimal)l.Result) * ((int)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) * ((int)r.Result), DataType.Decimal);
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                     {
-                        return new CompileResult(((decimal)l.Result) * ((decimal)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) * ((double)r.Result), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
@@ -124,11 +124,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((decimal)l.Result) / ((int)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) / ((int)r.Result), DataType.Decimal);
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                     {
-                        return new CompileResult(((decimal)l.Result) / ((decimal)r.Result), DataType.Decimal);
+                        return new CompileResult(((double)l.Result) / ((double)r.Result), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
@@ -171,11 +171,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                         }
                         if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                         {
-                            return new CompileResult(((decimal)l.Result) > ((int)r.Result), DataType.Boolean);
+                            return new CompileResult(((double)l.Result) > ((int)r.Result), DataType.Boolean);
                         }
                         if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                         {
-                            return new CompileResult(((decimal)l.Result) > ((decimal)r.Result), DataType.Boolean);
+                            return new CompileResult(((double)l.Result) > ((double)r.Result), DataType.Boolean);
                         }
                         return new CompileResult(false, DataType.Boolean);
                     });
@@ -205,11 +205,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((decimal)l.Result) >= ((int)r.Result), DataType.Boolean);
+                        return new CompileResult(((double)l.Result) >= ((int)r.Result), DataType.Boolean);
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                     {
-                        return new CompileResult(((decimal)l.Result) >= ((decimal)r.Result), DataType.Boolean);
+                        return new CompileResult(((double)l.Result) >= ((double)r.Result), DataType.Boolean);
                     }
                     return new CompileResult(false, DataType.Boolean);
                 });
@@ -228,11 +228,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                         }
                         if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                         {
-                            return new CompileResult(((decimal)l.Result) < ((int)r.Result), DataType.Boolean);
+                            return new CompileResult(((double)l.Result) < ((int)r.Result), DataType.Boolean);
                         }
                         if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                         {
-                            return new CompileResult(((decimal)l.Result) < ((decimal)r.Result), DataType.Boolean);
+                            return new CompileResult(((double)l.Result) < ((double)r.Result), DataType.Boolean);
                         }
                         return new CompileResult(false, DataType.Boolean);
                     });
@@ -251,11 +251,11 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((decimal)l.Result) <= ((int)r.Result), DataType.Boolean);
+                        return new CompileResult(((double)l.Result) <= ((int)r.Result), DataType.Boolean);
                     }
                     if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
                     {
-                        return new CompileResult(((decimal)l.Result) <= ((decimal)r.Result), DataType.Boolean);
+                        return new CompileResult(((double)l.Result) <= ((double)r.Result), DataType.Boolean);
                     }
                     return new CompileResult(false, DataType.Boolean);
                 });

@@ -24,9 +24,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
         private double Calculate(object arg)
         {
             var retVal = 0d;
-            if (arg is decimal)
+            if (arg is double)
             {
-                retVal += Convert.ToDouble((decimal)arg);
+                retVal += Convert.ToDouble((double)arg);
             }
             else if (arg is int)
             {

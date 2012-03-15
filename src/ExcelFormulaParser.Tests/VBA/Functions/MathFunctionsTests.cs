@@ -266,5 +266,32 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.AreEqual(3d, result.Result);
         }
+
+        [TestMethod]
+        public void ProductShouldMultiplyArguments()
+        {
+            var func = new Product();
+            var args = new object[] { 2d, 2d, 4d };
+            var result = func.Execute(args);
+            Assert.AreEqual(16d, result.Result);
+        }
+
+        [TestMethod]
+        public void ProductShouldHandleEnumerable()
+        {
+            var func = new Product();
+            var args = new object[] { 2d, 2d, new object[]{ 4d, 2d } };
+            var result = func.Execute(args);
+            Assert.AreEqual(32d, result.Result);
+        }
+
+        [TestMethod]
+        public void ProductShouldHandleFirstItemIsEnumerable()
+        {
+            var func = new Product();
+            var args = new object[] { new object[] { 4d, 2d }, 2d, 2d };
+            var result = func.Execute(args);
+            Assert.AreEqual(32d, result.Result);
+        }
     }
 }
