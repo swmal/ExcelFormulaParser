@@ -99,6 +99,7 @@
     <Compile Include="VBA\Functions\DateTime\TimeBaseFunction.cs" />
     <Compile Include="VBA\Functions\DateTime\TimeStringParser.cs" />
     <Compile Include="VBA\Functions\DateTime\Today.cs" />
+    <Compile Include="VBA\Functions\DateTime\Weekday.cs" />
     <Compile Include="VBA\Functions\DateTime\Year.cs" />
     <Compile Include="VBA\Functions\Logical\And.cs" />
     <Compile Include="VBA\Functions\Logical\If.cs" />

@@ -217,5 +217,29 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(new object[] { "2012-03-27 10:11:12" });
             Assert.AreEqual(10, result.Result);
         }
+
+        [TestMethod]
+        public void WeekdayShouldReturnCorrectResultForASundayWhenReturnTypeIs1()
+        {
+            var func = new Weekday();
+            var result = func.Execute(new object[] { new DateTime(2012, 4, 1).ToOADate(), 1 });
+            Assert.AreEqual(1, result.Result);
+        }
+
+        [TestMethod]
+        public void WeekdayShouldReturnCorrectResultForASundayWhenReturnTypeIs2()
+        {
+            var func = new Weekday();
+            var result = func.Execute(new object[] { new DateTime(2012, 4, 1).ToOADate(), 2 });
+            Assert.AreEqual(7, result.Result);
+        }
+
+        [TestMethod]
+        public void WeekdayShouldReturnCorrectResultForASundayWhenReturnTypeIs3()
+        {
+            var func = new Weekday();
+            var result = func.Execute(new object[] { new DateTime(2012, 4, 1).ToOADate(), 3 });
+            Assert.AreEqual(6, result.Result);
+        }
     }
 }

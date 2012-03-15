@@ -110,5 +110,11 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Hour('10:12:14')");
             Assert.AreEqual(10, result);
         }
+
+        [TestMethod, Ignore]
+        public void WeekdayShouldReturnCorrectResult()
+        {
+
+        }
     }
 }
