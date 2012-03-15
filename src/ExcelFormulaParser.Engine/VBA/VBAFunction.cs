@@ -53,5 +53,16 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             }
             return decimal.Parse(str);
         }
+
+        protected bool ArgToBool(IEnumerable<object> arguments, int index)
+        {
+            var obj = arguments.ElementAt(index) ?? string.Empty;
+            bool result;
+            if (!bool.TryParse(obj.ToString(), out result))
+            {
+                return false;
+            }
+            return result;
+        }
     }
 }

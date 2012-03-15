@@ -79,9 +79,9 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         }
 
         [TestMethod]
-        public void ThreeLessThanOrEqualToTwoShouldBeFalse()
+        public void ThreeLessThanOrEqualToTwoDotThreeShouldBeFalse()
         {
-            var result = _parser.Parse("3 <= 2");
+            var result = _parser.Parse("3 <= 2.3");
             Assert.IsFalse((bool)result);
         }
 
@@ -93,9 +93,9 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         }
 
         [TestMethod]
-        public void TwoGreaterThanOrEqualToThreeShouldBeFalse()
+        public void TwoDotTwoGreaterThanOrEqualToThreeShouldBeFalse()
         {
-            var result = _parser.Parse("2 >= 3");
+            var result = _parser.Parse("2.2 >= 3");
             Assert.IsFalse((bool)result);
         }
     }

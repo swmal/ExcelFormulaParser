@@ -39,8 +39,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                         continue;
                     }
                     // two operators in sequence could be "<=" or ">="
-                    var lastToken = context.LastToken != null ? context.LastToken.Value : string.Empty;
-                    if (_tokenProvider.IsOperator(lastToken) && _tokenProvider.IsOperator(c.ToString()) && !context.CurrentTokenHasValue)
+                    if (IsPartOfMultipleCharSeparator(context, c))
                     {
                         context.AppendToLastToken(c.ToString());
                         context.NewToken();
@@ -65,6 +64,12 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                 context.AddToken(CreateToken(context));
             }
             return context.Result;
+        }
+
+        private bool IsPartOfMultipleCharSeparator(TokenizerContext context, char c)
+        {
+            var lastToken = context.LastToken != null ? context.LastToken.Value : string.Empty;
+            return _tokenProvider.IsOperator(lastToken) && _tokenProvider.IsOperator(c.ToString()) && !context.CurrentTokenHasValue;
         }
 
         private Token CreateToken(TokenizerContext context)

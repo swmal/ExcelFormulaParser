@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.VBA.Functions.Text;
 using ExcelFormulaParser.Engine.VBA.Functions.Math;
+using ExcelFormulaParser.Engine.VBA.Functions.Logical;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions
 {
@@ -24,6 +25,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             // Math
             _functions["power"] = new Power();
             _functions["sqrt"] = new Sqrt();
+            // Logical
+            _functions["iif"] = new IIf();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

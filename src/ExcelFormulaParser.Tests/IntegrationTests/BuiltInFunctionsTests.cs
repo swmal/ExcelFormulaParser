@@ -53,14 +53,14 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         [TestMethod]
         public void LeftShouldReturnSubstringFromLeft()
         {
-            var result = _parser.Parse("Left('abcd', 2)");
+            var result = _parser.Parse("Left('abacd', 2)");
             Assert.AreEqual("ab", result);
         }
 
         [TestMethod]
         public void RightShouldReturnSubstringFromRight()
         {
-            var result = _parser.Parse("RIGHT('abcd', 2)");
+            var result = _parser.Parse("RIGHT('abacd', 2)");
             Assert.AreEqual("cd", result);
         }
 
@@ -76,6 +76,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         {
             var result = _parser.Parse("sqrt(9)");
             Assert.AreEqual(3m, result);
+        }
+
+        [TestMethod]
+        public void IIfShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("IIf(2 < 3, 1, 2)");
+            Assert.AreEqual(1, result);
         }
     }
 }
