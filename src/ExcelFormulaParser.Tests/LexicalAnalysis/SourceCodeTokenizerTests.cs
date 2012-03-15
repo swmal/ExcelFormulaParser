@@ -95,5 +95,14 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             Assert.AreEqual(TokenType.OpeningEnumerable, tokens.ElementAt(2).TokenType);
             Assert.AreEqual(TokenType.ClosingEnumerable, tokens.ElementAt(6).TokenType);
         }
+
+        [TestMethod]
+        public void ShouldCreateTokensForExcelAddressCorrectly()
+        {
+            var input = "Text(A1)";
+            var tokens = _tokenizer.Tokenize(input);
+
+            Assert.AreEqual(TokenType.ExcelAddress, tokens.ElementAt(2).TokenType);
+        }
     }
 }

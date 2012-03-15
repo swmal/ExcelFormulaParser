@@ -49,6 +49,10 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             {
                 return new Token(token, TokenType.Boolean);
             }
+            if (Regex.IsMatch(token, @"^(('[^/\\?*\[\]]{1,31}'|[A-Za-z_]{1,31})!)?[A-Z]{1,2}[1-9]{1}[0-9]{0,6}(\:[A-Z]{1,2}[1-9]{1}[0-9]{0,6}){0,1}$"))
+            {
+                return new Token(token, TokenType.ExcelAddress);
+            }
             if (FunctionRepository.Exists(token))
             {
                 return new Token(token, TokenType.Function);

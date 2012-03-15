@@ -115,5 +115,32 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             Assert.AreEqual(TokenType.Function, token.TokenType);
             Assert.AreEqual("Text", token.Value);
         }
+
+        [TestMethod]
+        public void CreateShouldCreateExcelAddressAsExcelAddressToken()
+        {
+            var input = "A1";
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+            Assert.AreEqual(TokenType.ExcelAddress, token.TokenType);
+            Assert.AreEqual("A1", token.Value);
+        }
+
+        [TestMethod]
+        public void CreateShouldCreateExcelRangeAsExcelAddressToken()
+        {
+            var input = "A1:B15";
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+            Assert.AreEqual(TokenType.ExcelAddress, token.TokenType);
+            Assert.AreEqual("A1:B15", token.Value);
+        }
+
+        [TestMethod]
+        public void CreateShouldCreateExcelRangeOnOtherSheetAsExcelAddressToken()
+        {
+            var input = "ws!A1:B15";
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+            Assert.AreEqual(TokenType.ExcelAddress, token.TokenType);
+            Assert.AreEqual("ws!A1:B15", token.Value);
+        }
     }
 }
