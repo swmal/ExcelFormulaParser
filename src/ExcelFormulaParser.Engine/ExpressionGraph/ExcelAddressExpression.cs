@@ -26,8 +26,21 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
+
             var result = _excelDataProvider.GetRangeValues(ExpressionString);
-            return new CompileResult(result, DataType.Enumerable);
+            if (result == null || result.Count() == 0)
+            {
+                return null;
+            }
+            if (result.Count() > 1)
+            {
+                return new CompileResult(result, DataType.Enumerable);
+            }
+            else
+            {
+                var factory = new CompileResultFactory();
+                return factory.Create(result.First());
+            }
         }
     }
 }

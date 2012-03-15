@@ -37,6 +37,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["floor"] = new Floor();
             _functions["sum"] = new Sum();
             _functions["stdev"] = new Stdev();
+            _functions["stdevp"] = new StdevP();
             _functions["exp"] = new Exp();
             _functions["max"] = new Max();
             _functions["min"] = new Min();

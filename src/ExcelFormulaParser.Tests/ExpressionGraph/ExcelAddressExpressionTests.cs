@@ -29,7 +29,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             var expression = new ExcelAddressExpression(expectedAddres, provider);
             var result = expression.Compile();
-            Assert.AreEqual(1, ((IEnumerable<object>)result.Result).First());
+            Assert.AreEqual(1, result.Result);
         }
     }
 }

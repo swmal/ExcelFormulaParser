@@ -85,6 +85,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         }
 
         [TestMethod]
+        public void StdevPShouldReturnAResult()
+        {
+            var result = _parser.Parse("stdevp(2,3,4)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
         public void ExpShouldReturnAResult()
         {
             var result = _parser.Parse("exp(4)");

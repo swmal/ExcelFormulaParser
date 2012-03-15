@@ -38,10 +38,17 @@ namespace ExcelFormulaParser.EPPlus.Tests
         }
 
         [TestMethod]
-        public void ShouldRetrieveValuesFromEPPlus()
+        public void ShouldRetrieveRangeValuesFromEPPlus()
         {
             var result = _parser.Parse("SUM(A1:A5) - SQRT(9)");
             Assert.AreEqual(12d, result);
+        }
+
+        [TestMethod]
+        public void ShouldRetrieveSingleValueFromEPPlus()
+        {
+            var result = _parser.Parse("INT(A2)");
+            Assert.AreEqual(2, result);
         }
     }
 }

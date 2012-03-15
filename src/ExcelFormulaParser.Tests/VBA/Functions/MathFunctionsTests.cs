@@ -109,6 +109,15 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         }
 
         [TestMethod]
+        public void StdevPShouldCalculateCorrectResult()
+        {
+            var func = new StdevP();
+            var args = new object[] { 2, 3, 4 };
+            var result = func.Execute(args);
+            Assert.AreEqual(0.8165d, Math.Round((double)result.Result, 5));
+        }
+
+        [TestMethod]
         public void ExpShouldCalculateCorrectResult()
         {
             var func = new Exp();

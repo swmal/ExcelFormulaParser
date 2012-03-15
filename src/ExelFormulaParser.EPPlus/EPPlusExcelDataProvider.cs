@@ -19,6 +19,7 @@ namespace ExcelFormulaParser.EPPlus
 
         public override IEnumerable<object> GetRangeValues(string address)
         {
+            var returnList = new List<object>();
             if (AddressHasWorkbookName(address))
             {
                 _currentWorksheet = _package.Workbook.Worksheets[GetWorksheetName(address)];
@@ -32,13 +33,14 @@ namespace ExcelFormulaParser.EPPlus
             {
                 foreach (var obj in (object[,])range.Value)
                 {
-                    yield return obj;
+                    returnList.Add(obj);
                 }
             }
             else 
             { 
-                yield return range.Value; 
+                returnList.Add(range.Value); 
             }
+            return returnList;
         }
 
         private static bool AddressHasWorkbookName(string address)
