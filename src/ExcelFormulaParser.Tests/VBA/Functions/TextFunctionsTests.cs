@@ -92,5 +92,13 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
             var result = func.Execute(new object[] { "testar testar", "es", "xx" });
             Assert.AreEqual("txxtar txxtar", result.Result);
         }
+
+        [TestMethod]
+        public void ConcatenateShouldConcatenateThreeStrings()
+        {
+            var func = new Concatenate();
+            var result = func.Execute(new object[] { "One", "Two", "Three" });
+            Assert.AreEqual("OneTwoThree", result.Result);
+        }
     }
 }

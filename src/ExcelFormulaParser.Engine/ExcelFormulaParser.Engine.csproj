@@ -117,6 +117,7 @@
     <Compile Include="VBA\Functions\Math\Stdev.cs" />
     <Compile Include="VBA\Functions\Math\Sum.cs" />
     <Compile Include="VBA\Functions\Numeric\CInt.cs" />
+    <Compile Include="VBA\Functions\Text\Concatenate.cs" />
     <Compile Include="VBA\Functions\Text\CStr.cs" />
     <Compile Include="VBA\Functions\Text\Left.cs" />
     <Compile Include="VBA\Functions\Text\Len.cs" />

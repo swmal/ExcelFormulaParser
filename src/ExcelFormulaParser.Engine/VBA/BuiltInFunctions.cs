@@ -24,6 +24,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["mid"] = new Mid();
             _functions["replace"] = new Replace();
             _functions["substitute"] = new Substitute();
+            _functions["concatenate"] = new Concatenate();
             // Numbers
             _functions["int"] = new CInt();
             // Math

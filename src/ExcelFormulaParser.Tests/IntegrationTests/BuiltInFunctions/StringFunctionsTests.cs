@@ -87,5 +87,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Substitute('testar testar', 'es', 'xx')");
             Assert.AreEqual("txxtar txxtar", result);
         }
+
+        [TestMethod]
+        public void ConcatenateShouldReturnAccordingToParams()
+        {
+            var result = _parser.Parse("CONCATENATE('One', 'Two', 'Three')");
+            Assert.AreEqual("OneTwoThree", result);
+        }
     }
 }
