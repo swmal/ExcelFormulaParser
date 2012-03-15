@@ -91,5 +91,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             message = string.Format(message, formats);
             ThrowArgumentExceptionIf(condition, message);
         }
+
+        protected CompileResult CreateResult(object result, DataType dataType)
+        {
+            return new CompileResult(result, dataType);
+        }
     }
 }

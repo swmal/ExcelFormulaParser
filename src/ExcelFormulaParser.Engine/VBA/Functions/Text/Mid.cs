@@ -15,7 +15,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
             var startIx = ArgToInt(arguments, 1);
             var length = ArgToInt(arguments, 2);
             var result = text.Substring(startIx, length);
-            return new CompileResult(result, DataType.String);
+            return CreateResult(result, DataType.String);
         }
     }
 }

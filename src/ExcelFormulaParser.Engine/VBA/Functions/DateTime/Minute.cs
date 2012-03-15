@@ -15,20 +15,15 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
             if (arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
             {
                 var result = TimeStringParser.Parse(firstArg);
-                return CreateResult(GetMinuteFromSerialNumber(result));
+                return CreateResult(GetMinuteFromSerialNumber(result), DataType.Integer);
             }
             ValidateAndInitSerialNumber(arguments);
-            return CreateResult(GetMinuteFromSerialNumber(SerialNumber));
+            return CreateResult(GetMinuteFromSerialNumber(SerialNumber), DataType.Integer);
         }
 
         private int GetMinuteFromSerialNumber(double serialNumber)
         {
             return (int)System.Math.Round(GetMinute(serialNumber), 0);
-        }
-
-        private CompileResult CreateResult(int minute)
-        {
-            return new CompileResult(minute, DataType.Integer);
         }
     }
 }

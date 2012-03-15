@@ -12,8 +12,16 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
         {
             ValidateArguments(arguments, 1);
             var dateObj = arguments.ElementAt(0);
-            var date = System.DateTime.FromOADate((double)dateObj);
-            return new CompileResult(date.Day, DataType.Integer);
+            System.DateTime date = System.DateTime.MinValue;
+            if (dateObj is double)
+            {
+                date = System.DateTime.FromOADate((double)dateObj);
+            }
+            if (dateObj is string)
+            {
+                date = System.DateTime.Parse(dateObj.ToString());
+            }
+            return CreateResult(date.Day, DataType.Integer);
         }
     }
 }

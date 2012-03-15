@@ -19,16 +19,16 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
                 var floor = System.Math.Floor(number);
                 var rest = number - floor;
                 var nSign = (int)(rest / significance) + 1;
-                return new CompileResult(floor + (nSign * significance), DataType.Decimal);
+                return CreateResult(floor + (nSign * significance), DataType.Decimal);
             }
             else if (significance == 1)
             {
-                return new CompileResult(System.Math.Ceiling(number), DataType.Decimal);
+                return CreateResult(System.Math.Ceiling(number), DataType.Decimal);
             }
             else
             {
                 var result = number - (number % significance) + significance;
-                return new CompileResult(result, DataType.Decimal);
+                return CreateResult(result, DataType.Decimal);
             }
         }
 

@@ -34,7 +34,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 
 
             var secondsOfThisTime = (double)(hour * 60 * 60 + min * 60 + sec);
-            return new CompileResult(GetTimeSerialNumber(secondsOfThisTime), DataType.Time);
+            return CreateResult(GetTimeSerialNumber(secondsOfThisTime), DataType.Time);
         }
     }
 }

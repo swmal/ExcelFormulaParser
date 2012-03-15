@@ -10,7 +10,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
     {
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
-            return new CompileResult(System.DateTime.Now.ToOADate(), DataType.Date);
+            return CreateResult(System.DateTime.Now.ToOADate(), DataType.Date);
         }
     }
 }

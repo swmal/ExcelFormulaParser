@@ -15,7 +15,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
             var find = ArgToString(arguments, 1);
             var replaceWith = ArgToString(arguments, 2);
             var result = text.Replace(find, replaceWith);
-            return new CompileResult(result, DataType.String);
+            return CreateResult(result, DataType.String);
         }
     }
 }

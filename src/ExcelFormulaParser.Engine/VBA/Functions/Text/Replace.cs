@@ -18,7 +18,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
             var firstPart = GetFirstPart(oldText, startPos);
             var lastPart = GetLastPart(oldText, startPos, nCharsToReplace);
             var result = string.Concat(firstPart, newText, lastPart);
-            return new CompileResult(result, DataType.String);
+            return CreateResult(result, DataType.String);
         }
 
         private string GetFirstPart(string text, int startPos)

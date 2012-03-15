@@ -11,7 +11,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
             var result = System.Math.Round((decimal)System.Math.PI, 14);
-            return new CompileResult(result, DataType.Decimal);
+            return CreateResult(result, DataType.Decimal);
         }
     }
 }

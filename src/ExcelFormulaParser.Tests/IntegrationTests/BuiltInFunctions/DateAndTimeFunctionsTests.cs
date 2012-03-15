@@ -96,6 +96,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         }
 
         [TestMethod]
+        public void MinuteShouldReturnCorrectResultWhenParsingString()
+        {
+            var result = _parser.Parse("Minute('10:12:14 AM')");
+            Assert.AreEqual(12, result);
+        }
+
+        [TestMethod]
         public void HourShouldReturnCorrectResultWhenParsingString()
         {
             var result = _parser.Parse("Hour('10:12:14')");

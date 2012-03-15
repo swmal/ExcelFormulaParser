@@ -13,7 +13,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
             ValidateArguments(arguments, 2);
             var str = ArgToString(arguments, 0);
             var length = ArgToInt(arguments, 1);
-            return new CompileResult(str.Substring(0, length), DataType.String);
+            return CreateResult(str.Substring(0, length), DataType.String);
         }
     }
 }

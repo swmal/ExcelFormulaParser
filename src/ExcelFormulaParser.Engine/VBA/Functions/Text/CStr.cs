@@ -11,7 +11,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
             ValidateArguments(arguments, 1);
-            return new CompileResult(arguments.First().ToString(), DataType.String);
+            return CreateResult(ArgToString(arguments, 0), DataType.String);
         }
     }
 }

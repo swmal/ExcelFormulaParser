@@ -14,7 +14,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             var number = ArgToDecimal(arguments, 0);
             var power = ArgToDecimal(arguments, 1);
             var result = System.Math.Pow((double)number, (double)power);
-            return new CompileResult((decimal)result, DataType.Decimal);
+            return CreateResult((decimal)result, DataType.Decimal);
         }
     }
 }

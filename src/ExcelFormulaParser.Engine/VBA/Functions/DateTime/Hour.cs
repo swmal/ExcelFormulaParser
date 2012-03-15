@@ -15,10 +15,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
             if (arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
             {
                 var result = TimeStringParser.Parse(firstArg);
-                return CreateResult(GetHourFromSerialNumber(result));
+                return CreateResult(GetHourFromSerialNumber(result), DataType.Integer);
             }
             ValidateAndInitSerialNumber(arguments);
-            return CreateResult(GetHourFromSerialNumber(SerialNumber));
+            return CreateResult(GetHourFromSerialNumber(SerialNumber), DataType.Integer);
         }
 
         private int GetHourFromSerialNumber(double serialNumber)
@@ -26,9 +26,5 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
             return (int)System.Math.Round(GetHour(serialNumber), 0);
         }
 
-        private CompileResult CreateResult(int hour)
-        {
-            return new CompileResult(hour, DataType.Integer);
-        }
     }
 }

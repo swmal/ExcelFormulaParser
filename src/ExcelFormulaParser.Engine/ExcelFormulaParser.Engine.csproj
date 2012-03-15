@@ -85,6 +85,7 @@
     <Compile Include="VBA\BuiltInFunctions.cs" />
     <Compile Include="VBA\FunctionRepository.cs" />
     <Compile Include="VBA\Functions\DateTime\Date.cs" />
+    <Compile Include="VBA\Functions\DateTime\DateStringParser.cs" />
     <Compile Include="VBA\Functions\DateTime\Day.cs" />
     <Compile Include="VBA\Functions\DateTime\Hour.cs" />
     <Compile Include="VBA\Functions\DateTime\Minute.cs" />

@@ -13,7 +13,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             ValidateArguments(arguments, 1);
             var arg = ArgToDecimal(arguments, 0);
             var result = System.Math.Sqrt((double)arg);
-            return new CompileResult((decimal)result, DataType.Decimal);
+            return CreateResult((decimal)result, DataType.Decimal);
         }
     }
 }

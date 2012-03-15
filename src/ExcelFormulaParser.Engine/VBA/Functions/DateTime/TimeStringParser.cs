@@ -36,7 +36,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 
         public virtual bool CanParse(string input)
         {
-            return Regex.IsMatch(input, RegEx24) || Regex.IsMatch(input, RegEx12);
+            System.DateTime dt;
+            return Regex.IsMatch(input, RegEx24) || Regex.IsMatch(input, RegEx12) || System.DateTime.TryParse(input, out dt);
         }
 
         private double InternalParse(string input)
@@ -47,17 +48,27 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
             }
             if (Regex.IsMatch(input, RegEx12))
             {
-                string dayPart = string.Empty;
-                dayPart = input.Substring(input.Length - 2, 2);
-                int hour;
-                int minute;
-                int second;
-                GetValuesFromString(input, out hour, out minute, out second);
-                if (dayPart == "PM") hour += 12;
-                ValidateValues(hour, minute, second);
-                return GetSerialNumber(hour, minute, second);
+                return Parse12HourTimeString(input);
+            }
+            System.DateTime dateTime;
+            if (System.DateTime.TryParse(input, out dateTime))
+            {
+                return GetSerialNumber(dateTime.Hour, dateTime.Minute, dateTime.Second);
             }
             return -1;
+        }
+
+        private double Parse12HourTimeString(string input)
+        {
+            string dayPart = string.Empty;
+            dayPart = input.Substring(input.Length - 2, 2);
+            int hour;
+            int minute;
+            int second;
+            GetValuesFromString(input, out hour, out minute, out second);
+            if (dayPart == "PM") hour += 12;
+            ValidateValues(hour, minute, second);
+            return GetSerialNumber(hour, minute, second);
         }
 
         private double Parse24HourTimeString(string input)

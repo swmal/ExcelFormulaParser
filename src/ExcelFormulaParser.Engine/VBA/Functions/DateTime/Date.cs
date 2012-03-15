@@ -18,7 +18,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
             month -= 1;
             date = date.AddMonths(month);
             date = date.AddDays((double)(day - 1));
-            return new CompileResult(date.ToOADate(), DataType.Date);
+            return CreateResult(date.ToOADate(), DataType.Date);
         }
     }
 }

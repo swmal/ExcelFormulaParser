@@ -81,6 +81,15 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         }
 
         [TestMethod]
+        public void MonthShouldReturnMonthOfYearWithStringParam()
+        {
+            var date = new DateTime(2012, 3, 12);
+            var func = new Day();
+            var result = func.Execute(new object[] { "2012-03-12" });
+            Assert.AreEqual(12, result.Result);
+        }
+
+        [TestMethod]
         public void MonthShouldReturnMonthOfYear()
         {
             var date = new DateTime(2012, 3, 12);
@@ -90,11 +99,29 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         }
 
         [TestMethod]
+        public void MonthShouldReturnMonthOfYearWithStringParam()
+        {
+            var date = new DateTime(2012, 3, 12);
+            var func = new Month();
+            var result = func.Execute(new object[] { "2012-03-12" });
+            Assert.AreEqual(3, result.Result);
+        }
+
+        [TestMethod]
         public void YearShouldReturnCorrectYear()
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Year();
             var result = func.Execute(new object[] { date.ToOADate() });
+            Assert.AreEqual(2012, result.Result);
+        }
+
+        [TestMethod]
+        public void YearShouldReturnCorrectYearWithStringParam()
+        {
+            var date = new DateTime(2012, 3, 12);
+            var func = new Year();
+            var result = func.Execute(new object[] { "2012-03-12" });
             Assert.AreEqual(2012, result.Result);
         }
 
@@ -165,6 +192,30 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var func = new Second();
             var result = func.Execute(new object[] { GetTime(9, 14, 17) });
             Assert.AreEqual(17, result.Result);
+        }
+
+        [TestMethod]
+        public void SecondShouldReturnCorrectResultWithStringArgument()
+        {
+            var func = new Second();
+            var result = func.Execute(new object[] { "2012-03-27 10:11:12" });
+            Assert.AreEqual(12, result.Result);
+        }
+
+        [TestMethod]
+        public void MinuteShouldReturnCorrectResultWithStringArgument()
+        {
+            var func = new Minute();
+            var result = func.Execute(new object[] { "2012-03-27 10:11:12" });
+            Assert.AreEqual(11, result.Result);
+        }
+
+        [TestMethod]
+        public void HourShouldReturnCorrectResultWithStringArgument()
+        {
+            var func = new Hour();
+            var result = func.Execute(new object[] { "2012-03-27 10:11:12" });
+            Assert.AreEqual(10, result.Result);
         }
     }
 }
