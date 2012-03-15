@@ -125,5 +125,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Int(2.9)");
             Assert.AreEqual(2, result);
         }
+
+        [TestMethod]
+        public void RandShouldReturnAResult()
+        {
+            var result = _parser.Parse("Rand()");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }

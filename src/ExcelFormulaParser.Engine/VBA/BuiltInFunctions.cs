@@ -40,6 +40,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["min"] = new Min();
             _functions["average"] = new Average();
             _functions["round"] = new Round();
+            _functions["rand"] = new Rand();
             // Logical
             _functions["if"] = new If();
             _functions["not"] = new Not();

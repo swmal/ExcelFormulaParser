@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.VBA.Functions.Math;
+using System.Threading;
 
 namespace ExcelFormulaParser.Tests.VBA.Functions
 {
@@ -197,6 +198,18 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var args = new object[] { -26.75d, -1 };
             var result = func.Execute(args);
             Assert.AreEqual(-26d, result.Result);
+        }
+
+        [TestMethod]
+        public void RandShouldReturnAValueBetween0and1()
+        {
+            var func = new Rand();
+            var args = new object[0];
+            var result1 = func.Execute(args);
+            Assert.IsTrue(((double)result1.Result) > 0 && ((double) result1.Result) < 1);
+            var result2 = func.Execute(args);
+            Assert.AreNotEqual(result1.Result, result2.Result, "The two numbers were the same");
+            Assert.IsTrue(((double)result2.Result) > 0 && ((double)result2.Result) < 1);
         }
     }
 }
