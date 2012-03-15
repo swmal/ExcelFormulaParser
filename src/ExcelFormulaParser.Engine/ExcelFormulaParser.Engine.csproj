@@ -113,6 +113,7 @@
     <Compile Include="VBA\Functions\Math\Pi.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
     <Compile Include="VBA\Functions\Math\Rand.cs" />
+    <Compile Include="VBA\Functions\Math\RandBetween.cs" />
     <Compile Include="VBA\Functions\Math\Round.cs" />
     <Compile Include="VBA\Functions\Math\Sqrt.cs" />
     <Compile Include="VBA\Functions\Math\Stdev.cs" />

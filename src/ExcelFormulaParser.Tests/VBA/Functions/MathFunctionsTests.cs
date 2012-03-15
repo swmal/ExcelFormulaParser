@@ -211,5 +211,23 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             Assert.AreNotEqual(result1.Result, result2.Result, "The two numbers were the same");
             Assert.IsTrue(((double)result2.Result) > 0 && ((double)result2.Result) < 1);
         }
+
+        [TestMethod]
+        public void RandBetweenShouldReturnAnIntegerValueBetweenSuppliedValues()
+        {
+            var func = new RandBetween();
+            var args = new object[] { 1, 5 };
+            var result = func.Execute(args);
+            CollectionAssert.Contains(new List<double> { 1d, 2d, 3d, 4d, 5d }, result.Result);
+        }
+
+        [TestMethod]
+        public void RandBetweenShouldReturnAnIntegerValueBetweenSuppliedValuesWhenLowIsNegative()
+        {
+            var func = new RandBetween();
+            var args = new object[] { -5, 0 };
+            var result = func.Execute(args);
+            CollectionAssert.Contains(new List<double> { 0d, -1d, -2d, -3d, -4d, -5d }, result.Result);
+        }
     }
 }

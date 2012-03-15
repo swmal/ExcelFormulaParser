@@ -132,5 +132,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Rand()");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void RandBetweenShouldReturnAResult()
+        {
+            var result = _parser.Parse("RandBetween(1,2)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }
