@@ -22,7 +22,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         public void PowerShouldReturnCorrectResult()
         {
             var result = _parser.Parse("Power(3, 3)");
-            Assert.AreEqual(27m, result);
+            Assert.AreEqual(27d, result);
         }
 
         [TestMethod]
@@ -45,6 +45,14 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         {
             var expectedValue = 22.4d;
             var result = _parser.Parse("ceiling(22.35, 0.1)");
+            Assert.AreEqual(expectedValue, result);
+        }
+
+        [TestMethod]
+        public void FloorShouldReturnCorrectResult()
+        {
+            var expectedValue = 22.3d;
+            var result = _parser.Parse("Floor(22.35, 0.1)");
             Assert.AreEqual(expectedValue, result);
         }
 

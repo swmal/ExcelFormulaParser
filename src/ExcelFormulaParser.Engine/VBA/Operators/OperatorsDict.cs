@@ -13,6 +13,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
             Add("-", Operator.Minus);
             Add("*", Operator.Multiply);
             Add("/", Operator.Divide);
+            Add("=", Operator.Eq);
             Add(">", Operator.GreaterThan);
             Add(">=", Operator.GreaterThanOrEqual);
             Add("<", Operator.LessThan);

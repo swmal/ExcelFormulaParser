@@ -24,5 +24,19 @@ namespace ExcelFormulaParser.Tests.VBA
             var result = Operator.Concat.Apply(new CompileResult(12, DataType.Integer), new CompileResult("b", DataType.String));
             Assert.AreEqual("12b", result.Result);
         }
+
+        [TestMethod]
+        public void OperatorEqShouldReturnTruefSuppliedValuesAreEqual()
+        {
+            var result = Operator.Eq.Apply(new CompileResult(12, DataType.Integer), new CompileResult(12, DataType.Integer));
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void OperatorEqShouldReturnTruefSuppliedValuesDiffer()
+        {
+            var result = Operator.Eq.Apply(new CompileResult(11, DataType.Integer), new CompileResult(12, DataType.Integer));
+            Assert.IsFalse((bool)result.Result);
+        }
     }
 }

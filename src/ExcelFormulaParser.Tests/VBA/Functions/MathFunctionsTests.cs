@@ -162,5 +162,41 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.AreEqual(2.343d, result.Result);
         }
+
+        [TestMethod]
+        public void RoundShouldReturnCorrectResultWhenNbrOfDecimalsIsNegative()
+        {
+            var func = new Round();
+            var args = new object[] { 9333, -3 };
+            var result = func.Execute(args);
+            Assert.AreEqual(9000d, result.Result);
+        }
+
+        [TestMethod]
+        public void FloorShouldReturnCorrectResultWhenSignificanceIsBetween0And1()
+        {
+            var func = new Floor();
+            var args = new object[] { 26.75d, 0.1 };
+            var result = func.Execute(args);
+            Assert.AreEqual(26.7d, result.Result);
+        }
+
+        [TestMethod]
+        public void FloorShouldReturnCorrectResultWhenSignificanceIs1()
+        {
+            var func = new Floor();
+            var args = new object[] { 26.75d, 1 };
+            var result = func.Execute(args);
+            Assert.AreEqual(26d, result.Result);
+        }
+
+        [TestMethod]
+        public void FloorShouldReturnCorrectResultWhenSignificanceIsMinus1()
+        {
+            var func = new Floor();
+            var args = new object[] { -26.75d, -1 };
+            var result = func.Execute(args);
+            Assert.AreEqual(-26d, result.Result);
+        }
     }
 }

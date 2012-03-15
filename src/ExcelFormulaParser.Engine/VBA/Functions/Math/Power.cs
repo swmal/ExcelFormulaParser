@@ -13,8 +13,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             ValidateArguments(arguments, 2);
             var number = ArgToDecimal(arguments, 0);
             var power = ArgToDecimal(arguments, 1);
-            var result = System.Math.Pow((double)number, (double)power);
-            return CreateResult((decimal)result, DataType.Decimal);
+            var result = System.Math.Pow(number, power);
+            return CreateResult(result, DataType.Decimal);
         }
     }
 }

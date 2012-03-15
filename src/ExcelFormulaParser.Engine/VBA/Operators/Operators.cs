@@ -14,6 +14,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
         Multiply,
         Divide,
         Modulus,
+        Equals,
         GreaterThan,
         GreaterThanOrEqual,
         LessThan,

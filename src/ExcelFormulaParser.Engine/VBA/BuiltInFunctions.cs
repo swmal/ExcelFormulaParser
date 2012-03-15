@@ -31,6 +31,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["sqrt"] = new Sqrt();
             _functions["pi"] = new Pi();
             _functions["ceiling"] = new Ceiling();
+            _functions["floor"] = new Floor();
             _functions["sum"] = new Sum();
             _functions["stdev"] = new Stdev();
             _functions["exp"] = new Exp();

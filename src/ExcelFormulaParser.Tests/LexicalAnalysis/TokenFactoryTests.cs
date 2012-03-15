@@ -78,6 +78,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         }
 
         [TestMethod]
+        public void ShouldCreateEqualsAsOperatorToken()
+        {
+            var input = "=";
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+
+            Assert.AreEqual("=", token.Value);
+            Assert.AreEqual(TokenType.Operator, token.TokenType);
+        }
+
+        [TestMethod]
         public void ShouldCreateIntegerAsIntegerToken()
         {
             var input = "23";

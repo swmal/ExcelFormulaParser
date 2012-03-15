@@ -102,5 +102,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             var result = _parser.Parse("2.2 >= 3");
             Assert.IsFalse((bool)result);
         }
+
+        [TestMethod]
+        public void TwelweAndTwelweShouldBeEqual()
+        {
+            var result = _parser.Parse("2=2");
+            Assert.IsTrue((bool)result);
+        }
     }
 }

@@ -182,6 +182,17 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
             }
         }
 
+        public static IOperator Eq
+        {
+            get
+            {
+                return new Operator(Operators.Equals, PrecedenceComparison, (l, r) =>
+                    {
+                        return new CompileResult(l.Result.Equals(r.Result), DataType.Boolean);
+                    });
+            }
+        }
+
         public static IOperator GreaterThanOrEqual
         {
             get

@@ -32,6 +32,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             {
                 retVal += Convert.ToDouble((int)arg);
             }
+            else if (arg is System.DateTime)
+            {
+                retVal += Convert.ToDateTime(arg).ToOADate();
+            }
             else if (arg is IEnumerable<object>)
             {
                 foreach (var item in (IEnumerable<object>)arg)
