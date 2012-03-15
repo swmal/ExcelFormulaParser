@@ -5,6 +5,7 @@ using System.Text;
 using ExcelFormulaParser.Engine.VBA.Functions.Text;
 using ExcelFormulaParser.Engine.VBA.Functions.Math;
 using ExcelFormulaParser.Engine.VBA.Functions.Logical;
+using ExcelFormulaParser.Engine.VBA.Functions.DateTime;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions
 {
@@ -35,6 +36,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["not"] = new Not();
             _functions["and"] = new And();
             _functions["or"] = new Or();
+            // Date
+            _functions["date"] = new Date();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

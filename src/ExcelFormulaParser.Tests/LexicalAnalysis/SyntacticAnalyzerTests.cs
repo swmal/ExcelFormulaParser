@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Tests.LexicalAnalysis
 {
@@ -24,9 +25,9 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             var input = new List<Token>
             {
                 new Token("(", TokenType.OpeningBracket),
-                new Token("1", TokenType.Undefined),
+                new Token("1", TokenType.Integer),
                 new Token("+", TokenType.Operator),
-                new Token("2", TokenType.Undefined),
+                new Token("2", TokenType.Integer),
                 new Token(")", TokenType.ClosingBracket)
             };
             _analyser.Analyze(input);
@@ -38,9 +39,9 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             var input = new List<Token>
             {
                 new Token("(", TokenType.OpeningBracket),
-                new Token("1", TokenType.Undefined),
+                new Token("1", TokenType.Integer),
                 new Token("+", TokenType.Operator),
-                new Token("2", TokenType.Undefined)
+                new Token("2", TokenType.Integer)
             };
             _analyser.Analyze(input);
         }
@@ -68,5 +69,15 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             _analyser.Analyze(input);
         }
 
+
+        [TestMethod, ExpectedException(typeof(UnrecognizedTokenException))]
+        public void ShouldThrowExceptionIfThereIsAnUnrecognizedToken()
+        {
+            var input = new List<Token>
+            {
+                new Token("abc123", TokenType.Unrecognized)
+            };
+            _analyser.Analyze(input);
+        }
     }
 }

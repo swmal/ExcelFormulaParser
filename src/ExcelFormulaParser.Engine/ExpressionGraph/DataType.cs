@@ -10,6 +10,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         Integer,
         Decimal,
         String,
-        Boolean
+        Boolean,
+        Date
     }
 }

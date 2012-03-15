@@ -56,5 +56,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             Assert.AreEqual(8, tokens.Count());
             Assert.AreEqual(TokenType.Negator, tokens.ElementAt(3).TokenType);
         }
+
+        [TestMethod]
+        public void ShouldSetNegatorOnTokenInsideFunctionCall()
+        {
+            var input = "Ceiling(-1, -0.1)";
+            var tokens = _tokenizer.Tokenize(input);
+
+            Assert.AreEqual(8, tokens.Count());
+            Assert.AreEqual(TokenType.Negator, tokens.ElementAt(2).TokenType);
+            Assert.AreEqual(TokenType.Negator, tokens.ElementAt(5).TokenType, "Negator after comma was not identified");
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
         GreaterThan,
         GreaterThanOrEqual,
         LessThan,
-        LessThanOrEqual
+        LessThanOrEqual,
+        IntegerDivision
     }
 }

@@ -53,7 +53,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             {
                 return new Token(token, TokenType.Function);
             }
-            return new Token(token, TokenType.Undefined);
+            return new Token(token, TokenType.Unrecognized);
 
         }
     }

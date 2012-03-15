@@ -20,7 +20,6 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 
         private readonly ITokenSeparatorProvider _tokenProvider;
         private readonly ITokenFactory _tokenFactory;
-        private bool _possibleNegation = true;
 
         public IEnumerable<Token> Tokenize(string input)
         {
@@ -56,11 +55,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                     }
                     if (tokenSeparator.Value == "-")
                     {
-                        if (context.LastToken == null 
-                            || 
-                            context.LastToken.TokenType == TokenType.Operator
-                            ||
-                            context.LastToken.TokenType == TokenType.OpeningBracket)
+                        if (TokenIsNegator(context))
                         {
                             context.AddToken(new Token("-", TokenType.Negator));
                             continue;
@@ -77,6 +72,17 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                 context.AddToken(CreateToken(context));
             }
             return context.Result;
+        }
+
+        private static bool TokenIsNegator(TokenizerContext context)
+        {
+            return context.LastToken == null
+                                        ||
+                                        context.LastToken.TokenType == TokenType.Operator
+                                        ||
+                                        context.LastToken.TokenType == TokenType.OpeningBracket
+                                        ||
+                                        context.LastToken.TokenType == TokenType.Comma;
         }
 
         private bool IsPartOfMultipleCharSeparator(TokenizerContext context, char c)

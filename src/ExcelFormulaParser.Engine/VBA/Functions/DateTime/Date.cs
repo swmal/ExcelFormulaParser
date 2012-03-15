@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ExcelFormulaParser.Engine.ExpressionGraph;
+
+namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
+{
+    public class Date : VBAFunction
+    {
+        public override CompileResult Execute(IEnumerable<object> arguments)
+        {
+            ValidateArguments(arguments, 3);
+            var year = ArgToInt(arguments, 0);
+            var month = ArgToInt(arguments, 1);
+            var day = ArgToInt(arguments, 2);
+            var date = new System.DateTime(year, 1, 1);
+            month -= 1;
+            date = date.AddMonths(month);
+            date = date.AddDays((double)(day - 1));
+            return new CompileResult(date.ToOADate(), DataType.Date);
+        }
+    }
+}

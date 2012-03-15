@@ -18,6 +18,6 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         Boolean,
         Decimal,
         Function,
-        Undefined
+        Unrecognized
     }
 }

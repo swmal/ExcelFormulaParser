@@ -33,11 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Data.Schema, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.Data.Schema.UnitTesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -50,6 +55,7 @@
     <Compile Include="ExpressionGraph\ExpressionFactoryTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilderTests.cs" />
     <Compile Include="ExpressionGraph\IntegerExpressionTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\DateAndTimeFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\LogicalFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\MathFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\StringFunctionsTests.cs" />
@@ -61,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\BasicCalcTests.cs" />
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />
+    <Compile Include="VBA\Functions\DateTimeFunctionsTests.cs" />
     <Compile Include="VBA\Functions\LogicalFunctionsTests.cs" />
     <Compile Include="VBA\Functions\MathFunctionsTests.cs" />
     <Compile Include="VBA\Functions\NumberFunctionsTests.cs" />
