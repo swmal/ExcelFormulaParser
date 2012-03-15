@@ -22,6 +22,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             Current = expression;
         }
 
+        public void Reset()
+        {
+            _expressions.Clear();
+            Current = null;
+        }
+
         public void Remove(Expression item)
         {
             if (item == Current)

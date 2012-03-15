@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ExcelFormulaParser.Engine;
 
 namespace ExcelFormulaParser.Tests.IntegrationTests
 {
@@ -81,8 +82,18 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         [TestMethod]
         public void IIfShouldReturnCorrectResult()
         {
-            var result = _parser.Parse("IIf(2 < 3, 1, 2)");
+            var result = _parser.Parse("If(2 < 3, 1, 2)");
             Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void NotShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("not(true)");
+            Assert.IsFalse((bool)result);
+
+            result = _parser.Parse("NOT(false)");
+            Assert.IsTrue((bool)result);
         }
     }
 }

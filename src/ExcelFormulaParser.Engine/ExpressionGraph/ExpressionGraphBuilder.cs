@@ -26,6 +26,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public ExpressionGraph Build(IEnumerable<Token> tokens)
         {
+            _tokenIndex = 0;
+            _graph.Reset();
             BuildUp(tokens, null);
             return _graph;
         }

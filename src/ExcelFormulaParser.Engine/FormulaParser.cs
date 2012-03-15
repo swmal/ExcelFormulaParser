@@ -9,7 +9,7 @@ using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.VBA;
 using ExcelFormulaParser.Engine.VBA.Functions;
 
-namespace ExcelFormulaParser.Tests
+namespace ExcelFormulaParser.Engine
 {
     public class FormulaParser
     {

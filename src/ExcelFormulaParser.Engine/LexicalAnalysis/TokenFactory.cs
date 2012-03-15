@@ -45,6 +45,10 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             {
                 return new Token(token, TokenType.Integer);
             }
+            if (Regex.IsMatch(token, @"^(true|false)$", RegexOptions.IgnoreCase))
+            {
+                return new Token(token, TokenType.Boolean);
+            }
             if (FunctionRepository.Exists(token))
             {
                 return new Token(token, TokenType.Function);

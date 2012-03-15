@@ -26,7 +26,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["power"] = new Power();
             _functions["sqrt"] = new Sqrt();
             // Logical
-            _functions["iif"] = new IIf();
+            _functions["if"] = new If();
+            _functions["not"] = new Not();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

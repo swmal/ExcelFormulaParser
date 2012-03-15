@@ -28,6 +28,14 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         }
 
         [TestMethod]
+        public void ShouldReturnBooleanExpressionWhenTokenIsBoolean()
+        {
+            var token = new Token("true", TokenType.Boolean);
+            var expression = _factory.Create(token);
+            Assert.IsInstanceOfType(expression, typeof(BooleanExpression));
+        }
+
+        [TestMethod]
         public void ShouldReturnDecimalExpressionWhenTokenIsDecimal()
         {
             var token = new Token("2.5", TokenType.Decimal);

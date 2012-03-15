@@ -88,6 +88,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         }
 
         [TestMethod]
+        public void ShouldCreateBooleanAsBooleanToken()
+        {
+            var input = "true";
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+
+            Assert.AreEqual("true", token.Value);
+            Assert.AreEqual(TokenType.Boolean, token.TokenType);
+        }
+
+        [TestMethod]
         public void ShouldCreateDecimalAsDecimalToken()
         {
             var input = "23.3";
