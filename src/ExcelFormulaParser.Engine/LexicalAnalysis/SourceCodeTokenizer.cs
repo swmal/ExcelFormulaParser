@@ -20,6 +20,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 
         private readonly ITokenSeparatorProvider _tokenProvider;
         private readonly ITokenFactory _tokenFactory;
+        private bool _possibleNegation = true;
 
         public IEnumerable<Token> Tokenize(string input)
         {
@@ -53,6 +54,18 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                     {
                         context.AddToken(CreateToken(context));
                     }
+                    if (tokenSeparator.Value == "-")
+                    {
+                        if (context.LastToken == null 
+                            || 
+                            context.LastToken.TokenType == TokenType.Operator
+                            ||
+                            context.LastToken.TokenType == TokenType.OpeningBracket)
+                        {
+                            context.AddToken(new Token("-", TokenType.Negator));
+                            continue;
+                        }
+                    }
                     context.AddToken(tokenSeparator);
                     context.NewToken();
                     continue;
@@ -69,11 +82,21 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         private bool IsPartOfMultipleCharSeparator(TokenizerContext context, char c)
         {
             var lastToken = context.LastToken != null ? context.LastToken.Value : string.Empty;
-            return _tokenProvider.IsOperator(lastToken) && _tokenProvider.IsOperator(c.ToString()) && !context.CurrentTokenHasValue;
+            return _tokenProvider.IsOperator(lastToken) 
+                && _tokenProvider.IsPossibleLastPartOfMultipleCharOperator(c.ToString()) 
+                && !context.CurrentTokenHasValue;
         }
 
         private Token CreateToken(TokenizerContext context)
         {
+            Token token = null;
+            if (context.CurrentToken == "-")
+            {
+                if (context.LastToken == null && context.LastToken.TokenType == TokenType.Operator)
+                {
+                    return new Token("-", TokenType.Negator);
+                }
+            }
             return _tokenFactory.Create(context.Result, context.CurrentToken);
         }
 

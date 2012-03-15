@@ -8,6 +8,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
     public enum TokenType
     {
         Operator,
+        Negator,
         OpeningBracket,
         ClosingBracket,
         Comma,

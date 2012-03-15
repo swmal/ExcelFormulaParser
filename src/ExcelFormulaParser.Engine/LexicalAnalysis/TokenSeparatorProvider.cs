@@ -47,5 +47,10 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         {
             return _tokens.ContainsKey(item) && _tokens[item].TokenType == TokenType.Operator;
         }
+
+        public bool IsPossibleLastPartOfMultipleCharOperator(string part)
+        {
+            return part == "=";
+        }
     }
 }

@@ -21,5 +21,17 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         {
             Value += stringToAppend;
         }
+
+        public void Negate()
+        {
+
+            if (
+                TokenType == TokenType.Decimal 
+                || 
+                TokenType == TokenType.Integer)
+            {
+                Value = "-" + Value;
+            }
+        }
     }
 }

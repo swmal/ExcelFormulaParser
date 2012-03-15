@@ -55,12 +55,14 @@
     <Compile Include="IntegrationTests\BuiltInFunctions\StringFunctionsTests.cs" />
     <Compile Include="IntegrationTests\FormulaParserTestBase.cs" />
     <Compile Include="IntegrationTests\PrecedenceTests.cs" />
+    <Compile Include="LexicalAnalysis\NegationTests.cs" />
     <Compile Include="LexicalAnalysis\SourceCodeTokenizerTests.cs" />
     <Compile Include="LexicalAnalysis\TokenFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\BasicCalcTests.cs" />
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />
     <Compile Include="VBA\Functions\LogicalFunctionsTests.cs" />
+    <Compile Include="VBA\Functions\MathFunctionsTests.cs" />
     <Compile Include="VBA\Functions\NumberFunctionsTests.cs" />
     <Compile Include="VBA\Functions\TextFunctionsTests.cs" />
     <Compile Include="VBA\OperatorsTests.cs" />

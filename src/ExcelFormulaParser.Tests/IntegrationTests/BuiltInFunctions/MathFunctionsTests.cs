@@ -29,5 +29,21 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("sqrt(9)");
             Assert.AreEqual(3m, result);
         }
+
+        [TestMethod]
+        public void PiShouldReturnCorrectResult()
+        {
+            var expectedValue = (decimal)Math.Round(Math.PI, 14);
+            var result = _parser.Parse("Pi()");
+            Assert.AreEqual(expectedValue, result);
+        }
+
+        [TestMethod]
+        public void CeilingShouldReturnCorrectResult()
+        {
+            var expectedValue = 22.4m;
+            var result = _parser.Parse("ceiling(22.35, 0.1)");
+            Assert.AreEqual(expectedValue, result);
+        }
     }
 }

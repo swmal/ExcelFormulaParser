@@ -87,6 +87,8 @@
     <Compile Include="VBA\Functions\Logical\If.cs" />
     <Compile Include="VBA\Functions\Logical\Not.cs" />
     <Compile Include="VBA\Functions\Logical\Or.cs" />
+    <Compile Include="VBA\Functions\Math\Ceiling.cs" />
+    <Compile Include="VBA\Functions\Math\Pi.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
     <Compile Include="VBA\Functions\Math\Sqrt.cs" />
     <Compile Include="VBA\Functions\Numeric\CInt.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="VBA\Functions\Text\Mid.cs" />
     <Compile Include="VBA\Functions\Text\Replace.cs" />
     <Compile Include="VBA\Functions\Text\Right.cs" />
+    <Compile Include="VBA\Functions\Text\Substitute.cs" />
     <Compile Include="VBA\Functions\Text\Upper.cs" />
     <Compile Include="VBA\IVBAModule.cs" />
     <Compile Include="VBA\VBAFunction.cs" />

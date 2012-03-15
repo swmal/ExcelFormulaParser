@@ -12,6 +12,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         private readonly ExpressionGraph _graph = new ExpressionGraph();
         private readonly IExpressionFactory _expressionFactory;
         private int _tokenIndex = 0;
+        private bool _negateNextExpression;
 
         public ExpressionGraphBuilder()
             : this(new ExpressionFactory())
@@ -38,7 +39,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 var token = tokens.ElementAt(_tokenIndex);
                 IOperator op = null;
-                if (OperatorsDict.Instance.TryGetValue(token.Value, out op))
+                if (token.TokenType == TokenType.Operator && OperatorsDict.Instance.TryGetValue(token.Value, out op))
                 {
                     SetOperatorOnExpression(parent, op);
                 }
@@ -60,6 +61,10 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 {
                     break;
                 }
+                else if (token.TokenType == TokenType.Negator)
+                {
+                    _negateNextExpression = true;
+                }
                 else
                 {
                     CreateAndAppendExpression(parent, token);
@@ -75,6 +80,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 parent.AddChild(new GroupExpression());
                 return;
+            }
+            if (_negateNextExpression)
+            {
+                token.Negate();
+                _negateNextExpression = false;
             }
             var expression = _expressionFactory.Create(token);
             if (parent == null)

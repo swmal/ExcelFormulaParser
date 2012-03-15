@@ -22,11 +22,14 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["right"] = new Right();
             _functions["mid"] = new Mid();
             _functions["replace"] = new Replace();
+            _functions["substitute"] = new Substitute();
             // Numbers
             _functions["cint"] = new CInt();
             // Math
             _functions["power"] = new Power();
             _functions["sqrt"] = new Sqrt();
+            _functions["pi"] = new Pi();
+            _functions["ceiling"] = new Ceiling();
             // Logical
             _functions["if"] = new If();
             _functions["not"] = new Not();

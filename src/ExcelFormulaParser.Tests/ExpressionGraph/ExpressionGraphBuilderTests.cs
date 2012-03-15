@@ -188,5 +188,20 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             Assert.AreEqual(2, result.Expressions.First().Children.Count());
         }
+
+        [TestMethod]
+        public void BuildShouldCreateASingleExpressionOutOfANegatorAndANumericToken()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("-", TokenType.Negator),
+                new Token("2", TokenType.Integer),
+            };
+
+            var result = _graphBuilder.Build(tokens);
+
+            Assert.AreEqual(1, result.Expressions.Count());
+            Assert.AreEqual(-2, result.Expressions.First().Compile().Result);
+        }
     }
 }

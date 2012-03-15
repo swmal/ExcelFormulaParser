@@ -84,5 +84,13 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
             var result = func.Execute(new object[] { "testar", 3, 3, "hej" });
             Assert.AreEqual("tehejr", result.Result);
         }
+
+        [TestMethod]
+        public void SubstituteShouldReturnAReplacedStringAccordingToParamsWhen()
+        {
+            var func = new Substitute();
+            var result = func.Execute(new object[] { "testar testar", "es", "xx" });
+            Assert.AreEqual("txxtar txxtar", result.Result);
+        }
     }
 }

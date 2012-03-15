@@ -78,5 +78,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Replace('testar', 3, 3, 'hej')");
             Assert.AreEqual("tehejr", result);
         }
+
+        [TestMethod]
+        public void SubstituteShouldReturnSubstringAccordingToParams()
+        {
+            var result = _parser.Parse("Substitute('testar testar', 'es', 'xx')");
+            Assert.AreEqual("txxtar txxtar", result);
+        }
     }
 }

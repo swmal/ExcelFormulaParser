@@ -11,5 +11,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 
         bool IsOperator(string item);
 
+        bool IsPossibleLastPartOfMultipleCharOperator(string part);
+
     }
 }
