@@ -11,6 +11,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         Decimal,
         String,
         Boolean,
-        Date
+        Date,
+        Time
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
 {
@@ -56,6 +57,35 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         {
             var result = _parser.Parse("Year(Date(2012, 2, 2))");
             Assert.AreEqual(2012, result);
+        }
+
+        [TestMethod]
+        public void TimeShouldReturnCorrectResult()
+        {
+            var expectedResult = ((double)(12 * 60 * 60 + 13 * 60 + 14))/((double)(24 * 60 * 60));
+            var result = _parser.Parse("Time(12, 13, 14)");
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void HourShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("HOUR(Time(12, 13, 14))");
+            Assert.AreEqual(12, result);
+        }
+
+        [TestMethod]
+        public void MinuteShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("minute(Time(12, 13, 14))");
+            Assert.AreEqual(13, result);
+        }
+
+        [TestMethod]
+        public void SecondShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("Second(Time(12, 13, 59))");
+            Assert.AreEqual(59, result);
         }
     }
 }

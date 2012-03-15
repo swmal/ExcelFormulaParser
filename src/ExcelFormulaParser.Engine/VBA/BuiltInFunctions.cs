@@ -43,6 +43,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["day"] = new Day();
             _functions["month"] = new Month();
             _functions["year"] = new Year();
+            _functions["time"] = new Time();
+            _functions["hour"] = new Hour();
+            _functions["minute"] = new Minute();
+            _functions["second"] = new Second();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

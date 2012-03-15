@@ -77,5 +77,19 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             }
             return result;
         }
+
+        protected void ThrowArgumentExceptionIf(Func<bool> condition, string message)
+        {
+            if (condition())
+            {
+                throw new ArgumentException(message);
+            }
+        }
+
+        protected void ThrowArgumentExceptionIf(Func<bool> condition, string message, params string[] formats)
+        {
+            message = string.Format(message, formats);
+            ThrowArgumentExceptionIf(condition, message);
+        }
     }
 }

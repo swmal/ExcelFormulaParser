@@ -12,6 +12,12 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
     [TestClass]
     public class DateTimeFunctionsTests
     {
+        private double GetTime(int hour, int minute, int second)
+        {
+            var secInADay = DateTime.Today.AddDays(1).Subtract(DateTime.Today).TotalSeconds;
+            var secondsOfExample = (double)(hour * 60 * 60 + minute * 60 + second);
+            return secondsOfExample / secInADay;
+        }
         [TestMethod]
         public void DateFunctionShouldReturnADate()
         {
@@ -90,6 +96,66 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var func = new Year();
             var result = func.Execute(new object[] { date.ToOADate() });
             Assert.AreEqual(2012, result.Result);
+        }
+
+        [TestMethod]
+        public void TimeShouldReturnACorrectSerialNumber()
+        {
+            var expectedResult = GetTime(10, 11, 12);
+            var func = new Time();
+            var result = func.Execute(new object[] { 10, 11, 12 });
+            Assert.AreEqual(expectedResult, result.Result);  
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void TimeShouldThrowExceptionIfSecondsIsOutOfRange()
+        {
+            var func = new Time();
+            var result = func.Execute(new object[] { 10, 11, 60 });
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void TimeShouldThrowExceptionIfMinuteIsOutOfRange()
+        {
+            var func = new Time();
+            var result = func.Execute(new object[] { 10, 60, 12 });
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void TimeShouldThrowExceptionIfHourIsOutOfRange()
+        {
+            var func = new Time();
+            var result = func.Execute(new object[] { 24, 12, 12 });
+        }
+
+        [TestMethod]
+        public void HourShouldReturnCorrectResult()
+        {
+            var func = new Hour();
+            var result = func.Execute(new object[] { GetTime(9, 13, 14) });
+            Assert.AreEqual(9, result.Result);
+
+            result = func.Execute(new object[] { GetTime(23, 13, 14) });
+            Assert.AreEqual(23, result.Result);
+        }
+
+        [TestMethod]
+        public void MinuteShouldReturnCorrectResult()
+        {
+            var func = new Minute();
+            var result = func.Execute(new object[] { GetTime(9, 14, 14) });
+            Assert.AreEqual(14, result.Result);
+
+            result = func.Execute(new object[] { GetTime(9, 55, 14) });
+            Assert.AreEqual(55, result.Result);
+        }
+
+        [TestMethod]
+        public void SecondShouldReturnCorrectResult()
+        {
+            var func = new Second();
+            var result = func.Execute(new object[] { GetTime(9, 14, 17) });
+            Assert.AreEqual(17, result.Result);
         }
     }
 }
