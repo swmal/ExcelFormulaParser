@@ -85,7 +85,11 @@
     <Compile Include="VBA\BuiltInFunctions.cs" />
     <Compile Include="VBA\FunctionRepository.cs" />
     <Compile Include="VBA\Functions\DateTime\Date.cs" />
+    <Compile Include="VBA\Functions\DateTime\Day.cs" />
+    <Compile Include="VBA\Functions\DateTime\Month.cs" />
+    <Compile Include="VBA\Functions\DateTime\Now.cs" />
     <Compile Include="VBA\Functions\DateTime\Today.cs" />
+    <Compile Include="VBA\Functions\DateTime\Year.cs" />
     <Compile Include="VBA\Functions\Logical\And.cs" />
     <Compile Include="VBA\Functions\Logical\If.cs" />
     <Compile Include="VBA\Functions\Logical\Not.cs" />

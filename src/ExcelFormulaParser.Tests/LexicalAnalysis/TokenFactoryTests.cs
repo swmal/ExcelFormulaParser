@@ -110,10 +110,10 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         [TestMethod]
         public void CreateShouldReadFunctionsFromFuncRepository()
         {
-            var input = "CStr";
+            var input = "Text";
             var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
             Assert.AreEqual(TokenType.Function, token.TokenType);
-            Assert.AreEqual("CStr", token.Value);
+            Assert.AreEqual("Text", token.Value);
         }
     }
 }

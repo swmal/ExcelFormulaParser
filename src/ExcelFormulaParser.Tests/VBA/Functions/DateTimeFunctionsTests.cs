@@ -42,17 +42,54 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         }
 
         [TestMethod]
-        public void TodayFunctionShouldReturnToday()
+        public void NowFunctionShouldReturnNow()
         {
             var startTime = DateTime.Now;
             Thread.Sleep(1);
-            var func = new Today();
+            var func = new Now();
             var args = new object[0];
             var result = func.Execute(args);
             Thread.Sleep(1);
             var endTime = DateTime.Now;
             var resultDate = DateTime.FromOADate((double)result.Result);
             Assert.IsTrue(resultDate > startTime && resultDate < endTime);
+        }
+
+        [TestMethod]
+        public void TodayFunctionShouldReturnTodaysDate()
+        {
+            var func = new Today();
+            var args = new object[0];
+            var result = func.Execute(args);
+            var resultDate = DateTime.FromOADate((double)result.Result);
+            Assert.AreEqual(DateTime.Now.Date, resultDate);
+        }
+
+        [TestMethod]
+        public void DayShouldReturnDayInMonth()
+        {
+            var date = new DateTime(2012, 3, 12);
+            var func = new Day();
+            var result = func.Execute(new object[] { date.ToOADate() });
+            Assert.AreEqual(12, result.Result);
+        }
+
+        [TestMethod]
+        public void MonthShouldReturnMonthOfYear()
+        {
+            var date = new DateTime(2012, 3, 12);
+            var func = new Month();
+            var result = func.Execute(new object[] { date.ToOADate() });
+            Assert.AreEqual(3, result.Result);
+        }
+
+        [TestMethod]
+        public void YearShouldReturnCorrectYear()
+        {
+            var date = new DateTime(2012, 3, 12);
+            var func = new Year();
+            var result = func.Execute(new object[] { date.ToOADate() });
+            Assert.AreEqual(2012, result.Result);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
         {
             _functions = new Dictionary<string, VBAFunction>();
             // Text
-            _functions["cstr"] = new CStr();
+            _functions["text"] = new CStr();
             _functions["len"] = new Len();
             _functions["lower"] = new Lower();
             _functions["upper"] = new Upper();
@@ -38,6 +38,11 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["or"] = new Or();
             // Date
             _functions["date"] = new Date();
+            _functions["today"] = new Today();
+            _functions["now"] = new Now();
+            _functions["day"] = new Day();
+            _functions["month"] = new Month();
+            _functions["year"] = new Year();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

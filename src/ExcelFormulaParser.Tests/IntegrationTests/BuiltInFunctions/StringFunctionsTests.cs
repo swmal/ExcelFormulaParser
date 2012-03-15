@@ -17,16 +17,16 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         }
 
         [TestMethod]
-        public void CstrShouldReturnString()
+        public void TextShouldReturnString()
         {
-            var result = _parser.Parse("Cstr(2)");
+            var result = _parser.Parse("Text(2)");
             Assert.AreEqual("2", result);
         }
 
         [TestMethod]
-        public void CstrShouldConcatenateWithNextExpression()
+        public void TextShouldConcatenateWithNextExpression()
         {
-            var result = _parser.Parse("Cstr(2) & 'a'");
+            var result = _parser.Parse("Text(2) & 'a'");
             Assert.AreEqual("2a", result);
         }
 

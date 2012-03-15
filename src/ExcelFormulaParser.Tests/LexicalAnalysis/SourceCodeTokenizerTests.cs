@@ -63,7 +63,7 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         [TestMethod]
         public void ShouldCreateTokensForFunctionCorrectly()
         {
-            var input = "CStr(2)";
+            var input = "Text(2)";
             var tokens = _tokenizer.Tokenize(input);
 
             Assert.AreEqual(4, tokens.Count());

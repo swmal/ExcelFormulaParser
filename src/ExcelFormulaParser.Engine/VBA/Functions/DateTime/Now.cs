@@ -6,11 +6,11 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
-    public class Today : VBAFunction
+    public class Now : VBAFunction
     {
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
-            return new CompileResult(System.DateTime.Today.ToOADate(), DataType.Date);
+            return new CompileResult(System.DateTime.Now.ToOADate(), DataType.Date);
         }
     }
 }
