@@ -16,5 +16,10 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         public string Value { get; private set; }
 
         public TokenType TokenType { get; private set; }
+
+        public void Append(string stringToAppend)
+        {
+            Value += stringToAppend;
+        }
     }
 }

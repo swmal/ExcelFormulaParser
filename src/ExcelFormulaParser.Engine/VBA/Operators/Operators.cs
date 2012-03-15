@@ -15,6 +15,8 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
         Divide,
         Modulus,
         GreaterThan,
-        LessThan
+        GreaterThanOrEqual,
+        LessThan,
+        LessThanOrEqual
     }
 }

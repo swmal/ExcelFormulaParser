@@ -9,5 +9,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
     {
         IDictionary<string, Token> Tokens { get; }
 
+        bool IsOperator(string item);
+
     }
 }

@@ -38,6 +38,14 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                         context.AppendToCurrentToken(c);
                         continue;
                     }
+                    // two operators in sequence could be "<=" or ">="
+                    var lastToken = context.LastToken != null ? context.LastToken.Value : string.Empty;
+                    if (_tokenProvider.IsOperator(lastToken) && _tokenProvider.IsOperator(c.ToString()) && !context.CurrentTokenHasValue)
+                    {
+                        context.AppendToLastToken(c.ToString());
+                        context.NewToken();
+                        continue;
+                    }
                     if (tokenSeparator.TokenType == TokenType.String)
                     {
                         context.ToggleIsInString();

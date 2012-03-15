@@ -73,5 +73,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             Assert.AreEqual("2", tokens.ElementAt(2).Value);
             Assert.AreEqual(TokenType.ClosingBracket, tokens.Last().TokenType);
         }
+
+        [TestMethod]
+        public void ShouldHandleMultipleCharOperatorCorrectly()
+        {
+            var input = "1 <= 2";
+            var tokens = _tokenizer.Tokenize(input);
+
+            Assert.AreEqual(3, tokens.Count());
+            Assert.AreEqual("<=", tokens.ElementAt(1).Value);
+            Assert.AreEqual(TokenType.Operator, tokens.ElementAt(1).TokenType);
+        }
     }
 }

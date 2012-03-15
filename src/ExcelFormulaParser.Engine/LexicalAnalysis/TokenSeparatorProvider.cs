@@ -26,6 +26,9 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             _tokens.Add("&", new Token("&", TokenType.Operator));
             _tokens.Add(">", new Token(">", TokenType.Operator));
             _tokens.Add("<", new Token("<", TokenType.Operator));
+            _tokens.Add("=", new Token("=", TokenType.Operator));
+            _tokens.Add("<=", new Token("<=", TokenType.Operator));
+            _tokens.Add(">=", new Token(">=", TokenType.Operator));
             _tokens.Add("(", new Token("(", TokenType.OpeningBracket));
             _tokens.Add(")", new Token(")", TokenType.ClosingBracket));
             _tokens.Add("'", new Token("'", TokenType.String));
@@ -38,6 +41,11 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         IDictionary<string, Token> ITokenSeparatorProvider.Tokens
         {
             get { return _tokens; }
+        }
+
+        public bool IsOperator(string item)
+        {
+            return _tokens.ContainsKey(item) && _tokens[item].TokenType == TokenType.Operator;
         }
     }
 }

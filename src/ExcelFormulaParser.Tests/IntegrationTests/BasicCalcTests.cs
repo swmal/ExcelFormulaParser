@@ -70,5 +70,33 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             var result = _parser.Parse("3 < 2");
             Assert.IsFalse((bool)result);
         }
+
+        [TestMethod]
+        public void ThreeLessThanOrEqualToThreeShouldBeTrue()
+        {
+            var result = _parser.Parse("3 <= 3");
+            Assert.IsTrue((bool)result);
+        }
+
+        [TestMethod]
+        public void ThreeLessThanOrEqualToTwoShouldBeFalse()
+        {
+            var result = _parser.Parse("3 <= 2");
+            Assert.IsFalse((bool)result);
+        }
+
+        [TestMethod]
+        public void ThreeGreaterThanOrEqualToThreeShouldBeTrue()
+        {
+            var result = _parser.Parse("3 >= 3");
+            Assert.IsTrue((bool)result);
+        }
+
+        [TestMethod]
+        public void TwoGreaterThanOrEqualToThreeShouldBeFalse()
+        {
+            var result = _parser.Parse("2 >= 3");
+            Assert.IsFalse((bool)result);
+        }
     }
 }

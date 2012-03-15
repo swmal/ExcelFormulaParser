@@ -66,5 +66,16 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         {
             _currentToken.Append(c.ToString());
         }
+
+        public void AppendToLastToken(string stringToAppend)
+        {
+            _result.Last().Append(stringToAppend);
+        }
+
+        public Token LastToken
+        {
+            get { return _result.Count > 0 ? _result.Last() : null; }
+        }
+
     }
 }

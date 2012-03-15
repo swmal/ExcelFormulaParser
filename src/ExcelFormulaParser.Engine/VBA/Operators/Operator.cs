@@ -182,6 +182,29 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
             }
         }
 
+        public static IOperator GreaterThanOrEqual
+        {
+            get
+            {
+                return new Operator(Operators.GreaterThanOrEqual, PrecedenceComparison, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) >= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((decimal)l.Result) >= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((decimal)l.Result) >= ((decimal)r.Result), DataType.Boolean);
+                    }
+                    return new CompileResult(false, DataType.Boolean);
+                });
+            }
+        }
+
         public static IOperator LessThan
         {
             get
@@ -202,6 +225,29 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                         }
                         return new CompileResult(false, DataType.Boolean);
                     });
+            }
+        }
+
+        public static IOperator LessThanOrEqual
+        {
+            get
+            {
+                return new Operator(Operators.LessThanOrEqual, PrecedenceComparison, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) <= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((decimal)l.Result) <= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((decimal)l.Result) <= ((decimal)r.Result), DataType.Boolean);
+                    }
+                    return new CompileResult(false, DataType.Boolean);
+                });
             }
         }
     }
