@@ -14,6 +14,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
             Add("*", Operator.Multiply);
             Add("/", Operator.Divide);
             Add(">", Operator.GreaterThan);
+            Add("<", Operator.LessThan);
             Add("&", Operator.Concat);
             Add("mod", Operator.Modulus);
         }
