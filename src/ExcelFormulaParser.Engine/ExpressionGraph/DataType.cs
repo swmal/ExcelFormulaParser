@@ -9,6 +9,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     {
         Integer,
         Decimal,
-        String
+        String,
+        Boolean
     }
 }

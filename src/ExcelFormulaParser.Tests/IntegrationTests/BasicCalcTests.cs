@@ -56,5 +56,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
             var result = _parser.Parse("2.5 * 1.5");
             Assert.AreEqual(3.75m, result);
         }
+
+        [TestMethod]
+        public void ThreeGreaterThanTwoShouldBeTrue()
+        {
+            var result = _parser.Parse("3 > 2");
+            Assert.IsTrue((bool)result);
+        }
     }
 }

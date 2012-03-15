@@ -37,7 +37,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             {
                 token = token.Trim();
             }
-            if (Regex.IsMatch(token, @"^[0-9]+\.[0-9]+"))
+            if (Regex.IsMatch(token, @"^[0-9]+\.[0-9]+$"))
             {
                 return new Token(token, TokenType.Decimal);
             }

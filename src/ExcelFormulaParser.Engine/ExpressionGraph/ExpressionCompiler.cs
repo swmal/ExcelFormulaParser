@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.VBA.Operators;
+using ExcelFormulaParser.Engine.ExpressionGraph.CompileStrategy;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
@@ -10,16 +11,18 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     {
         private IEnumerable<Expression> _expressions;
         private IExpressionConverter _expressionConverter;
+        private ICompileStrategyFactory _compileStrategyFactory;
 
         public ExpressionCompiler()
-            : this(new ExpressionConverter())
+            : this(new ExpressionConverter(), new CompileStrategyFactory())
         {
 
         }
 
-        public ExpressionCompiler(IExpressionConverter expressionConverter)
+        public ExpressionCompiler(IExpressionConverter expressionConverter, ICompileStrategyFactory compileStrategyFactory)
         {
             _expressionConverter = expressionConverter;
+            _compileStrategyFactory = compileStrategyFactory;
         }
 
         public CompileResult Compile(IEnumerable<Expression> expressions)
@@ -68,32 +71,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             var expressionsToHandle = _expressions.Where(x => x.Operator != null && x.Operator.Precedence == precedence);
             foreach (var expression in expressionsToHandle)
             {
-                if (expression.Operator.Operator == Operators.Concat)
+                var isFirst = (expression == first);
+                var strategy = _compileStrategyFactory.Create(expression);
+                var compiledExpression = strategy.Compile();
+                if (expression == first)
                 {
-                    var newExp = _expressionConverter.ToStringExpression(expression);
-                    newExp.Prev = expression.Prev;
-                    newExp.Next = expression.Next;
-                    if (expression.Prev != null)
-                    {
-                        expression.Prev.Next = newExp;
-                    }
-                    if (expression.Next != null)
-                    {
-                        expression.Next.Prev = newExp;
-                    }
-                    newExp.MergeWithNext();
-                    if (expression == first)
-                    {
-                        first = newExp;
-                    }
-                }
-                else
-                {
-                    var mergedExp = expression.MergeWithNext();
-                    if (expression == first)
-                    {
-                        first = mergedExp;
-                    }
+                    first = compiledExpression;
                 }
             }
             return RefreshList(first);

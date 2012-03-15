@@ -13,6 +13,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
         private const int PrecedenceModulus = 5;
         private const int PrecedenceAddSubtract = 10;
         private const int PrecedenceConcat = 15;
+        private const int PrecedenceComparison = 25;
 
         private Operator() { }
 
@@ -155,6 +156,29 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
                 {
                     return new CompileResult((int)l.Result % (int)r.Result, DataType.Integer); ;
                 });
+            }
+        }
+
+        public static IOperator GreaterThan
+        {
+            get
+            {
+                return new Operator(Operators.GreaterThan, PrecedenceComparison, (l, r) =>
+                    {
+                        if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                        {
+                            return new CompileResult(((int)l.Result) > ((int)r.Result), DataType.Boolean);
+                        }
+                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                        {
+                            return new CompileResult(((decimal)l.Result) > ((int)r.Result), DataType.Boolean);
+                        }
+                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                        {
+                            return new CompileResult(((decimal)l.Result) > ((decimal)r.Result), DataType.Boolean);
+                        }
+                        return new CompileResult(false, DataType.Boolean);
+                    });
             }
         }
     }

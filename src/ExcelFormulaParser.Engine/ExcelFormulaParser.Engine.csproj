@@ -41,7 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionGraph\AtomicExpression.cs" />
+    <Compile Include="ExpressionGraph\BooleanExpression.cs" />
     <Compile Include="ExpressionGraph\CompileResult.cs" />
+    <Compile Include="ExpressionGraph\CompileStrategy\CompileStrategy.cs" />
+    <Compile Include="ExpressionGraph\CompileStrategy\CompileStrategyFactory.cs" />
+    <Compile Include="ExpressionGraph\CompileStrategy\DefaultCompileStrategy.cs" />
+    <Compile Include="ExpressionGraph\CompileStrategy\ICompileStrategyFactory.cs" />
+    <Compile Include="ExpressionGraph\CompileStrategy\StringConcatStrategy.cs" />
     <Compile Include="ExpressionGraph\DataType.cs" />
     <Compile Include="ExpressionGraph\DecimalExpression.cs" />
     <Compile Include="ExpressionGraph\Expression.cs" />

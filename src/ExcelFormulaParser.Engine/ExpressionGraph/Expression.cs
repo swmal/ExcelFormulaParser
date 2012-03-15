@@ -38,23 +38,49 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             _children.Add(child);
         }
 
+        //public virtual Expression MergeWithNext()
+        //{
+        //    if (Next != null && Operator != null)
+        //    {
+        //        var result = Operator.Apply(Compile(), Next.Compile());
+        //        ExpressionString = result.Result.ToString();
+        //        if (Next != null)
+        //        {
+        //            Operator = Next.Operator;
+        //        }
+        //        else
+        //        {
+        //            Operator = null;
+        //        }
+        //        Next = Next.Next;
+        //    }
+        //    return this;
+        //}
+
         public virtual Expression MergeWithNext()
         {
+            var expression = this;
             if (Next != null && Operator != null)
             {
                 var result = Operator.Apply(Compile(), Next.Compile());
-                ExpressionString = result.Result.ToString();
+                expression = ExpressionConverter.Instance.FromCompileResult(result);
                 if (Next != null)
                 {
-                    Operator = Next.Operator;
+                    expression.Operator = Next.Operator;
                 }
                 else
                 {
-                    Operator = null;
+                    expression.Operator = null;
                 }
-                Next = Next.Next;
+                expression.Next = Next.Next;
+                if (expression.Next != null) expression.Next.Prev = expression;
+                expression.Prev = Prev;
             }
-            return this;
+            if (Prev != null)
+            {
+                Prev.Next = expression;
+            }
+            return expression;
         }
 
         public abstract CompileResult Compile();

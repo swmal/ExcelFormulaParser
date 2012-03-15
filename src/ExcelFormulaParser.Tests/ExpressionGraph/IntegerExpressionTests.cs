@@ -19,9 +19,9 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var exp2 = new IntegerExpression("2");
             exp1.Next = exp2;
 
-            exp1.MergeWithNext();
+            var result = exp1.MergeWithNext();
 
-            Assert.AreEqual(3, exp1.Compile().Result);
+            Assert.AreEqual(3, result.Compile().Result);
         }
 
         [TestMethod]
@@ -32,9 +32,9 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var exp2 = new IntegerExpression("2");
             exp1.Next = exp2;
 
-            exp1.MergeWithNext();
+            var result = exp1.MergeWithNext();
 
-            Assert.IsNull(exp1.Next);
+            Assert.IsNull(result.Next);
         }
     }
 }

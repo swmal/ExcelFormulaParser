@@ -13,6 +13,7 @@ namespace ExcelFormulaParser.Engine.VBA.Operators
         Minus,
         Multiply,
         Divide,
-        Modulus
+        Modulus,
+        GreaterThan
     }
 }

@@ -72,5 +72,14 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             Assert.IsInstanceOfType(result, typeof(DecimalExpression));
             Assert.AreEqual(2.5m, result.Compile().Result);
         }
+
+        [TestMethod]
+        public void FromCompileResultShouldCreateBooleanExpressionIfCompileResultIsBoolean()
+        {
+            var compileResult = new CompileResult("true", DataType.Boolean);
+            var result = _converter.FromCompileResult(compileResult);
+            Assert.IsInstanceOfType(result, typeof(BooleanExpression));
+            Assert.IsTrue((bool)result.Compile().Result);
+        }
     }
 }

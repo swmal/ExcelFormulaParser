@@ -25,8 +25,23 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                     return new StringExpression(compileResult.Result.ToString());
                 case DataType.Decimal:
                     return new DecimalExpression(compileResult.Result.ToString());
+                case DataType.Boolean:
+                    return new BooleanExpression(compileResult.Result.ToString());
             }
             return null;
+        }
+
+        private static IExpressionConverter _instance;
+        public static IExpressionConverter Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ExpressionConverter();
+                }
+                return _instance;
+            }
         }
     }
 }
