@@ -81,7 +81,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         }
 
         [TestMethod]
-        public void MonthShouldReturnMonthOfYearWithStringParam()
+        public void DayShouldReturnMonthOfYearWithStringParam()
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Day();

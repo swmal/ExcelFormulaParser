@@ -79,5 +79,23 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.AreEqual(expectedValue, result.Result);
         }
+
+        [TestMethod]
+        public void SumShouldCalculate2Plus3AndReturn5()
+        {
+            var func = new Sum();
+            var args = new object[] { 2, 3 };
+            var result = func.Execute(args);
+            Assert.AreEqual(5d, result.Result);
+        }
+
+        [TestMethod]
+        public void SumShouldCalculateEnumerableOf2Plus5Plus3AndReturn10()
+        {
+            var func = new Sum();
+            var args = new object[] { new object[]{2, 5}, 3 };
+            var result = func.Execute(args);
+            Assert.AreEqual(10d, result.Result);
+        }
     }
 }

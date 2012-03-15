@@ -12,6 +12,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         String,
         Boolean,
         Date,
-        Time
+        Time,
+        Enumerable
     }
 }

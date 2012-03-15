@@ -48,6 +48,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                     _tokenIndex++;
                     BuildFunctionExpression(tokens, parent, token.Value);
                 }
+                else if (token.TokenType == TokenType.OpeningEnumerable)
+                {
+                    _tokenIndex++;
+                    BuildEnumerableExpression(tokens, parent);
+                }
                 else if (token.TokenType == TokenType.OpeningBracket)
                 {
                     _tokenIndex++;
@@ -57,7 +62,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                         return;
                     }
                 }
-                else if (token.TokenType == TokenType.ClosingBracket)
+                else if (token.TokenType == TokenType.ClosingBracket || token.TokenType == TokenType.ClosingEnumerable)
                 {
                     break;
                 }
@@ -73,12 +78,30 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             }
         }
 
+        private void BuildEnumerableExpression(IEnumerable<Token> tokens, Expression parent)
+        {
+            if (parent == null)
+            {
+                _graph.Add(new EnumerableExpression());
+                BuildUp(tokens, _graph.Current);
+            }
+            else
+            {
+                var enumerableExpression = new EnumerableExpression();
+                parent.AddChild(enumerableExpression);
+                BuildUp(tokens, enumerableExpression);
+            }
+        }
+
         private void CreateAndAppendExpression(Expression parent, Token token)
         {
             if (IsWaste(token)) return;
             if (parent != null && token.TokenType == TokenType.Comma)
             {
-                parent.AddChild(new GroupExpression());
+                if (parent.GetType() != typeof(EnumerableExpression))
+                {
+                    parent.AddChild(new GroupExpression());
+                }
                 return;
             }
             if (_negateNextExpression)

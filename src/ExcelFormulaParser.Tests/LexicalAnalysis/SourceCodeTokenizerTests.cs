@@ -84,5 +84,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             Assert.AreEqual("<=", tokens.ElementAt(1).Value);
             Assert.AreEqual(TokenType.Operator, tokens.ElementAt(1).TokenType);
         }
+
+        [TestMethod]
+        public void ShouldCreateTokensForEnumerableCorrectly()
+        {
+            var input = "Text({1,2})";
+            var tokens = _tokenizer.Tokenize(input);
+
+            Assert.AreEqual(8, tokens.Count());
+            Assert.AreEqual(TokenType.OpeningEnumerable, tokens.ElementAt(2).TokenType);
+            Assert.AreEqual(TokenType.ClosingEnumerable, tokens.ElementAt(6).TokenType);
+        }
     }
 }

@@ -174,7 +174,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         {
             var tokens = new List<Token>
             {
-                new Token("CStr", TokenType.Function),
+                new Token("Text", TokenType.Function),
                 new Token("(", TokenType.OpeningBracket),
                 new Token("2", TokenType.Integer),
                 new Token(",", TokenType.Comma),
@@ -202,6 +202,28 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             Assert.AreEqual(1, result.Expressions.Count());
             Assert.AreEqual(-2, result.Expressions.First().Compile().Result);
+        }
+
+        [TestMethod]
+        public void BuildShouldHandleEnumerableTokens()
+        {
+            var tokens = new List<Token>
+            {
+                new Token("Text", TokenType.Function),
+                new Token("(", TokenType.OpeningBracket),
+                new Token("{", TokenType.OpeningEnumerable),
+                new Token("2", TokenType.Integer),
+                new Token(",", TokenType.Comma),
+                new Token("3", TokenType.Integer),
+                new Token("}", TokenType.ClosingEnumerable),
+                new Token(")", TokenType.ClosingBracket)
+            };
+
+            var result = _graphBuilder.Build(tokens);
+
+            var enumerableExpression = result.Expressions.First().Children.First();
+            Assert.IsInstanceOfType(enumerableExpression, typeof(EnumerableExpression));
+            Assert.AreEqual(2, enumerableExpression.Children.Count(), "Enumerable.Count was not 2");
         }
     }
 }

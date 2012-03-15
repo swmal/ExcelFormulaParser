@@ -31,6 +31,8 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             _tokens.Add(">=", new Token(">=", TokenType.Operator));
             _tokens.Add("(", new Token("(", TokenType.OpeningBracket));
             _tokens.Add(")", new Token(")", TokenType.ClosingBracket));
+            _tokens.Add("{", new Token("{", TokenType.OpeningEnumerable));
+            _tokens.Add("}", new Token("}", TokenType.ClosingEnumerable));
             _tokens.Add("'", new Token("'", TokenType.String));
             _tokens.Add("\"", new Token("\"", TokenType.String));
             _tokens.Add(",", new Token(",", TokenType.Comma));

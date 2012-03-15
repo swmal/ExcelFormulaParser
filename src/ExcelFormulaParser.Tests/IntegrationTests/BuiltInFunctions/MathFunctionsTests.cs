@@ -45,5 +45,26 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("ceiling(22.35, 0.1)");
             Assert.AreEqual(expectedValue, result);
         }
+
+        [TestMethod]
+        public void SumShouldReturnCorrectResultWithInts()
+        {
+            var result = _parser.Parse("sum(1, 2)");
+            Assert.AreEqual(3d, result);
+        }
+
+        [TestMethod]
+        public void SumShouldReturnCorrectResultWithDecimals()
+        {
+            var result = _parser.Parse("sum(1,2.5)");
+            Assert.AreEqual(3.5d, result);
+        }
+
+        [TestMethod]
+        public void SumShouldReturnCorrectResultWithEnumerable()
+        {
+            var result = _parser.Parse("sum({1,2,3}, 2.5)");
+            Assert.AreEqual(8.5d, result);
+        }
     }
 }

@@ -50,6 +50,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionGraph\EnumerableExpressionTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionCompilerTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionConverterTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionFactoryTests.cs" />
