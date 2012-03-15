@@ -8,6 +8,14 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
     public class ExpressionFactory : IExpressionFactory
     {
+        private readonly ExcelDataProvider _excelDataProvider;
+
+        public ExpressionFactory(ExcelDataProvider excelDataProvider)
+        {
+            _excelDataProvider = excelDataProvider;
+        }
+
+
         public Expression Create(Token token)
         {
             switch (token.TokenType)
@@ -21,7 +29,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 case TokenType.Boolean:
                     return new BooleanExpression(token.Value);
                 case TokenType.ExcelAddress:
-                    return new ExcelRangeExpression(token.Value);
+                    return new ExcelAddressExpression(token.Value, _excelDataProvider);
                 default:
                     return new StringExpression(token.Value);
             }

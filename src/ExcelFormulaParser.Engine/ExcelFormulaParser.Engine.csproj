@@ -55,7 +55,7 @@
     <Compile Include="ExpressionGraph\DateExpression.cs" />
     <Compile Include="ExpressionGraph\DecimalExpression.cs" />
     <Compile Include="ExpressionGraph\EnumerableExpression.cs" />
-    <Compile Include="ExpressionGraph\ExcelRangeExpression.cs" />
+    <Compile Include="ExpressionGraph\ExcelAddressExpression.cs" />
     <Compile Include="ExpressionGraph\Expression.cs" />
     <Compile Include="ExpressionGraph\ExpressionCompiler.cs" />
     <Compile Include="ExpressionGraph\ExpressionConverter.cs" />
@@ -105,6 +105,9 @@
     <Compile Include="VBA\Functions\Logical\Not.cs" />
     <Compile Include="VBA\Functions\Logical\Or.cs" />
     <Compile Include="VBA\Functions\Math\Ceiling.cs" />
+    <Compile Include="VBA\Functions\Math\Exp.cs" />
+    <Compile Include="VBA\Functions\Math\Max.cs" />
+    <Compile Include="VBA\Functions\Math\Min.cs" />
     <Compile Include="VBA\Functions\Math\Pi.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
     <Compile Include="VBA\Functions\Math\Sqrt.cs" />

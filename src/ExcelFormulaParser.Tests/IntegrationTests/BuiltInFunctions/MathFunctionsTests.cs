@@ -35,7 +35,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         [TestMethod]
         public void PiShouldReturnCorrectResult()
         {
-            var expectedValue = (decimal)Math.Round(Math.PI, 14);
+            var expectedValue = (double)Math.Round(Math.PI, 14);
             var result = _parser.Parse("Pi()");
             Assert.AreEqual(expectedValue, result);
         }
@@ -43,7 +43,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         [TestMethod]
         public void CeilingShouldReturnCorrectResult()
         {
-            var expectedValue = 22.4m;
+            var expectedValue = 22.4d;
             var result = _parser.Parse("ceiling(22.35, 0.1)");
             Assert.AreEqual(expectedValue, result);
         }
@@ -67,6 +67,34 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         {
             var result = _parser.Parse("sum({1,2,3}, 2.5)");
             Assert.AreEqual(8.5d, result);
+        }
+
+        [TestMethod]
+        public void StdevShouldReturnAResult()
+        {
+            var result = _parser.Parse("stdev(1,2,3,4)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
+        public void ExpShouldReturnAResult()
+        {
+            var result = _parser.Parse("exp(4)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
+        public void MaxShouldReturnAResult()
+        {
+            var result = _parser.Parse("Max(4, 5)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
+        public void MinShouldReturnAResult()
+        {
+            var result = _parser.Parse("min(4, 5)");
+            Assert.IsInstanceOfType(result, typeof(double));
         }
     }
 }

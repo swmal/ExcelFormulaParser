@@ -32,9 +32,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             }
         }
 
-        private void ValidateNumberAndSign(decimal number, decimal sign)
+        private void ValidateNumberAndSign(double number, double sign)
         {
-            if (number > 0m && sign < 0)
+            if (number > 0d && sign < 0)
             {
                 var values = string.Format("num: {0}, sign: {1}", number, sign);
                 throw new InvalidOperationException("Ceiling cannot handle a negative significance when the number is positive" + values);

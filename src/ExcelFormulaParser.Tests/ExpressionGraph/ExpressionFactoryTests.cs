@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
+using Rhino.Mocks;
+using ExcelFormulaParser.Engine;
 
 namespace ExcelFormulaParser.Tests.ExpressionGraph
 {
@@ -16,7 +18,8 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         [TestInitialize]
         public void Setup()
         {
-            _factory = new ExpressionFactory();
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _factory = new ExpressionFactory(provider);
         }
 
         [TestMethod]
@@ -48,7 +51,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         {
             var token = new Token("A1", TokenType.ExcelAddress);
             var expression = _factory.Create(token);
-            Assert.IsInstanceOfType(expression, typeof(ExcelRangeExpression));
+            Assert.IsInstanceOfType(expression, typeof(ExcelAddressExpression));
         }
     }
 }

@@ -6,12 +6,13 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
-    public class Pi : VBAFunction
+    public class Min : VBAFunction
     {
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
-            var result = System.Math.Round((double)System.Math.PI, 14);
-            return CreateResult(result, DataType.Decimal);
+            ValidateArguments(arguments, 1);
+            var values = ArgsToDoubleEnumerable(arguments);
+            return CreateResult(values.Min(), DataType.Decimal);
         }
     }
 }

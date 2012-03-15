@@ -41,7 +41,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             return obj != null ? obj.ToString() : string.Empty;
         }
 
-        protected decimal ArgToDecimal(IEnumerable<object> arguments, int index)
+        protected double ArgToDecimal(IEnumerable<object> arguments, int index)
         {
             var obj = arguments.ElementAt(index);
             var str = obj != null ? obj.ToString() : string.Empty;
@@ -51,7 +51,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
                 
                 str = str.Replace('.', ',');
             }
-            return decimal.Parse(str);
+            return double.Parse(str);
         }
 
         /// <summary>
@@ -84,6 +84,26 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             {
                 throw new ArgumentException(message);
             }
+        }
+
+        protected bool IsNumeric(object val)
+        {
+            if (val == null) return false;
+            return val.GetType() == typeof(int) || val.GetType() == typeof(double) || val.GetType() == typeof(decimal);
+        }
+
+        protected IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<object> arguments)
+        {
+            var values = new List<double>();
+            for (var x = 0; x < arguments.Count(); x++)
+            {
+                var arg = arguments.ElementAt(x);
+                if(IsNumeric(arg))
+                {
+                    values.Add((double)ArgToDecimal(arguments, x));
+                }
+            }
+            return values;
         }
 
         protected void ThrowArgumentExceptionIf(Func<bool> condition, string message, params string[] formats)

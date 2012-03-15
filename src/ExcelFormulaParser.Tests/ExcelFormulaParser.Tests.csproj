@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionGraph\EnumerableExpressionTests.cs" />
+    <Compile Include="ExpressionGraph\ExcelAddressExpressionTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionCompilerTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionConverterTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionFactoryTests.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="IntegrationTests\BuiltInFunctions\LogicalFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\MathFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\StringFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\ExcelDataProviderTests\ExcelDataProviderIntegrationTests.cs" />
     <Compile Include="IntegrationTests\FormulaParserTestBase.cs" />
     <Compile Include="IntegrationTests\PrecedenceTests.cs" />
     <Compile Include="LexicalAnalysis\NegationTests.cs" />

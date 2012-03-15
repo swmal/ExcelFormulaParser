@@ -32,6 +32,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["pi"] = new Pi();
             _functions["ceiling"] = new Ceiling();
             _functions["sum"] = new Sum();
+            _functions["stdev"] = new Stdev();
+            _functions["exp"] = new Exp();
+            _functions["max"] = new Max();
+            _functions["min"] = new Min();
             // Logical
             _functions["if"] = new If();
             _functions["not"] = new Not();

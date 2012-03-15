@@ -13,7 +13,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         [TestMethod]
         public void PiShouldReturnPIConstant()
         {
-            var expectedValue = (decimal)Math.Round(Math.PI, 14);
+            var expectedValue = (double)Math.Round(Math.PI, 14);
             var func = new Pi();
             var args = new object[0];
             var result = func.Execute(args);
@@ -23,9 +23,9 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         [TestMethod]
         public void CeilingShouldRoundUpAccordingToParamsSignificanceLowerThan0()
         {
-            var expectedValue = 22.36m;
+            var expectedValue = 22.36d;
             var func = new Ceiling();
-            var args = new object[]{22.35m, 0.01};
+            var args = new object[]{22.35d, 0.01};
             var result = func.Execute(args);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -33,19 +33,19 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         [TestMethod]
         public void CeilingShouldRoundTowardsZeroIfSignificanceAndNumberIsMinus0point1()
         {
-            var expectedValue = -22.4m;
+            var expectedValue = -22.4d;
             var func = new Ceiling();
-            var args = new object[] { -22.35m, -0.1 };
+            var args = new object[] { -22.35d, -0.1 };
             var result = func.Execute(args);
-            Assert.AreEqual(expectedValue, result.Result);
+            Assert.AreEqual(expectedValue, System.Math.Round((double)result.Result, 2));
         }
 
         [TestMethod]
         public void CeilingShouldRoundUpAccordingToParamsSignificanceIs1()
         {
-            var expectedValue = 23m;
+            var expectedValue = 23d;
             var func = new Ceiling();
-            var args = new object[] { 22.35m, 1 };
+            var args = new object[] { 22.35d, 1 };
             var result = func.Execute(args);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -53,9 +53,9 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         [TestMethod]
         public void CeilingShouldRoundUpAccordingToParamsSignificanceIs10()
         {
-            var expectedValue = 30m;
+            var expectedValue = 30d;
             var func = new Ceiling();
-            var args = new object[] { 22.35m, 10 };
+            var args = new object[] { 22.35d, 10 };
             var result = func.Execute(args);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -63,9 +63,9 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         [TestMethod]
         public void CeilingShouldRoundTowardsZeroIfSignificanceAndNumberIsNegative()
         {
-            var expectedValue = -30m;
+            var expectedValue = -30d;
             var func = new Ceiling();
-            var args = new object[] { -22.35m, -10 };
+            var args = new object[] { -22.35d, -10 };
             var result = func.Execute(args);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -73,9 +73,9 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
         public void CeilingShouldThrowExceptionIfNumberIsPositiveAndSignificanceIsNegative()
         {
-            var expectedValue = 30m;
+            var expectedValue = 30d;
             var func = new Ceiling();
-            var args = new object[] { 22.35m, -1 };
+            var args = new object[] { 22.35d, -1 };
             var result = func.Execute(args);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -105,6 +105,33 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var args = new object[] { 1, 3, 5 };
             var result = func.Execute(args);
             Assert.AreEqual(1.63299d, Math.Round((double)result.Result, 5));
+        }
+
+        [TestMethod]
+        public void ExpShouldCalculateCorrectResult()
+        {
+            var func = new Exp();
+            var args = new object[] { 4 };
+            var result = func.Execute(args);
+            Assert.AreEqual(54.59815003d, System.Math.Round((double)result.Result, 8));
+        }
+
+        [TestMethod]
+        public void MaxShouldCalculateCorrectResult()
+        {
+            var func = new Max();
+            var args = new object[] { 4, 2, 5, 2 };
+            var result = func.Execute(args);
+            Assert.AreEqual(5d, result.Result);
+        }
+
+        [TestMethod]
+        public void MinShouldCalculateCorrectResult()
+        {
+            var func = new Min();
+            var args = new object[] { 4, 2, 5, 2 };
+            var result = func.Execute(args);
+            Assert.AreEqual(2d, result.Result);
         }
     }
 }
