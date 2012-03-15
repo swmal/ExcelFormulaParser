@@ -6,7 +6,7 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
-    public class Count : VBAFunction
+    public class CountA : VBAFunction
     {
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
@@ -28,23 +28,14 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
                 {
                     nItems++;
                 }
+                
             }
         }
 
         private bool ShouldCount(object item)
         {
             if (item == null) return false;
-            if (item.GetType() == typeof(int)
-                ||
-                item.GetType() == typeof(double)
-                ||
-                item.GetType() == typeof(decimal)
-                ||
-                item.GetType() == typeof(System.DateTime))
-            {
-                return true;
-            }
-            return false;
+            return (!string.IsNullOrEmpty(item.ToString()));
         }
     }
 }

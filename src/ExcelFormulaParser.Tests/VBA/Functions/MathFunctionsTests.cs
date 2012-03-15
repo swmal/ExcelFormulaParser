@@ -248,5 +248,23 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.AreEqual(3d, result.Result);
         }
+
+        [TestMethod]
+        public void CountAShouldReturnNumberOfNonWhitespaceItems()
+        {
+            var func = new CountA();
+            var args = new object[] { 1d, 2m, 3, new DateTime(2012, 4, 1), "4", null, string.Empty };
+            var result = func.Execute(args);
+            Assert.AreEqual(5d, result.Result);
+        }
+
+        [TestMethod]
+        public void CountAShouldIncludeEnumerableMembers()
+        {
+            var func = new CountA();
+            var args = new object[] { 1d, new object[] { 12, 13 } };
+            var result = func.Execute(args);
+            Assert.AreEqual(3d, result.Result);
+        }
     }
 }

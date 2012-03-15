@@ -47,6 +47,13 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                     }
                     if (tokenSeparator.TokenType == TokenType.String)
                     {
+                        if (context.LastToken != null &&
+                            context.LastToken.TokenType == TokenType.String && 
+                            !context.CurrentTokenHasValue)
+                        {
+                            // We are dealing with an empty string ('').
+                            context.AddToken(new Token(string.Empty, TokenType.StringContent));
+                        }
                         context.ToggleIsInString();
                     }
                     if (context.CurrentTokenHasValue)

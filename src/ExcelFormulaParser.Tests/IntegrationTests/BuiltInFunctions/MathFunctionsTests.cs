@@ -141,10 +141,17 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         }
 
         [TestMethod]
-        public void CountBetweenShouldReturnAResult()
+        public void CountShouldReturnAResult()
         {
             var result = _parser.Parse("Count(1,2,2,'4')");
             Assert.AreEqual(3d, result);
+        }
+
+        [TestMethod]
+        public void CountAShouldReturnAResult()
+        {
+            var result = _parser.Parse("CountA(1,2,2,'', 'a')");
+            Assert.AreEqual(4d, result);
         }
     }
 }

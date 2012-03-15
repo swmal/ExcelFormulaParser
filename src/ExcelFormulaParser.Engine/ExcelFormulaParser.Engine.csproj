@@ -108,6 +108,7 @@
     <Compile Include="VBA\Functions\Math\Average.cs" />
     <Compile Include="VBA\Functions\Math\Ceiling.cs" />
     <Compile Include="VBA\Functions\Math\Count.cs" />
+    <Compile Include="VBA\Functions\Math\CountA.cs" />
     <Compile Include="VBA\Functions\Math\Exp.cs" />
     <Compile Include="VBA\Functions\Math\Floor.cs" />
     <Compile Include="VBA\Functions\Math\Max.cs" />
