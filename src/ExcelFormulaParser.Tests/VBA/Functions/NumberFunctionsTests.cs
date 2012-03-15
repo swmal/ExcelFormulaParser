@@ -18,5 +18,32 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.AreEqual(2, result.Result);
         }
+
+        [TestMethod]
+        public void IntShouldConvertDecimalToInteger()
+        {
+            var func = new CInt();
+            var args = new object[] { 2.88m };
+            var result = func.Execute(args);
+            Assert.AreEqual(2, result.Result);
+        }
+
+        [TestMethod]
+        public void IntShouldConvertNegativeDecimalToInteger()
+        {
+            var func = new CInt();
+            var args = new object[] { -2.88m };
+            var result = func.Execute(args);
+            Assert.AreEqual(-3, result.Result);
+        }
+
+        [TestMethod]
+        public void IntShouldConvertStringToInteger()
+        {
+            var func = new CInt();
+            var args = new object[] { "-2.88" };
+            var result = func.Execute(args);
+            Assert.AreEqual(-3, result.Result);
+        }
     }
 }

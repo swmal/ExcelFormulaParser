@@ -118,5 +118,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Round(2.2, 0)");
             Assert.AreEqual(2d, result);
         }
+
+        [TestMethod]
+        public void IntShouldReturnAResult()
+        {
+            var result = _parser.Parse("Int(2.9)");
+            Assert.AreEqual(2, result);
+        }
     }
 }

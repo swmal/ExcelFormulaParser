@@ -25,7 +25,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["replace"] = new Replace();
             _functions["substitute"] = new Substitute();
             // Numbers
-            _functions["cint"] = new CInt();
+            _functions["int"] = new CInt();
             // Math
             _functions["power"] = new Power();
             _functions["sqrt"] = new Sqrt();

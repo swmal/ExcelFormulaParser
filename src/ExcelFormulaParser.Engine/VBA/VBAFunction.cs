@@ -28,6 +28,15 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             var obj = arguments.ElementAt(index);
             if(obj == null) throw new ArgumentNullException("expected argument (int) was null");
             int result;
+            var objType = obj.GetType();
+            if (objType == typeof(int))
+            {
+                return (int)obj;
+            }
+            if (objType == typeof(double) || objType == typeof(decimal))
+            {
+                return Convert.ToInt32(obj);
+            }
             if(!int.TryParse(obj.ToString(), out result))
             {
                 throw new ArgumentException("Could not parse " + obj.ToString() + " to int");
