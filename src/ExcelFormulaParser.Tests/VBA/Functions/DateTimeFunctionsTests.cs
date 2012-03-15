@@ -107,6 +107,15 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             Assert.AreEqual(expectedResult, result.Result);  
         }
 
+        [TestMethod]
+        public void TimeShouldParseStringCorrectly()
+        {
+            var expectedResult = GetTime(10, 11, 12);
+            var func = new Time();
+            var result = func.Execute(new object[] { "10:11:12" });
+            Assert.AreEqual(expectedResult, result.Result);
+        }
+
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void TimeShouldThrowExceptionIfSecondsIsOutOfRange()
         {

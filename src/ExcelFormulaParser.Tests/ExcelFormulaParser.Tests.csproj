@@ -72,6 +72,7 @@
     <Compile Include="VBA\Functions\MathFunctionsTests.cs" />
     <Compile Include="VBA\Functions\NumberFunctionsTests.cs" />
     <Compile Include="VBA\Functions\TextFunctionsTests.cs" />
+    <Compile Include="VBA\Functions\TimeStringParserTests.cs" />
     <Compile Include="VBA\OperatorsTests.cs" />
   </ItemGroup>
   <ItemGroup>
