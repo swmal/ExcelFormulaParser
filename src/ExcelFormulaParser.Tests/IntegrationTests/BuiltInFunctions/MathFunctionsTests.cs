@@ -96,5 +96,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("min(4, 5)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void AverageShouldReturnAResult()
+        {
+            var result = _parser.Parse("Average(2, 2, 2)");
+            Assert.AreEqual(2d, result);
+        }
+
+        [TestMethod]
+        public void RoundShouldReturnAResult()
+        {
+            var result = _parser.Parse("Round(2.2, 0)");
+            Assert.AreEqual(2d, result);
+        }
     }
 }

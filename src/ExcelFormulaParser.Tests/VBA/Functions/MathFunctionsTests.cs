@@ -133,5 +133,34 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.AreEqual(2d, result.Result);
         }
+
+        [TestMethod]
+        public void AverageShouldCalculateCorrectResult()
+        {
+            var expectedResult = (4d + 2d + 5d + 2d) / 4d;
+            var func = new Average();
+            var args = new object[] { 4d, 2d, 5d, 2d };
+            var result = func.Execute(args);
+            Assert.AreEqual(expectedResult, result.Result);
+        }
+
+        [TestMethod]
+        public void AverageShouldCalculateCorrectResultWithEnumerableAndBoolMembers()
+        {
+            var expectedResult = (4d + 2d + 5d + 2d + 1d) / 5d;
+            var func = new Average();
+            var args = new object[] { new object[]{ 4d, 2d }, 5d, 2d, true };
+            var result = func.Execute(args);
+            Assert.AreEqual(expectedResult, result.Result);
+        }
+
+        [TestMethod]
+        public void RoundShouldReturnCorrectResult()
+        {
+            var func = new Round();
+            var args = new object[] { 2.3433, 3 };
+            var result = func.Execute(args);
+            Assert.AreEqual(2.343d, result.Result);
+        }
     }
 }

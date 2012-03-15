@@ -36,6 +36,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["exp"] = new Exp();
             _functions["max"] = new Max();
             _functions["min"] = new Min();
+            _functions["average"] = new Average();
+            _functions["round"] = new Round();
             // Logical
             _functions["if"] = new If();
             _functions["not"] = new Not();

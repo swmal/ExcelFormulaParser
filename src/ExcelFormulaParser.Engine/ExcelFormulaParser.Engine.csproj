@@ -104,12 +104,14 @@
     <Compile Include="VBA\Functions\Logical\If.cs" />
     <Compile Include="VBA\Functions\Logical\Not.cs" />
     <Compile Include="VBA\Functions\Logical\Or.cs" />
+    <Compile Include="VBA\Functions\Math\Average.cs" />
     <Compile Include="VBA\Functions\Math\Ceiling.cs" />
     <Compile Include="VBA\Functions\Math\Exp.cs" />
     <Compile Include="VBA\Functions\Math\Max.cs" />
     <Compile Include="VBA\Functions\Math\Min.cs" />
     <Compile Include="VBA\Functions\Math\Pi.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
+    <Compile Include="VBA\Functions\Math\Round.cs" />
     <Compile Include="VBA\Functions\Math\Sqrt.cs" />
     <Compile Include="VBA\Functions\Math\Stdev.cs" />
     <Compile Include="VBA\Functions\Math\Sum.cs" />
