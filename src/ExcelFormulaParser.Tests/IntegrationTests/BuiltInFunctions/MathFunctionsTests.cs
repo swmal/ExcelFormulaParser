@@ -139,5 +139,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("RandBetween(1,2)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void CountBetweenShouldReturnAResult()
+        {
+            var result = _parser.Parse("Count(1,2,2,'4')");
+            Assert.AreEqual(3d, result);
+        }
     }
 }

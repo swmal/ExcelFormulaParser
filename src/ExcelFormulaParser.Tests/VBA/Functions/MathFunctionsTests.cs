@@ -229,5 +229,24 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             CollectionAssert.Contains(new List<double> { 0d, -1d, -2d, -3d, -4d, -5d }, result.Result);
         }
+
+        [TestMethod]
+        public void CountShouldReturnNumberOfNumericItems()
+        {
+            var func = new Count();
+            var args = new object[] { 1d, 2m, 3, new DateTime(2012, 4, 1), "4" };
+            var result = func.Execute(args);
+            Assert.AreEqual(4d, result.Result);
+        }
+
+
+        [TestMethod]
+        public void CountShouldIncludeEnumerableMembers()
+        {
+            var func = new Count();
+            var args = new object[] { 1d, new object[]{12, 13} };
+            var result = func.Execute(args);
+            Assert.AreEqual(3d, result.Result);
+        }
     }
 }
