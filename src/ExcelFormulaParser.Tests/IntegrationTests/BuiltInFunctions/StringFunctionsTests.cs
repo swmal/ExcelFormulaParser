@@ -64,5 +64,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("RIGHT('abacd', 2)");
             Assert.AreEqual("cd", result);
         }
+
+        [TestMethod]
+        public void MidShouldReturnSubstringAccordingToParams()
+        {
+            var result = _parser.Parse("Mid('abacd', 2, 2)");
+            Assert.AreEqual("ac", result);
+        }
+
+        [TestMethod]
+        public void ReplaceShouldReturnSubstringAccordingToParams()
+        {
+            var result = _parser.Parse("Replace('testar', 3, 3, 'hej')");
+            Assert.AreEqual("tehejr", result);
+        }
     }
 }

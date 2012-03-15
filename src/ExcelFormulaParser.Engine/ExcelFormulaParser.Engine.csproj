@@ -94,6 +94,8 @@
     <Compile Include="VBA\Functions\Text\Left.cs" />
     <Compile Include="VBA\Functions\Text\Len.cs" />
     <Compile Include="VBA\Functions\Text\Lower.cs" />
+    <Compile Include="VBA\Functions\Text\Mid.cs" />
+    <Compile Include="VBA\Functions\Text\Replace.cs" />
     <Compile Include="VBA\Functions\Text\Right.cs" />
     <Compile Include="VBA\Functions\Text\Upper.cs" />
     <Compile Include="VBA\IVBAModule.cs" />

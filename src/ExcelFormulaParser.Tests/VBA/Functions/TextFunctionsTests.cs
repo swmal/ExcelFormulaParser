@@ -60,5 +60,29 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
             var result = func.Execute(new object[] { "abcd", 2 });
             Assert.AreEqual("cd", result.Result);
         }
+
+        [TestMethod]
+        public void MidShouldReturnSubstringAccordingToParams()
+        {
+            var func = new Mid();
+            var result = func.Execute(new object[] { "abcd", 1, 2 });
+            Assert.AreEqual("bc", result.Result);
+        }
+
+        [TestMethod]
+        public void ReplaceShouldReturnAReplacedStringAccordingToParamsWhenStartIxIs1()
+        {
+            var func = new Replace();
+            var result = func.Execute(new object[] { "testar", 1, 2, "hej" });
+            Assert.AreEqual("hejstar", result.Result);
+        }
+
+        [TestMethod]
+        public void ReplaceShouldReturnAReplacedStringAccordingToParamsWhenStartIxIs3()
+        {
+            var func = new Replace();
+            var result = func.Execute(new object[] { "testar", 3, 3, "hej" });
+            Assert.AreEqual("tehejr", result.Result);
+        }
     }
 }
