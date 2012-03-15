@@ -45,5 +45,50 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args);
             Assert.IsFalse((bool)result.Result);
         }
+
+        [TestMethod]
+        public void AndShouldReturnTrueIfAllArgumentsAreTrue()
+        {
+            var func = new And();
+            var args = new object[] { true, true, true };
+            var result = func.Execute(args);
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void AndShouldReturnTrueIfAllArgumentsAreTrueOr1()
+        {
+            var func = new And();
+            var args = new object[] { true, true, 1, true, 1 };
+            var result = func.Execute(args);
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void AndShouldReturnFalseIfOneArgumentIsFalse()
+        {
+            var func = new And();
+            var args = new object[] { true, false, true };
+            var result = func.Execute(args);
+            Assert.IsFalse((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void AndShouldReturnFalseIfOneArgumentIs0()
+        {
+            var func = new And();
+            var args = new object[] { true, 0, true };
+            var result = func.Execute(args);
+            Assert.IsFalse((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void OrShouldReturnTrueIfOneArgumentIsTrue()
+        {
+            var func = new Or();
+            var args = new object[] { true, false, false };
+            var result = func.Execute(args);
+            Assert.IsTrue((bool)result.Result);
+        }
     }
 }

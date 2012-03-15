@@ -28,6 +28,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             // Logical
             _functions["if"] = new If();
             _functions["not"] = new Not();
+            _functions["and"] = new And();
+            _functions["or"] = new Or();
         }
 
         private readonly Dictionary<string, VBAFunction> _functions;

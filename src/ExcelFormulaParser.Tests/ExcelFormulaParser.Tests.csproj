@@ -50,7 +50,9 @@
     <Compile Include="ExpressionGraph\ExpressionFactoryTests.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilderTests.cs" />
     <Compile Include="ExpressionGraph\IntegerExpressionTests.cs" />
-    <Compile Include="IntegrationTests\BuiltInFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\LogicalFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\MathFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\StringFunctionsTests.cs" />
     <Compile Include="IntegrationTests\FormulaParserTestBase.cs" />
     <Compile Include="IntegrationTests\PrecedenceTests.cs" />
     <Compile Include="LexicalAnalysis\SourceCodeTokenizerTests.cs" />

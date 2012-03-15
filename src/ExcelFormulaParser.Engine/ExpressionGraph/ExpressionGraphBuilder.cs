@@ -71,10 +71,27 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         private void CreateAndAppendExpression(Expression parent, Token token)
         {
             if (IsWaste(token)) return;
+            if (parent != null && token.TokenType == TokenType.Comma)
+            {
+                parent.AddChild(new GroupExpression());
+                return;
+            }
             var expression = _expressionFactory.Create(token);
             if (parent == null)
             {
                 _graph.Add(expression);
+            }
+            else if (parent.IsFunctionExpression)
+            {
+                if (parent.Children.Count() == 0)
+                {
+                    var group = parent.AddChild(new GroupExpression());
+                    group.AddChild(expression);
+                }
+                else
+                {
+                    parent.Children.Last().AddChild(expression);
+                }
             }
             else
             {
@@ -84,7 +101,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         private bool IsWaste(Token token)
         {
-            if (token.TokenType == TokenType.String  || token.TokenType == TokenType.Comma)
+            if (token.TokenType == TokenType.String)
             {
                 return true;
             }

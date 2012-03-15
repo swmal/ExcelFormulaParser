@@ -83,8 +83,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VBA\BuiltInFunctions.cs" />
     <Compile Include="VBA\FunctionRepository.cs" />
+    <Compile Include="VBA\Functions\Logical\And.cs" />
     <Compile Include="VBA\Functions\Logical\If.cs" />
     <Compile Include="VBA\Functions\Logical\Not.cs" />
+    <Compile Include="VBA\Functions\Logical\Or.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
     <Compile Include="VBA\Functions\Math\Sqrt.cs" />
     <Compile Include="VBA\Functions\Numeric\CInt.cs" />

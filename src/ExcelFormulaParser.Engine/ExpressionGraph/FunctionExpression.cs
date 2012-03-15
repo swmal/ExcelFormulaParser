@@ -13,6 +13,15 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
 
         }
+
+        public override bool IsFunctionExpression
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public override CompileResult Compile()
         {
             var args = new List<object>();

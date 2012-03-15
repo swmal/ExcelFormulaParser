@@ -54,13 +54,26 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             return decimal.Parse(str);
         }
 
+        /// <summary>
+        /// If the argument is a boolean value its value will be returned.
+        /// If the argument is an integer value, true will be returned if its
+        /// value is not 0, otherwise false.
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         protected bool ArgToBool(IEnumerable<object> arguments, int index)
         {
             var obj = arguments.ElementAt(index) ?? string.Empty;
             bool result;
-            if (!bool.TryParse(obj.ToString(), out result))
+            if (bool.TryParse(obj.ToString(), out result))
             {
-                return false;
+                return result;
+            }
+            int intResult;
+            if (int.TryParse(obj.ToString(), out intResult))
+            {
+                return intResult != 0;
             }
             return result;
         }
