@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine;
 using ExcelFormulaParser.Engine.ExpressionGraph;
+using Rhino.Mocks;
 
 namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
 {
@@ -14,7 +15,8 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         [TestInitialize]
         public void Setup()
         {
-            _parser = new FormulaParser();
+            var excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _parser = new FormulaParser(excelDataProvider);
         }
 
         [TestMethod]

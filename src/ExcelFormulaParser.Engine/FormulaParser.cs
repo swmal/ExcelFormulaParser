@@ -13,8 +13,8 @@ namespace ExcelFormulaParser.Engine
 {
     public class FormulaParser
     {
-        public FormulaParser()
-            :this(new Lexer(), new ExpressionGraphBuilder(), new ExpressionCompiler())
+        public FormulaParser(ExcelDataProvider excelDataProvider)
+            :this(new Lexer(), new ExpressionGraphBuilder(excelDataProvider), new ExpressionCompiler())
         {
 
         }

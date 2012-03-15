@@ -8,6 +8,8 @@ using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.VBA.Operators;
 using ExcelFormulaParser.Engine.VBA;
 using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine;
+using Rhino.Mocks;
 
 namespace ExcelFormulaParser.Tests.ExpressionGraph
 {
@@ -19,7 +21,8 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         [TestInitialize]
         public void Setup()
         {
-            _graphBuilder = new ExpressionGraphBuilder();
+            var excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _graphBuilder = new ExpressionGraphBuilder(excelDataProvider);
             FunctionRepository.LoadModule(new BuiltInFunctions());
         }
 

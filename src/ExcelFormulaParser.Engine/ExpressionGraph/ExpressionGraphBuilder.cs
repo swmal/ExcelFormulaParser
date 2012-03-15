@@ -14,7 +14,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         private int _tokenIndex = 0;
         private bool _negateNextExpression;
 
-        public ExpressionGraphBuilder()
+        public ExpressionGraphBuilder(ExcelDataProvider excelDataProvider)
             : this(new ExpressionFactory())
         {
 

@@ -42,5 +42,13 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var expression = _factory.Create(token);
             Assert.IsInstanceOfType(expression, typeof(DecimalExpression));
         }
+
+        [TestMethod]
+        public void ShouldReturnExcelRangeExpressionWhenTokenIsExcelAddress()
+        {
+            var token = new Token("A1", TokenType.ExcelAddress);
+            var expression = _factory.Create(token);
+            Assert.IsInstanceOfType(expression, typeof(ExcelRangeExpression));
+        }
     }
 }

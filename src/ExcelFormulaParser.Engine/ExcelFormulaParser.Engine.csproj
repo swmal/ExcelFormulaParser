@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelDataProvider.cs" />
     <Compile Include="Exceptions\UnrecognizedTokenException.cs" />
     <Compile Include="ExpressionGraph\AtomicExpression.cs" />
     <Compile Include="ExpressionGraph\BooleanExpression.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="ExpressionGraph\DateExpression.cs" />
     <Compile Include="ExpressionGraph\DecimalExpression.cs" />
     <Compile Include="ExpressionGraph\EnumerableExpression.cs" />
+    <Compile Include="ExpressionGraph\ExcelRangeExpression.cs" />
     <Compile Include="ExpressionGraph\Expression.cs" />
     <Compile Include="ExpressionGraph\ExpressionCompiler.cs" />
     <Compile Include="ExpressionGraph\ExpressionConverter.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="VBA\Functions\Math\Pi.cs" />
     <Compile Include="VBA\Functions\Math\Power.cs" />
     <Compile Include="VBA\Functions\Math\Sqrt.cs" />
+    <Compile Include="VBA\Functions\Math\Stdev.cs" />
     <Compile Include="VBA\Functions\Math\Sum.cs" />
     <Compile Include="VBA\Functions\Numeric\CInt.cs" />
     <Compile Include="VBA\Functions\Text\CStr.cs" />

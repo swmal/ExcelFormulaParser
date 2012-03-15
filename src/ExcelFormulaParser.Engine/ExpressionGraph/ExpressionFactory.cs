@@ -20,6 +20,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                     return new DecimalExpression(token.Value);
                 case TokenType.Boolean:
                     return new BooleanExpression(token.Value);
+                case TokenType.ExcelAddress:
+                    return new ExcelRangeExpression(token.Value);
                 default:
                     return new StringExpression(token.Value);
             }
