@@ -10,9 +10,25 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
     {
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
+            ValidateArguments(arguments, 1);
+            var firstArg = arguments.ElementAt(0).ToString();
+            if (arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
+            {
+                var result = TimeStringParser.Parse(firstArg);
+                return CreateResult(GetMinuteFromSerialNumber(result));
+            }
             ValidateAndInitSerialNumber(arguments);
-            var minutes = (int)System.Math.Round(GetMinute(SerialNumber), 0);
-            return new CompileResult(minutes, DataType.Integer);
+            return CreateResult(GetMinuteFromSerialNumber(SerialNumber));
+        }
+
+        private int GetMinuteFromSerialNumber(double serialNumber)
+        {
+            return (int)System.Math.Round(GetMinute(serialNumber), 0);
+        }
+
+        private CompileResult CreateResult(int minute)
+        {
+            return new CompileResult(minute, DataType.Integer);
         }
     }
 }

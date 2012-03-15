@@ -8,6 +8,17 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
     public abstract class TimeBaseFunction : VBAFunction
     {
+        public TimeBaseFunction()
+        {
+            TimeStringParser = new TimeStringParser();
+        }
+
+        protected TimeStringParser TimeStringParser
+        {
+            get;
+            private set;
+        }
+
         protected double SerialNumber
         {
             get;

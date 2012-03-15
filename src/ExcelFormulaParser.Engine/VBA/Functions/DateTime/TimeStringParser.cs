@@ -8,6 +8,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
     public class TimeStringParser
     {
+        private const string RegEx24 = @"^[0-9]{1,2}(\:[0-9]{1,2}){0,2}$";
+        private const string RegEx12 = @"^[0-9]{1,2}(\:[0-9]{1,2}){0,2}( PM| AM)$";
+
         private double GetSerialNumber(int hour, int minute, int second)
         {
             var secondsInADay = 24d * 60d * 60d;
@@ -33,28 +36,58 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 
         public virtual bool CanParse(string input)
         {
-            return InternalParse(input) != -1;
+            return Regex.IsMatch(input, RegEx24) || Regex.IsMatch(input, RegEx12);
         }
 
         private double InternalParse(string input)
         {
-            if (Regex.IsMatch(input, @"^[0-9]{1,2}(:[0-9]){0,2}"))
+            if (Regex.IsMatch(input, RegEx24))
             {
-                int hour = 0, minute = 0, second = 0;
-                var items = input.Split(':');
-                hour = int.Parse(items[0]);
-                if (items.Length > 1)
-                {
-                    minute = int.Parse(items[1]);
-                }
-                if (items.Length > 2)
-                {
-                    second = int.Parse(items[2]);
-                }
+                return Parse24HourTimeString(input);
+            }
+            if (Regex.IsMatch(input, RegEx12))
+            {
+                string dayPart = string.Empty;
+                dayPart = input.Substring(input.Length - 2, 2);
+                int hour;
+                int minute;
+                int second;
+                GetValuesFromString(input, out hour, out minute, out second);
+                if (dayPart == "PM") hour += 12;
                 ValidateValues(hour, minute, second);
                 return GetSerialNumber(hour, minute, second);
             }
             return -1;
+        }
+
+        private double Parse24HourTimeString(string input)
+        {
+            int hour;
+            int minute;
+            int second;
+            GetValuesFromString(input, out hour, out minute, out second);
+            ValidateValues(hour, minute, second);
+            return GetSerialNumber(hour, minute, second);
+        }
+
+        private static void GetValuesFromString(string input, out int hour, out int minute, out int second)
+        {
+            hour = 0;
+            minute = 0;
+            second = 0;
+
+            var items = input.Split(':');
+            hour = int.Parse(items[0]);
+            if (items.Length > 1)
+            {
+                minute = int.Parse(items[1]);
+            }
+            if (items.Length > 2)
+            {
+                var val = items[2];
+                val = Regex.Replace(val, "[^0-9]+$", string.Empty);
+                second = int.Parse(val);
+            }
         }
     }
 }

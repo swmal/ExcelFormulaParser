@@ -9,27 +9,21 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
     public class Time : TimeBaseFunction
     {
         public Time()
-            : this(new TimeStringParser())
+            : base()
         {
 
         }
-
-        public Time(TimeStringParser timeStringParser)
-        {
-            _timeStringParser = timeStringParser;
-        }
-
-        private readonly TimeStringParser _timeStringParser;
         
         public override CompileResult Execute(IEnumerable<object> arguments)
         {
             ValidateArguments(arguments, 1);
             var firstArg = arguments.ElementAt(0).ToString();
-            if(arguments.Count() == 1 && _timeStringParser.CanParse(firstArg))
+            if(arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
             {
-                var result = _timeStringParser.Parse(firstArg);
+                var result = TimeStringParser.Parse(firstArg);
                 return new CompileResult(result, DataType.Time);
             }
+            ValidateArguments(arguments, 3);
             var hour = ArgToInt(arguments, 0);
             var min = ArgToInt(arguments, 1);
             var sec = ArgToInt(arguments, 2);

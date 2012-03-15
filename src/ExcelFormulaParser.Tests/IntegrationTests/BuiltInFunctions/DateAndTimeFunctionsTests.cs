@@ -87,5 +87,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Second(Time(12, 13, 59))");
             Assert.AreEqual(59, result);
         }
+
+        [TestMethod]
+        public void SecondShouldReturnCorrectResultWhenParsingString()
+        {
+            var result = _parser.Parse("Second('10:12:14')");
+            Assert.AreEqual(14, result);
+        }
+
+        [TestMethod]
+        public void HourShouldReturnCorrectResultWhenParsingString()
+        {
+            var result = _parser.Parse("Hour('10:12:14')");
+            Assert.AreEqual(10, result);
+        }
     }
 }
