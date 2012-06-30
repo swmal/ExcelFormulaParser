@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.VBA.Operators;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
+using ExcelFormulaParser.Engine.VBA;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
@@ -11,18 +12,20 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     {
         private readonly ExpressionGraph _graph = new ExpressionGraph();
         private readonly IExpressionFactory _expressionFactory;
+        private readonly FunctionRepository _functionRepository;
         private int _tokenIndex = 0;
         private bool _negateNextExpression;
 
-        public ExpressionGraphBuilder(ExcelDataProvider excelDataProvider)
-            : this(new ExpressionFactory(excelDataProvider))
+        public ExpressionGraphBuilder(ExcelDataProvider excelDataProvider, FunctionRepository functionRepository)
+            : this(new ExpressionFactory(excelDataProvider), functionRepository)
         {
 
         }
 
-        public ExpressionGraphBuilder(IExpressionFactory expressionFactory)
+        public ExpressionGraphBuilder(IExpressionFactory expressionFactory, FunctionRepository functionRepository)
         {
             _expressionFactory = expressionFactory;
+            _functionRepository = functionRepository;
         }
 
         public ExpressionGraph Build(IEnumerable<Token> tokens)
@@ -145,12 +148,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             if (parent == null)
             {
-                _graph.Add(new FunctionExpression(funcName));
+                _graph.Add(new FunctionExpression(funcName, _functionRepository));
                 BuildUp(tokens, _graph.Current);
             }
             else
             {
-                var func = new FunctionExpression(funcName);
+                var func = new FunctionExpression(funcName, _functionRepository);
                 parent.AddChild(func);
                 BuildUp(tokens, func);
             }

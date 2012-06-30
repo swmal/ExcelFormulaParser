@@ -18,13 +18,13 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         public void Setup()
         {
             _tokenizer = new SourceCodeTokenizer();
-            FunctionRepository.LoadModule(new BuiltInFunctions());
+            FunctionRepository.Instance.LoadModule(new BuiltInFunctions());
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            FunctionRepository.Clear();
+            FunctionRepository.Instance.Clear();
         }
 
         [TestMethod]

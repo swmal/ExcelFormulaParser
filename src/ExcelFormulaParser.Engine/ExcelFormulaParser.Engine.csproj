@@ -84,6 +84,8 @@
     <Compile Include="LexicalAnalysis\TokenizerContext.cs" />
     <Compile Include="LexicalAnalysis\TokenSeparatorProvider.cs" />
     <Compile Include="LexicalAnalysis\TokenType.cs" />
+    <Compile Include="ParsingConfiguration.cs" />
+    <Compile Include="ParsingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VBA\BuiltInFunctions.cs" />
     <Compile Include="VBA\FunctionRepository.cs" />

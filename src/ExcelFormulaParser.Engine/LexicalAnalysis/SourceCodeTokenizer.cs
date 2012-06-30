@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.VBA;
 
 namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
     public class SourceCodeTokenizer : ISourceCodeTokenizer
     {
         public SourceCodeTokenizer()
-            : this(new TokenFactory(), new TokenSeparatorProvider())
+            : this(new TokenFactory(FunctionRepository.Instance), new TokenSeparatorProvider())
         {
 
         }

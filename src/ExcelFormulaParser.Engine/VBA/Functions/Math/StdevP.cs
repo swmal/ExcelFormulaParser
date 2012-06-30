@@ -19,25 +19,20 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             var result = double.NaN;
             if (args != null)
             {
-                double sum=0;
-                double sum2=0;
+                double sum = 0d, sum2 = 0d;
                 int count=0;
-                foreach (var r in args)
+                foreach (var currentMember in args)
                 {
-                    if (r != double.NaN)
+                    if (currentMember != double.NaN)
                     {
-                        sum += r;
-                        sum2 += (r*r);
+                        sum += currentMember;
+                        sum2 += (currentMember*currentMember);
                         count++;
                     }
                 }
                 if (count > 0)
                 {
                     result = System.Math.Sqrt(((count * sum2 - sum * sum) / (count * count)));
-                }
-                else
-                {
-                    result = double.NaN;
                 }
             }
             return result;

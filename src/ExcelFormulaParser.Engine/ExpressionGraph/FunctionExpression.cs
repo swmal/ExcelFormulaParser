@@ -8,11 +8,13 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
     public class FunctionExpression : AtomicExpression
     {
-        public FunctionExpression(string expression)
+        public FunctionExpression(string expression, FunctionRepository functionRepository)
             : base(expression)
         {
-
+            _functionRepository = functionRepository;
         }
+
+        private readonly FunctionRepository _functionRepository;
 
         public override bool IsFunctionExpression
         {
@@ -30,7 +32,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 var arg = child.Compile().Result;
                 args.Add(arg);
             }
-            var function = FunctionRepository.GetFunction(ExpressionString);
+            var function = _functionRepository.GetFunction(ExpressionString);
             return function.Execute(args);
         }
 

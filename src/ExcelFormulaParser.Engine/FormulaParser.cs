@@ -14,23 +14,28 @@ namespace ExcelFormulaParser.Engine
     public class FormulaParser
     {
         public FormulaParser(ExcelDataProvider excelDataProvider)
-            :this(new Lexer(), new ExpressionGraphBuilder(excelDataProvider), new ExpressionCompiler())
         {
-
+            Configure(x =>
+            {
+                x.SetLexer(new Lexer())
+                    .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, x.FunctionRepository))
+                    .SetExpresionCompiler(new ExpressionCompiler());
+                x.FunctionRepository.LoadModule(new BuiltInFunctions());
+            });
         }
 
-        public FormulaParser(ILexer lexer, IExpressionGraphBuilder graphBuilder, IExpressionCompiler compiler)
+        public void Configure(Action<ParsingConfiguration> configMethod)
         {
-            _lexer = lexer;
-            _graphBuilder = graphBuilder;
-            _compiler = compiler;
-            FunctionRepository.Clear();
-            FunctionRepository.LoadModule(new BuiltInFunctions());
+            var config = ParsingConfiguration.Create();
+            configMethod.Invoke(config);
+            _lexer = config.Lexer;
+            _graphBuilder = config.GraphBuilder;
+            _compiler = config.ExpressionCompiler;
         }
 
-        private readonly ILexer _lexer;
-        private readonly IExpressionGraphBuilder _graphBuilder;
-        private readonly IExpressionCompiler _compiler;
+        private ILexer _lexer;
+        private IExpressionGraphBuilder _graphBuilder;
+        private IExpressionCompiler _compiler;
 
         public object Parse(string formula)
         {

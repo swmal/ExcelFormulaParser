@@ -22,14 +22,14 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         public void Setup()
         {
             var excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
-            _graphBuilder = new ExpressionGraphBuilder(excelDataProvider);
-            FunctionRepository.LoadModule(new BuiltInFunctions());
+            _graphBuilder = new ExpressionGraphBuilder(excelDataProvider, FunctionRepository.Instance);
+            FunctionRepository.Instance.LoadModule(new BuiltInFunctions());
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            FunctionRepository.Clear();
+            FunctionRepository.Instance.Clear();
         }
 
         [TestMethod]

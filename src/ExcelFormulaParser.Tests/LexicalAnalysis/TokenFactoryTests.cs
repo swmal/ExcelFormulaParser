@@ -14,17 +14,18 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
     {
         private ITokenFactory _tokenFactory;
 
+
         [TestInitialize]
         public void Setup()
         {
-            _tokenFactory = new TokenFactory();
-            FunctionRepository.LoadModule(new BuiltInFunctions());
+            _tokenFactory = new TokenFactory(FunctionRepository.Instance);
+            FunctionRepository.Instance.LoadModule(new BuiltInFunctions());
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            FunctionRepository.Clear();
+            FunctionRepository.Instance.Clear();
         }
 
         [TestMethod]
