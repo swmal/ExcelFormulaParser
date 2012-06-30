@@ -28,9 +28,9 @@ namespace ExcelFormulaParser.Engine
         {
             var config = ParsingConfiguration.Create();
             configMethod.Invoke(config);
-            _lexer = config.Lexer;
-            _graphBuilder = config.GraphBuilder;
-            _compiler = config.ExpressionCompiler;
+            _lexer = config.Lexer ?? _lexer;
+            _graphBuilder = config.GraphBuilder ?? _graphBuilder;
+            _compiler = config.ExpressionCompiler ?? _compiler;
         }
 
         private ILexer _lexer;
@@ -41,6 +41,10 @@ namespace ExcelFormulaParser.Engine
         {
             var tokens = _lexer.Tokenize(formula);
             var graph = _graphBuilder.Build(tokens);
+            if (graph.Expressions.Count() == 0)
+            {
+                return null;
+            }
             return _compiler.Compile(graph.Expressions).Result;
         }
     }
