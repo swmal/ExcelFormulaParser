@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Pi : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             var result = System.Math.Round((double)System.Math.PI, 14);
             return CreateResult(result, DataType.Decimal);

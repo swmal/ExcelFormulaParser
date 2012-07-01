@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Product : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 2);
             var first = CalculateFirstItem(arguments);

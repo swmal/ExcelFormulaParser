@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
 {
     public class Substitute : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 3);
             var text = ArgToString(arguments, 0);

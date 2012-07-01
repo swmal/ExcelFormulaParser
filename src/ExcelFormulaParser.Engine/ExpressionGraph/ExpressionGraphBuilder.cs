@@ -12,20 +12,20 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     {
         private readonly ExpressionGraph _graph = new ExpressionGraph();
         private readonly IExpressionFactory _expressionFactory;
-        private readonly FunctionRepository _functionRepository;
+        private readonly ParsingContext _parsingContext;
         private int _tokenIndex = 0;
         private bool _negateNextExpression;
 
-        public ExpressionGraphBuilder(ExcelDataProvider excelDataProvider, FunctionRepository functionRepository)
-            : this(new ExpressionFactory(excelDataProvider), functionRepository)
+        public ExpressionGraphBuilder(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
+            : this(new ExpressionFactory(excelDataProvider), parsingContext)
         {
 
         }
 
-        public ExpressionGraphBuilder(IExpressionFactory expressionFactory, FunctionRepository functionRepository)
+        public ExpressionGraphBuilder(IExpressionFactory expressionFactory, ParsingContext parsingContext)
         {
             _expressionFactory = expressionFactory;
-            _functionRepository = functionRepository;
+            _parsingContext = parsingContext;
         }
 
         public ExpressionGraph Build(IEnumerable<Token> tokens)
@@ -148,12 +148,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             if (parent == null)
             {
-                _graph.Add(new FunctionExpression(funcName, _functionRepository));
+                _graph.Add(new FunctionExpression(funcName, _parsingContext));
                 BuildUp(tokens, _graph.Current);
             }
             else
             {
-                var func = new FunctionExpression(funcName, _functionRepository);
+                var func = new FunctionExpression(funcName, _parsingContext);
                 parent.AddChild(func);
                 BuildUp(tokens, func);
             }

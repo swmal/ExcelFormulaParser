@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
     public class Weekday : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 2);
             var serialNumber = ArgToDecimal(arguments, 0);

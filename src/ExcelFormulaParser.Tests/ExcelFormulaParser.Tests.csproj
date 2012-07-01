@@ -71,6 +71,7 @@
     <Compile Include="LexicalAnalysis\NegationTests.cs" />
     <Compile Include="LexicalAnalysis\SourceCodeTokenizerTests.cs" />
     <Compile Include="LexicalAnalysis\TokenFactoryTests.cs" />
+    <Compile Include="ParsingContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\BasicCalcTests.cs" />
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />

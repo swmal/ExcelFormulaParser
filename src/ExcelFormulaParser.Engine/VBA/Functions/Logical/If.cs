@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Logical
 {
     public class If : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 3);
             var condition = ArgToBool(arguments, 0);

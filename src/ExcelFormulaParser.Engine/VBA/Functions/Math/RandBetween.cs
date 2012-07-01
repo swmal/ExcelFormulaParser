@@ -8,12 +8,12 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class RandBetween : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 2);
             var low = ArgToDecimal(arguments, 0);
             var high = ArgToDecimal(arguments, 1);
-            var rand = new Rand().Execute(new object[0]).Result;
+            var rand = new Rand().Execute(new object[0], context).Result;
             var randPart = (CalulateDiff(high, low) * (double)rand) + 1;
             randPart = System.Math.Floor(randPart);
             return CreateResult(low + randPart, DataType.Integer);

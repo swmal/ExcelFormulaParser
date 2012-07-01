@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.VBA;
 
 namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
     public class Lexer : ILexer
     {
-        public Lexer()
-            :this(new SourceCodeTokenizer(), new SyntacticAnalyzer())
+        public Lexer(FunctionRepository functionRepository)
+            :this(new SourceCodeTokenizer(functionRepository), new SyntacticAnalyzer())
         {
 
         }

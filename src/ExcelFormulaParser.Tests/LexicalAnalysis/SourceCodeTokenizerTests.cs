@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.VBA;
 using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine;
 
 namespace ExcelFormulaParser.Tests.LexicalAnalysis
 {
@@ -17,14 +18,13 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         [TestInitialize]
         public void Setup()
         {
-            _tokenizer = new SourceCodeTokenizer();
-            FunctionRepository.Instance.LoadModule(new BuiltInFunctions());
+            var context = ParsingContext.Create();
+            _tokenizer = new SourceCodeTokenizer(context.Configuration.FunctionRepository);
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            FunctionRepository.Instance.Clear();
         }
 
         [TestMethod]

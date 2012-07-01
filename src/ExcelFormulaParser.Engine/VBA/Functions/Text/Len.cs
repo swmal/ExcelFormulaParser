@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
 {
     public class Len : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             return CreateResult(arguments.First().ToString().Length, DataType.Integer);

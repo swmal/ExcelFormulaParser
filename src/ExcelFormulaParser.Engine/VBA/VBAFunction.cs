@@ -9,7 +9,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
 {
     public abstract class VBAFunction
     {
-        public abstract CompileResult Execute(IEnumerable<object> arguments);
+        public abstract CompileResult Execute(IEnumerable<object> arguments, ParsingContext context);
 
         protected void ValidateArguments(IEnumerable<object> arguments, int minLength)
         {

@@ -6,17 +6,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.VBA.Functions;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.VBA.Functions.Text;
+using ExcelFormulaParser.Engine;
 
 namespace ExcelFormulaParser.Tests.VBA.Functions.Text
 {
     [TestClass]
     public class TextFunctionsTests
     {
+        private ParsingContext _parsingContext;
         [TestMethod]
         public void CStrShouldConvertNumberToString()
         {
             var func = new CStr();
-            var result = func.Execute(new object[] { 1 });
+            var result = func.Execute(new object[] { 1 }, _parsingContext);
             Assert.AreEqual(DataType.String, result.DataType);
             Assert.AreEqual("1", result.Result);
         }
@@ -25,7 +27,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void LenShouldReturnStringsLength()
         {
             var func = new Len();
-            var result = func.Execute(new object[] { "abc" });
+            var result = func.Execute(new object[] { "abc" }, _parsingContext);
             Assert.AreEqual(3, result.Result);
         }
 
@@ -33,7 +35,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void LowerShouldReturnLowerCaseString()
         {
             var func = new Lower();
-            var result = func.Execute(new object[] { "ABC" });
+            var result = func.Execute(new object[] { "ABC" }, _parsingContext);
             Assert.AreEqual("abc", result.Result);
         }
 
@@ -41,7 +43,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void UpperShouldReturnUpperCaseString()
         {
             var func = new Upper();
-            var result = func.Execute(new object[] { "abc" });
+            var result = func.Execute(new object[] { "abc" }, _parsingContext);
             Assert.AreEqual("ABC", result.Result);
         }
 
@@ -49,7 +51,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void LeftShouldReturnSubstringFromLeft()
         {
             var func = new Left();
-            var result = func.Execute(new object[] { "abcd", 2 });
+            var result = func.Execute(new object[] { "abcd", 2 }, _parsingContext);
             Assert.AreEqual("ab", result.Result);
         }
 
@@ -57,7 +59,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void RightShouldReturnSubstringFromRight()
         {
             var func = new Right();
-            var result = func.Execute(new object[] { "abcd", 2 });
+            var result = func.Execute(new object[] { "abcd", 2 }, _parsingContext);
             Assert.AreEqual("cd", result.Result);
         }
 
@@ -65,7 +67,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void MidShouldReturnSubstringAccordingToParams()
         {
             var func = new Mid();
-            var result = func.Execute(new object[] { "abcd", 1, 2 });
+            var result = func.Execute(new object[] { "abcd", 1, 2 }, _parsingContext);
             Assert.AreEqual("bc", result.Result);
         }
 
@@ -73,7 +75,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void ReplaceShouldReturnAReplacedStringAccordingToParamsWhenStartIxIs1()
         {
             var func = new Replace();
-            var result = func.Execute(new object[] { "testar", 1, 2, "hej" });
+            var result = func.Execute(new object[] { "testar", 1, 2, "hej" }, _parsingContext);
             Assert.AreEqual("hejstar", result.Result);
         }
 
@@ -81,7 +83,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void ReplaceShouldReturnAReplacedStringAccordingToParamsWhenStartIxIs3()
         {
             var func = new Replace();
-            var result = func.Execute(new object[] { "testar", 3, 3, "hej" });
+            var result = func.Execute(new object[] { "testar", 3, 3, "hej" }, _parsingContext);
             Assert.AreEqual("tehejr", result.Result);
         }
 
@@ -89,7 +91,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void SubstituteShouldReturnAReplacedStringAccordingToParamsWhen()
         {
             var func = new Substitute();
-            var result = func.Execute(new object[] { "testar testar", "es", "xx" });
+            var result = func.Execute(new object[] { "testar testar", "es", "xx" }, _parsingContext);
             Assert.AreEqual("txxtar txxtar", result.Result);
         }
 
@@ -97,7 +99,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions.Text
         public void ConcatenateShouldConcatenateThreeStrings()
         {
             var func = new Concatenate();
-            var result = func.Execute(new object[] { "One", "Two", "Three" });
+            var result = func.Execute(new object[] { "One", "Two", "Three" }, _parsingContext);
             Assert.AreEqual("OneTwoThree", result.Result);
         }
     }

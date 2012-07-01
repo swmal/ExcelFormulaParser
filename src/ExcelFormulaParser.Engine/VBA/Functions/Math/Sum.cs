@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Sum : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             var retVal = 0d;
             if (arguments != null)

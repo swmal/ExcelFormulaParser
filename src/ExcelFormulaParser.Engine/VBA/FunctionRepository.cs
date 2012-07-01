@@ -12,30 +12,17 @@ namespace ExcelFormulaParser.Engine.VBA
     public class FunctionRepository
     {
         private Dictionary<string, VBAFunction> _functions = new Dictionary<string, VBAFunction>();
-        private static object _syncRoot = new object();
 
         private FunctionRepository()
         {
 
         }
 
-        private static FunctionRepository _instance;
-        public static FunctionRepository Instance
+        public static FunctionRepository Create()
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_syncRoot)
-                    {
-                        if (_instance == null)
-                        {
-                            _instance = new FunctionRepository();
-                        }
-                    }
-                }
-                return _instance;
-            }
+            var repo = new FunctionRepository();
+            repo.LoadModule(new BuiltInFunctions());
+            return repo;
         }
 
         /// <summary>

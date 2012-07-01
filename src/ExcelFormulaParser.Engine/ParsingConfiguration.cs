@@ -20,7 +20,7 @@ namespace ExcelFormulaParser.Engine
 
         private ParsingConfiguration() 
         {
-            FunctionRepository = FunctionRepository.Instance;
+            FunctionRepository = FunctionRepository.Create();
         }
 
         internal static ParsingConfiguration Create()

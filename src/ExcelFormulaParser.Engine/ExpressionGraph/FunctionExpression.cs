@@ -8,13 +8,13 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
     public class FunctionExpression : AtomicExpression
     {
-        public FunctionExpression(string expression, FunctionRepository functionRepository)
+        public FunctionExpression(string expression, ParsingContext parsingContext)
             : base(expression)
         {
-            _functionRepository = functionRepository;
+            _parsingContext = parsingContext;
         }
 
-        private readonly FunctionRepository _functionRepository;
+        private readonly ParsingContext _parsingContext;
 
         public override bool IsFunctionExpression
         {
@@ -32,8 +32,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 var arg = child.Compile().Result;
                 args.Add(arg);
             }
-            var function = _functionRepository.GetFunction(ExpressionString);
-            return function.Execute(args);
+            var function = _parsingContext.Configuration.FunctionRepository.GetFunction(ExpressionString);
+            return function.Execute(args, _parsingContext);
         }
 
         public override Expression MergeWithNext()

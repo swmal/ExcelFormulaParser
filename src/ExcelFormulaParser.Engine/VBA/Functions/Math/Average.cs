@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Average : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             double nValues = 0d, result = 0d;

@@ -5,11 +5,11 @@ using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using System.Globalization;
 
-namespace ExcelFormulaParser.Engine.VBA.Functions
+namespace ExcelFormulaParser.Engine.VBA.Functions.Numeric
 {
     public class CInt : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             var obj = arguments.ElementAt(0);

@@ -6,6 +6,7 @@ using ExcelFormulaParser.Engine.VBA.Functions.Text;
 using ExcelFormulaParser.Engine.VBA.Functions.Math;
 using ExcelFormulaParser.Engine.VBA.Functions.Logical;
 using ExcelFormulaParser.Engine.VBA.Functions.DateTime;
+using ExcelFormulaParser.Engine.VBA.Functions.Numeric;
 
 namespace ExcelFormulaParser.Engine.VBA.Functions
 {

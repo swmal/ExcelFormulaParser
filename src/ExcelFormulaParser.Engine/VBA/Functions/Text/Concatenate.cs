@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
 {
     public class Concatenate : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             if (arguments == null)
             {

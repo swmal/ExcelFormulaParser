@@ -13,7 +13,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
         {
 
         }
-        public override CompileResult Execute(IEnumerable<object> arguments)
+        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             var firstArg = arguments.ElementAt(0).ToString();
