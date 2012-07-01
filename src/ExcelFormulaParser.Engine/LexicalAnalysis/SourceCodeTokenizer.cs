@@ -90,7 +90,9 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
                                         ||
                                         context.LastToken.TokenType == TokenType.OpeningBracket
                                         ||
-                                        context.LastToken.TokenType == TokenType.Comma;
+                                        context.LastToken.TokenType == TokenType.Comma
+                                        ||
+                                        context.LastToken.TokenType == TokenType.OpeningEnumerable;
         }
 
         private bool IsPartOfMultipleCharSeparator(TokenizerContext context, char c)

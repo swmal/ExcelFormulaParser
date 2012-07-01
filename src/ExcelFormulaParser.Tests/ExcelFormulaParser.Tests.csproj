@@ -77,6 +77,7 @@
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />
     <Compile Include="TestHelpers\FunctionsHelper.cs" />
     <Compile Include="VBA\Functions\DateTimeFunctionsTests.cs" />
+    <Compile Include="VBA\Functions\FunctionArgumentTests.cs" />
     <Compile Include="VBA\Functions\LogicalFunctionsTests.cs" />
     <Compile Include="VBA\Functions\MathFunctionsTests.cs" />
     <Compile Include="VBA\Functions\NumberFunctionsTests.cs" />

@@ -88,6 +88,7 @@
     <Compile Include="ParsingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VBA\BuiltInFunctions.cs" />
+    <Compile Include="VBA\ExcelCellState.cs" />
     <Compile Include="VBA\FunctionRepository.cs" />
     <Compile Include="VBA\Functions\DateTime\Date.cs" />
     <Compile Include="VBA\Functions\DateTime\DateStringParser.cs" />

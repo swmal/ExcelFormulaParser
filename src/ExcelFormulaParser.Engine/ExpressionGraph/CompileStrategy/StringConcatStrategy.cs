@@ -26,7 +26,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph.CompileStrategy
             {
                 _expression.Next.Prev = newExp;
             }
-            return (StringExpression)newExp.MergeWithNext();
+            return newExp.MergeWithNext();
         }
     }
 }
