@@ -8,13 +8,13 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Average : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             double nValues = 0d, result = 0d;
             foreach (var arg in arguments)
             {
-                Calculate(arg, ref result, ref nValues);
+                Calculate(arg.Value, ref result, ref nValues);
             }
             return CreateResult(result/nValues, DataType.Decimal);
         }
@@ -36,11 +36,11 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
                 nValues++;
                 retVal += (bool)arg ? 1 : 0;
             }
-            else if (arg is IEnumerable<object>)
+            else if (arg is IEnumerable<FunctionArgument>)
             {
-                foreach (var item in (IEnumerable<object>)arg)
+                foreach (var item in (IEnumerable<FunctionArgument>)arg)
                 {
-                    Calculate(item, ref retVal, ref nValues);
+                    Calculate(item.Value, ref retVal, ref nValues);
                 }
             }
         }

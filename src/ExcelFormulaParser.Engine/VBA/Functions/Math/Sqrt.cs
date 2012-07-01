@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Sqrt : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             var arg = ArgToDecimal(arguments, 0);

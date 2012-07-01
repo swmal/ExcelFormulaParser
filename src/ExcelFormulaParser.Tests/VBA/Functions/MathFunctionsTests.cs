@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.VBA.Functions.Math;
 using System.Threading;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Tests.TestHelpers;
+using ExcelFormulaParser.Engine.VBA.Functions;
 
 namespace ExcelFormulaParser.Tests.VBA.Functions
 {
@@ -19,7 +21,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = (double)Math.Round(Math.PI, 14);
             var func = new Pi();
-            var args = new object[0];
+            var args = FunctionsHelper.CreateArgs(0);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -29,7 +31,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = 22.36d;
             var func = new Ceiling();
-            var args = new object[]{22.35d, 0.01};
+            var args = FunctionsHelper.CreateArgs(22.35d, 0.01);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -39,7 +41,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = -22.4d;
             var func = new Ceiling();
-            var args = new object[] { -22.35d, -0.1 };
+            var args = FunctionsHelper.CreateArgs(-22.35d, -0.1);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, System.Math.Round((double)result.Result, 2));
         }
@@ -49,7 +51,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = 23d;
             var func = new Ceiling();
-            var args = new object[] { 22.35d, 1 };
+            var args = FunctionsHelper.CreateArgs(22.35d, 1);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -59,7 +61,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = 30d;
             var func = new Ceiling();
-            var args = new object[] { 22.35d, 10 };
+            var args = FunctionsHelper.CreateArgs(22.35d, 10);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -69,7 +71,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = -30d;
             var func = new Ceiling();
-            var args = new object[] { -22.35d, -10 };
+            var args = FunctionsHelper.CreateArgs(-22.35d, -10);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -79,7 +81,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedValue = 30d;
             var func = new Ceiling();
-            var args = new object[] { 22.35d, -1 };
+            var args = FunctionsHelper.CreateArgs(22.35d, -1);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedValue, result.Result);
         }
@@ -88,7 +90,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void SumShouldCalculate2Plus3AndReturn5()
         {
             var func = new Sum();
-            var args = new object[] { 2, 3 };
+            var args = FunctionsHelper.CreateArgs(2, 3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(5d, result.Result);
         }
@@ -97,7 +99,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void SumShouldCalculateEnumerableOf2Plus5Plus3AndReturn10()
         {
             var func = new Sum();
-            var args = new object[] { new object[]{2, 5}, 3 };
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(2, 5), 3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(10d, result.Result);
         }
@@ -106,7 +108,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void StdevShouldCalculateCorrectResult()
         {
             var func = new Stdev();
-            var args = new object[] { 1, 3, 5 };
+            var args = FunctionsHelper.CreateArgs(1, 3, 5);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(1.63299d, Math.Round((double)result.Result, 5));
         }
@@ -115,7 +117,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void StdevPShouldCalculateCorrectResult()
         {
             var func = new StdevP();
-            var args = new object[] { 2, 3, 4 };
+            var args = FunctionsHelper.CreateArgs(2, 3, 4);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(0.8165d, Math.Round((double)result.Result, 5));
         }
@@ -124,7 +126,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void ExpShouldCalculateCorrectResult()
         {
             var func = new Exp();
-            var args = new object[] { 4 };
+            var args = FunctionsHelper.CreateArgs(4);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(54.59815003d, System.Math.Round((double)result.Result, 8));
         }
@@ -133,7 +135,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void MaxShouldCalculateCorrectResult()
         {
             var func = new Max();
-            var args = new object[] { 4, 2, 5, 2 };
+            var args = FunctionsHelper.CreateArgs(4, 2, 5, 2);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(5d, result.Result);
         }
@@ -142,7 +144,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void MinShouldCalculateCorrectResult()
         {
             var func = new Min();
-            var args = new object[] { 4, 2, 5, 2 };
+            var args = FunctionsHelper.CreateArgs(4, 2, 5, 2);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(2d, result.Result);
         }
@@ -152,7 +154,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedResult = (4d + 2d + 5d + 2d) / 4d;
             var func = new Average();
-            var args = new object[] { 4d, 2d, 5d, 2d };
+            var args = FunctionsHelper.CreateArgs(4d, 2d, 5d, 2d);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedResult, result.Result);
         }
@@ -162,7 +164,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedResult = (4d + 2d + 5d + 2d + 1d) / 5d;
             var func = new Average();
-            var args = new object[] { new object[]{ 4d, 2d }, 5d, 2d, true };
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(4d, 2d), 5d, 2d, true);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedResult, result.Result);
         }
@@ -171,7 +173,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void RoundShouldReturnCorrectResult()
         {
             var func = new Round();
-            var args = new object[] { 2.3433, 3 };
+            var args = FunctionsHelper.CreateArgs(2.3433, 3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(2.343d, result.Result);
         }
@@ -180,7 +182,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void RoundShouldReturnCorrectResultWhenNbrOfDecimalsIsNegative()
         {
             var func = new Round();
-            var args = new object[] { 9333, -3 };
+            var args = FunctionsHelper.CreateArgs(9333, -3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(9000d, result.Result);
         }
@@ -189,7 +191,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void FloorShouldReturnCorrectResultWhenSignificanceIsBetween0And1()
         {
             var func = new Floor();
-            var args = new object[] { 26.75d, 0.1 };
+            var args = FunctionsHelper.CreateArgs(26.75d, 0.1);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(26.7d, result.Result);
         }
@@ -198,7 +200,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void FloorShouldReturnCorrectResultWhenSignificanceIs1()
         {
             var func = new Floor();
-            var args = new object[] { 26.75d, 1 };
+            var args = FunctionsHelper.CreateArgs(26.75d, 1);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(26d, result.Result);
         }
@@ -207,7 +209,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void FloorShouldReturnCorrectResultWhenSignificanceIsMinus1()
         {
             var func = new Floor();
-            var args = new object[] { -26.75d, -1 };
+            var args = FunctionsHelper.CreateArgs(-26.75d, -1);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(-26d, result.Result);
         }
@@ -216,7 +218,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void RandShouldReturnAValueBetween0and1()
         {
             var func = new Rand();
-            var args = new object[0];
+            var args = new FunctionArgument[0];
             var result1 = func.Execute(args, _parsingContext);
             Assert.IsTrue(((double)result1.Result) > 0 && ((double) result1.Result) < 1);
             var result2 = func.Execute(args, _parsingContext);
@@ -228,7 +230,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void RandBetweenShouldReturnAnIntegerValueBetweenSuppliedValues()
         {
             var func = new RandBetween();
-            var args = new object[] { 1, 5 };
+            var args = FunctionsHelper.CreateArgs(1, 5);
             var result = func.Execute(args, _parsingContext);
             CollectionAssert.Contains(new List<double> { 1d, 2d, 3d, 4d, 5d }, result.Result);
         }
@@ -237,7 +239,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void RandBetweenShouldReturnAnIntegerValueBetweenSuppliedValuesWhenLowIsNegative()
         {
             var func = new RandBetween();
-            var args = new object[] { -5, 0 };
+            var args = FunctionsHelper.CreateArgs(-5, 0);
             var result = func.Execute(args, _parsingContext);
             CollectionAssert.Contains(new List<double> { 0d, -1d, -2d, -3d, -4d, -5d }, result.Result);
         }
@@ -246,7 +248,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void CountShouldReturnNumberOfNumericItems()
         {
             var func = new Count();
-            var args = new object[] { 1d, 2m, 3, new DateTime(2012, 4, 1), "4" };
+            var args = FunctionsHelper.CreateArgs(1d, 2m, 3, new DateTime(2012, 4, 1), "4");
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(4d, result.Result);
         }
@@ -256,7 +258,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void CountShouldIncludeEnumerableMembers()
         {
             var func = new Count();
-            var args = new object[] { 1d, new object[]{12, 13} };
+            var args = FunctionsHelper.CreateArgs(1d, FunctionsHelper.CreateArgs(12, 13));
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(3d, result.Result);
         }
@@ -265,7 +267,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void CountAShouldReturnNumberOfNonWhitespaceItems()
         {
             var func = new CountA();
-            var args = new object[] { 1d, 2m, 3, new DateTime(2012, 4, 1), "4", null, string.Empty };
+            var args = FunctionsHelper.CreateArgs(1d, 2m, 3, new DateTime(2012, 4, 1), "4", null, string.Empty);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(5d, result.Result);
         }
@@ -274,7 +276,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void CountAShouldIncludeEnumerableMembers()
         {
             var func = new CountA();
-            var args = new object[] { 1d, new object[] { 12, 13 } };
+            var args = FunctionsHelper.CreateArgs(1d, FunctionsHelper.CreateArgs(12, 13));
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(3d, result.Result);
         }
@@ -283,7 +285,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void ProductShouldMultiplyArguments()
         {
             var func = new Product();
-            var args = new object[] { 2d, 2d, 4d };
+            var args = FunctionsHelper.CreateArgs(2d, 2d, 4d);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(16d, result.Result);
         }
@@ -292,7 +294,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void ProductShouldHandleEnumerable()
         {
             var func = new Product();
-            var args = new object[] { 2d, 2d, new object[]{ 4d, 2d } };
+            var args = FunctionsHelper.CreateArgs(2d, 2d, FunctionsHelper.CreateArgs(4d, 2d));
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(32d, result.Result);
         }
@@ -301,7 +303,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void ProductShouldHandleFirstItemIsEnumerable()
         {
             var func = new Product();
-            var args = new object[] { new object[] { 4d, 2d }, 2d, 2d };
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(4d, 2d), 2d, 2d);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(32d, result.Result);
         }

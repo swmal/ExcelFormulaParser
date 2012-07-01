@@ -8,12 +8,13 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Product : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 2);
             var first = CalculateFirstItem(arguments);
-            var result = CalculateCollection(arguments.Skip(1), first, (obj, current) =>
+            var result = CalculateCollection(arguments.Skip(1), first, (arg, current) =>
             {
+                var obj = arg.Value;
                 if (obj != null)
                 {
                     if (obj is double)
@@ -26,24 +27,24 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             return CreateResult(result, DataType.Decimal);
         }
 
-        private double CalculateFirstItem(IEnumerable<object> arguments)
+        private double CalculateFirstItem(IEnumerable<FunctionArgument> arguments)
         {
-            var firstElement = arguments.ElementAt(0);
-            if (firstElement is IEnumerable<object>)
+            var firstElement = arguments.ElementAt(0).Value;
+            if (firstElement is IEnumerable<FunctionArgument>)
             {
-                var items = (IEnumerable<object>)firstElement;
+                var items = (IEnumerable<FunctionArgument>)firstElement;
                 double? result = null;
                 foreach (var item in items)
                 {
-                    if (item is double)
+                    if (item.Value is double)
                     {
                         if (result.HasValue)
                         {
-                            result *= (double)item;
+                            result *= (double)item.Value;
                         }
                         else
                         {
-                            result = (double)item;
+                            result = (double)item.Value;
                         }
                     }
                 }

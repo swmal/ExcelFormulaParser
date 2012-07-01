@@ -8,10 +8,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
     public class Year : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
-            var dateObj = arguments.ElementAt(0);
+            var dateObj = arguments.ElementAt(0).Value;
             System.DateTime date = System.DateTime.MinValue;
             if (dateObj is double)
             {

@@ -25,7 +25,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
             private set;
         }
 
-        public void ValidateAndInitSerialNumber(IEnumerable<object> arguments)
+        public void ValidateAndInitSerialNumber(IEnumerable<FunctionArgument> arguments)
         {
             ValidateArguments(arguments, 1);
             SerialNumber = (double)ArgToDecimal(arguments, 0);

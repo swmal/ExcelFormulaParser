@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
 {
     public class CStr : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             return CreateResult(ArgToString(arguments, 0), DataType.String);

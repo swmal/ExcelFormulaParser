@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.VBA.Functions;
 using ExcelFormulaParser.Engine.VBA.Functions.Numeric;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Tests.TestHelpers;
 
 namespace ExcelFormulaParser.Tests.VBA.Functions
 {
@@ -18,7 +19,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void CIntShouldConvertTextToInteger()
         {
             var func = new CInt();
-            var args = new object[] { "2" };
+            var args = FunctionsHelper.CreateArgs("2");
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(2, result.Result);
         }
@@ -27,7 +28,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void IntShouldConvertDecimalToInteger()
         {
             var func = new CInt();
-            var args = new object[] { 2.88m };
+            var args = FunctionsHelper.CreateArgs(2.88m);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(2, result.Result);
         }
@@ -36,7 +37,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void IntShouldConvertNegativeDecimalToInteger()
         {
             var func = new CInt();
-            var args = new object[] { -2.88m };
+            var args = FunctionsHelper.CreateArgs(-2.88m);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(-3, result.Result);
         }
@@ -45,7 +46,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void IntShouldConvertStringToInteger()
         {
             var func = new CInt();
-            var args = new object[] { "-2.88" };
+            var args = FunctionsHelper.CreateArgs("-2.88");
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(-3, result.Result);
         }

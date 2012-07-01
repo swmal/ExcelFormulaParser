@@ -8,10 +8,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Text
 {
     public class Upper : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
-            return CreateResult(arguments.First().ToString().ToUpper(), DataType.String);
+            return CreateResult(arguments.First().Value.ToString().ToUpper(), DataType.String);
         }
     }
 }

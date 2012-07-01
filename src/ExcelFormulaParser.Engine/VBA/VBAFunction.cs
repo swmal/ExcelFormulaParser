@@ -9,9 +9,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
 {
     public abstract class VBAFunction
     {
-        public abstract CompileResult Execute(IEnumerable<object> arguments, ParsingContext context);
+        public abstract CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context);
 
-        protected void ValidateArguments(IEnumerable<object> arguments, int minLength)
+        protected void ValidateArguments(IEnumerable<FunctionArgument> arguments, int minLength)
         {
             if (arguments == null)
             {
@@ -23,9 +23,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             }
         }
 
-        protected int ArgToInt(IEnumerable<object> arguments, int index)
+        protected int ArgToInt(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var obj = arguments.ElementAt(index);
+            var obj = arguments.ElementAt(index).Value;
             if(obj == null) throw new ArgumentNullException("expected argument (int) was null");
             int result;
             var objType = obj.GetType();
@@ -44,20 +44,19 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             return result;
         }
 
-        protected string ArgToString(IEnumerable<object> arguments, int index)
+        protected string ArgToString(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var obj = arguments.ElementAt(index);
+            var obj = arguments.ElementAt(index).Value;
             return obj != null ? obj.ToString() : string.Empty;
         }
 
-        protected double ArgToDecimal(IEnumerable<object> arguments, int index)
+        protected double ArgToDecimal(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var obj = arguments.ElementAt(index);
+            var obj = arguments.ElementAt(index).Value;
             var str = obj != null ? obj.ToString() : string.Empty;
             var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
             if (decimalSeparator == ",")
             {
-                
                 str = str.Replace('.', ',');
             }
             return double.Parse(str);
@@ -71,9 +70,9 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
         /// <param name="arguments"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        protected bool ArgToBool(IEnumerable<object> arguments, int index)
+        protected bool ArgToBool(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var obj = arguments.ElementAt(index) ?? string.Empty;
+            var obj = arguments.ElementAt(index).Value ?? string.Empty;
             bool result;
             if (bool.TryParse(obj.ToString(), out result))
             {
@@ -101,12 +100,12 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             return val.GetType() == typeof(int) || val.GetType() == typeof(double) || val.GetType() == typeof(decimal);
         }
 
-        protected IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<object> arguments)
+        protected IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<FunctionArgument> arguments)
         {
             var values = new List<double>();
             for (var x = 0; x < arguments.Count(); x++)
             {
-                var arg = arguments.ElementAt(x);
+                var arg = arguments.ElementAt(x).Value;
                 if(IsNumeric(arg))
                 {
                     values.Add((double)ArgToDecimal(arguments, x));
@@ -126,13 +125,13 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             return new CompileResult(result, dataType);
         }
 
-        protected virtual double CalculateCollection(IEnumerable<object> collection, double result, Func<object,double,double> action)
+        protected virtual double CalculateCollection(IEnumerable<FunctionArgument> collection, double result, Func<FunctionArgument,double,double> action)
         {
             foreach (var item in collection)
             {
-                if (item is IEnumerable<object>)
+                if (item.Value is IEnumerable<FunctionArgument>)
                 {
-                    result = CalculateCollection((IEnumerable<object>)item, result, action);
+                    result = CalculateCollection((IEnumerable<FunctionArgument>)item.Value, result, action);
                 }
                 else
                 {

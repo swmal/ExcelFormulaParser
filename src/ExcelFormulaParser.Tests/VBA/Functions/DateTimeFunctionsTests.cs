@@ -7,6 +7,8 @@ using ExcelFormulaParser.Engine.VBA.Functions.DateTime;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using System.Threading;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Tests.TestHelpers;
+using ExcelFormulaParser.Engine.VBA.Functions;
 
 namespace ExcelFormulaParser.Tests.VBA.Functions
 {
@@ -25,7 +27,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void DateFunctionShouldReturnADate()
         {
             var func = new Date();
-            var args = new object[] { 2012, 4, 3 };
+            var args = FunctionsHelper.CreateArgs(2012, 4, 3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(DataType.Date, result.DataType);
         }
@@ -35,7 +37,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedDate = new DateTime(2012, 4, 3);
             var func = new Date();
-            var args = new object[] { 2012, 4, 3 };
+            var args = FunctionsHelper.CreateArgs(2012, 4, 3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedDate.ToOADate(), result.Result);
         }
@@ -45,7 +47,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedDate = new DateTime(2011, 11, 3);
             var func = new Date();
-            var args = new object[] { 2012, -1, 3 };
+            var args = FunctionsHelper.CreateArgs(2012, -1, 3);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedDate.ToOADate(), result.Result);
         }
@@ -56,7 +58,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var startTime = DateTime.Now;
             Thread.Sleep(1);
             var func = new Now();
-            var args = new object[0];
+            var args = new FunctionArgument[0];
             var result = func.Execute(args, _parsingContext);
             Thread.Sleep(1);
             var endTime = DateTime.Now;
@@ -68,7 +70,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void TodayFunctionShouldReturnTodaysDate()
         {
             var func = new Today();
-            var args = new object[0];
+            var args = new FunctionArgument[0];
             var result = func.Execute(args, _parsingContext);
             var resultDate = DateTime.FromOADate((double)result.Result);
             Assert.AreEqual(DateTime.Now.Date, resultDate);
@@ -79,7 +81,8 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Day();
-            var result = func.Execute(new object[] { date.ToOADate() }, _parsingContext);
+            var args = FunctionsHelper.CreateArgs(date.ToOADate());
+            var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(12, result.Result);
         }
 
@@ -88,7 +91,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Day();
-            var result = func.Execute(new object[] { "2012-03-12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("2012-03-12"), _parsingContext);
             Assert.AreEqual(12, result.Result);
         }
 
@@ -97,7 +100,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Month();
-            var result = func.Execute(new object[] { date.ToOADate() }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(date.ToOADate()), _parsingContext);
             Assert.AreEqual(3, result.Result);
         }
 
@@ -106,7 +109,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Month();
-            var result = func.Execute(new object[] { "2012-03-12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("2012-03-12"), _parsingContext);
             Assert.AreEqual(3, result.Result);
         }
 
@@ -115,7 +118,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Year();
-            var result = func.Execute(new object[] { date.ToOADate() }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(date.ToOADate()), _parsingContext);
             Assert.AreEqual(2012, result.Result);
         }
 
@@ -124,7 +127,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var date = new DateTime(2012, 3, 12);
             var func = new Year();
-            var result = func.Execute(new object[] { "2012-03-12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("2012-03-12"), _parsingContext);
             Assert.AreEqual(2012, result.Result);
         }
 
@@ -133,7 +136,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedResult = GetTime(10, 11, 12);
             var func = new Time();
-            var result = func.Execute(new object[] { 10, 11, 12 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(10, 11, 12), _parsingContext);
             Assert.AreEqual(expectedResult, result.Result);  
         }
 
@@ -142,7 +145,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         {
             var expectedResult = GetTime(10, 11, 12);
             var func = new Time();
-            var result = func.Execute(new object[] { "10:11:12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("10:11:12"), _parsingContext);
             Assert.AreEqual(expectedResult, result.Result);
         }
 
@@ -150,31 +153,31 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void TimeShouldThrowExceptionIfSecondsIsOutOfRange()
         {
             var func = new Time();
-            var result = func.Execute(new object[] { 10, 11, 60 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(10, 11, 60), _parsingContext);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void TimeShouldThrowExceptionIfMinuteIsOutOfRange()
         {
             var func = new Time();
-            var result = func.Execute(new object[] { 10, 60, 12 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(10, 60, 12), _parsingContext);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void TimeShouldThrowExceptionIfHourIsOutOfRange()
         {
             var func = new Time();
-            var result = func.Execute(new object[] { 24, 12, 12 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(24, 12, 12), _parsingContext);
         }
 
         [TestMethod]
         public void HourShouldReturnCorrectResult()
         {
             var func = new Hour();
-            var result = func.Execute(new object[] { GetTime(9, 13, 14) }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(GetTime(9, 13, 14)), _parsingContext);
             Assert.AreEqual(9, result.Result);
 
-            result = func.Execute(new object[] { GetTime(23, 13, 14) }, _parsingContext);
+            result = func.Execute(FunctionsHelper.CreateArgs(GetTime(23, 13, 14)), _parsingContext);
             Assert.AreEqual(23, result.Result);
         }
 
@@ -182,10 +185,10 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void MinuteShouldReturnCorrectResult()
         {
             var func = new Minute();
-            var result = func.Execute(new object[] { GetTime(9, 14, 14) }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(GetTime(9, 14, 14)), _parsingContext);
             Assert.AreEqual(14, result.Result);
 
-            result = func.Execute(new object[] { GetTime(9, 55, 14) }, _parsingContext);
+            result = func.Execute(FunctionsHelper.CreateArgs(GetTime(9, 55, 14)), _parsingContext);
             Assert.AreEqual(55, result.Result);
         }
 
@@ -193,7 +196,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void SecondShouldReturnCorrectResult()
         {
             var func = new Second();
-            var result = func.Execute(new object[] { GetTime(9, 14, 17) }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(GetTime(9, 14, 17)), _parsingContext);
             Assert.AreEqual(17, result.Result);
         }
 
@@ -201,7 +204,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void SecondShouldReturnCorrectResultWithStringArgument()
         {
             var func = new Second();
-            var result = func.Execute(new object[] { "2012-03-27 10:11:12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("2012-03-27 10:11:12"), _parsingContext);
             Assert.AreEqual(12, result.Result);
         }
 
@@ -209,7 +212,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void MinuteShouldReturnCorrectResultWithStringArgument()
         {
             var func = new Minute();
-            var result = func.Execute(new object[] { "2012-03-27 10:11:12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("2012-03-27 10:11:12"), _parsingContext);
             Assert.AreEqual(11, result.Result);
         }
 
@@ -217,7 +220,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void HourShouldReturnCorrectResultWithStringArgument()
         {
             var func = new Hour();
-            var result = func.Execute(new object[] { "2012-03-27 10:11:12" }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs("2012-03-27 10:11:12"), _parsingContext);
             Assert.AreEqual(10, result.Result);
         }
 
@@ -225,7 +228,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void WeekdayShouldReturnCorrectResultForASundayWhenReturnTypeIs1()
         {
             var func = new Weekday();
-            var result = func.Execute(new object[] { new DateTime(2012, 4, 1).ToOADate(), 1 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(new DateTime(2012, 4, 1).ToOADate(), 1), _parsingContext);
             Assert.AreEqual(1, result.Result);
         }
 
@@ -233,7 +236,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void WeekdayShouldReturnCorrectResultForASundayWhenReturnTypeIs2()
         {
             var func = new Weekday();
-            var result = func.Execute(new object[] { new DateTime(2012, 4, 1).ToOADate(), 2 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(new DateTime(2012, 4, 1).ToOADate(), 2), _parsingContext);
             Assert.AreEqual(7, result.Result);
         }
 
@@ -241,7 +244,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
         public void WeekdayShouldReturnCorrectResultForASundayWhenReturnTypeIs3()
         {
             var func = new Weekday();
-            var result = func.Execute(new object[] { new DateTime(2012, 4, 1).ToOADate(), 3 }, _parsingContext);
+            var result = func.Execute(FunctionsHelper.CreateArgs(new DateTime(2012, 4, 1).ToOADate(), 3), _parsingContext);
             Assert.AreEqual(6, result.Result);
         }
     }

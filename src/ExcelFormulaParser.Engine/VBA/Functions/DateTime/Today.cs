@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
     public class Today : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             return CreateResult(System.DateTime.Today.ToOADate(), DataType.Date);
         }

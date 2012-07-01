@@ -8,10 +8,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.DateTime
 {
     public class Hour : TimeBaseFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
-            var firstArg = arguments.ElementAt(0).ToString();
+            var firstArg = arguments.ElementAt(0).Value.ToString();
             if (arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
             {
                 var result = TimeStringParser.Parse(firstArg);

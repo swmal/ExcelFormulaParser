@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\BasicCalcTests.cs" />
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />
+    <Compile Include="TestHelpers\FunctionsHelper.cs" />
     <Compile Include="VBA\Functions\DateTimeFunctionsTests.cs" />
     <Compile Include="VBA\Functions\LogicalFunctionsTests.cs" />
     <Compile Include="VBA\Functions\MathFunctionsTests.cs" />

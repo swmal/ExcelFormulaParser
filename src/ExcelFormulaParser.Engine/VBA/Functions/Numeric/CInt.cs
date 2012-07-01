@@ -9,10 +9,10 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Numeric
 {
     public class CInt : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
-            var obj = arguments.ElementAt(0);
+            var obj = arguments.ElementAt(0).Value;
             return CreateResult(ToInteger(obj), DataType.Integer);
         }
 

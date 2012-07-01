@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.VBA.Functions;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
@@ -26,14 +27,31 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
-            var args = new List<object>();
+            var args = new List<FunctionArgument>();
             foreach (var child in Children)
             {
                 var arg = child.Compile().Result;
-                args.Add(arg);
+                BuildFunctionArguments(arg, args);
             }
             var function = _parsingContext.Configuration.FunctionRepository.GetFunction(ExpressionString);
             return function.Execute(args, _parsingContext);
+        }
+
+        private static void BuildFunctionArguments(object result, List<FunctionArgument> args)
+        {
+            if (result is IEnumerable<object>)
+            {
+                var argList = new List<FunctionArgument>();
+                foreach (var arg in ((IEnumerable<object>)result))
+                {
+                    BuildFunctionArguments(arg, argList);
+                }
+                args.Add(new FunctionArgument(argList));
+            }
+            else
+            {
+                args.Add(new FunctionArgument(result));
+            }
         }
 
         public override Expression MergeWithNext()

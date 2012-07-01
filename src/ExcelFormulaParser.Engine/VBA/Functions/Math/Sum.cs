@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class Sum : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             var retVal = 0d;
             if (arguments != null)
@@ -21,24 +21,24 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             return CreateResult(retVal, DataType.Decimal);
         }
 
-        private double Calculate(object arg)
+        private double Calculate(FunctionArgument arg)
         {
             var retVal = 0d;
-            if (arg is double)
+            if (arg.Value is double)
             {
-                retVal += Convert.ToDouble((double)arg);
+                retVal += Convert.ToDouble((double)arg.Value);
             }
-            else if (arg is int)
+            else if (arg.Value is int)
             {
-                retVal += Convert.ToDouble((int)arg);
+                retVal += Convert.ToDouble((int)arg.Value);
             }
-            else if (arg is System.DateTime)
+            else if (arg.Value is System.DateTime)
             {
-                retVal += Convert.ToDateTime(arg).ToOADate();
+                retVal += Convert.ToDateTime(arg.Value).ToOADate();
             }
-            else if (arg is IEnumerable<object>)
+            else if (arg.Value is IEnumerable<FunctionArgument>)
             {
-                foreach (var item in (IEnumerable<object>)arg)
+                foreach (var item in (IEnumerable<FunctionArgument>)arg.Value)
                 {
                     retVal += Calculate(item);
                 }

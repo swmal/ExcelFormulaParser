@@ -8,7 +8,7 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
 {
     public class CountA : VBAFunction
     {
-        public override CompileResult Execute(IEnumerable<object> arguments, ParsingContext context)
+        public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             var nItems = 0d;
@@ -16,15 +16,15 @@ namespace ExcelFormulaParser.Engine.VBA.Functions.Math
             return CreateResult(nItems, DataType.Integer);
         }
 
-        private void Calculate(IEnumerable<object> items, ref double nItems)
+        private void Calculate(IEnumerable<FunctionArgument> items, ref double nItems)
         {
             foreach (var item in items)
             {
-                if (item is IEnumerable<object>)
+                if (item.Value is IEnumerable<FunctionArgument>)
                 {
-                    Calculate((IEnumerable<object>)item, ref nItems);
+                    Calculate((IEnumerable<FunctionArgument>)item.Value, ref nItems);
                 }
-                else if (ShouldCount(item))
+                else if (ShouldCount(item.Value))
                 {
                     nItems++;
                 }
