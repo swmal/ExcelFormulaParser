@@ -19,6 +19,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
         GreaterThanOrEqual,
         LessThan,
         LessThanOrEqual,
-        IntegerDivision
+        IntegerDivision,
+        Exponentiation
     }
 }

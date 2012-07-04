@@ -38,5 +38,12 @@ namespace ExcelFormulaParser.Tests.Excel
             var result = Operator.Eq.Apply(new CompileResult(11, DataType.Integer), new CompileResult(12, DataType.Integer));
             Assert.IsFalse((bool)result.Result);
         }
+
+        [TestMethod]
+        public void OperatorExpShouldReturnCorrectResult()
+        {
+            var result = Operator.Exp.Apply(new CompileResult(2, DataType.Integer), new CompileResult(3, DataType.Integer));
+            Assert.AreEqual(8d, result.Result);
+        }
     }
 }

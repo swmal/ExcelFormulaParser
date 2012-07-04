@@ -8,6 +8,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
 {
     public class Operator : IOperator
     {
+        private const int PrecedenceExp = 2;
         private const int PrecedenceMultiplyDevide = 3;
         private const int PrecedenceIntegerDivision = 4;
         private const int PrecedenceModulus = 5;
@@ -132,6 +133,17 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
+            }
+        }
+
+        public static IOperator Exp
+        {
+            get
+            {
+                return new Operator(Operators.Exponentiation, PrecedenceExp, (l, r) =>
+                    {
+                        return new CompileResult(Math.Pow(Convert.ToDouble(l.Result), Convert.ToDouble(r.Result)), DataType.Decimal);
+                    });
             }
         }
 

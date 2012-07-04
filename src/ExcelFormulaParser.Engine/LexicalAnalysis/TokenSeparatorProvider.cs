@@ -23,6 +23,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             _tokens.Add("-", new Token("-", TokenType.Operator));
             _tokens.Add("*", new Token("*", TokenType.Operator));
             _tokens.Add("/", new Token("/", TokenType.Operator));
+            _tokens.Add("^", new Token("^", TokenType.Operator));
             _tokens.Add("&", new Token("&", TokenType.Operator));
             _tokens.Add(">", new Token(">", TokenType.Operator));
             _tokens.Add("<", new Token("<", TokenType.Operator));

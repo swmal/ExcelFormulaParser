@@ -55,6 +55,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         }
 
         [TestMethod]
+        public void ShouldHandleExpCorrectly()
+        {
+            var result = _parser.Parse("=2 ^ 4");
+            Assert.AreEqual(16d, result);
+        }
+
+        [TestMethod]
         public void ShouldMultiplyDecimalWithDecimalCorrectly()
         {
             var result = _parser.Parse("=2.5 * 1.5");

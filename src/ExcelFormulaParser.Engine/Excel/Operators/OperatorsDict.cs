@@ -13,6 +13,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             Add("-", Operator.Minus);
             Add("*", Operator.Multiply);
             Add("/", Operator.Divide);
+            Add("^", Operator.Exp);
             Add("=", Operator.Eq);
             Add(">", Operator.GreaterThan);
             Add(">=", Operator.GreaterThanOrEqual);
