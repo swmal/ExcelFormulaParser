@@ -7,6 +7,12 @@ namespace ExcelFormulaParser.Engine
 {
     public class ParsingScopes
     {
+        private readonly IParsingLifetimeEventHandler _lifetimeEventHandler;
+
+        public ParsingScopes(IParsingLifetimeEventHandler lifetimeEventHandler)
+        {
+            _lifetimeEventHandler = lifetimeEventHandler;
+        }
         private Stack<ParsingScope> _scopes = new Stack<ParsingScope>();
 
         public virtual ParsingScope NewScope()
@@ -24,6 +30,10 @@ namespace ExcelFormulaParser.Engine
         public virtual void KillScope(ParsingScope parsingScope)
         {
             _scopes.Pop();
+            if (_scopes.Count() == 0)
+            {
+                _lifetimeEventHandler.ParsingCompleted();
+            }
         }
     }
 }

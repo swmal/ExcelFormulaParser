@@ -8,7 +8,7 @@ using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine
 {
-    public class ParsingContext
+    public class ParsingContext : IParsingLifetimeEventHandler
     {
         private ParsingContext() { }
 
@@ -25,8 +25,13 @@ namespace ExcelFormulaParser.Engine
             var context = new ParsingContext();
             context.Configuration = ParsingConfiguration.Create();
             context.Ranges = new Ranges();
-            context.Scopes = new ParsingScopes();
+            context.Scopes = new ParsingScopes(context);
             return context;
+        }
+
+        void IParsingLifetimeEventHandler.ParsingCompleted()
+        {
+            Ranges.Clear();
         }
     }
 }

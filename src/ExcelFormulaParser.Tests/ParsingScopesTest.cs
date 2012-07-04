@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine;
+using Rhino.Mocks;
 
 namespace ExcelFormulaParser.Tests
 {
@@ -11,11 +12,13 @@ namespace ExcelFormulaParser.Tests
     public class ParsingScopesTest
     {
         private ParsingScopes _parsingScopes;
+        private IParsingLifetimeEventHandler _lifeTimeEventHandler;
 
         [TestInitialize]
         public void Setup()
         {
-            _parsingScopes = new ParsingScopes();
+            _lifeTimeEventHandler = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
+            _parsingScopes = new ParsingScopes(_lifeTimeEventHandler);
         }
 
         [TestMethod]
@@ -28,11 +31,34 @@ namespace ExcelFormulaParser.Tests
         }
 
         [TestMethod]
+        public void CurrentScopeShouldHandleNestedScopes()
+        {
+            using (var scope1 = _parsingScopes.NewScope())
+            {
+                Assert.AreEqual(_parsingScopes.Current, scope1);
+                using (var scope2 = _parsingScopes.NewScope())
+                {
+                    Assert.AreEqual(_parsingScopes.Current, scope2);
+                }
+                Assert.AreEqual(_parsingScopes.Current, scope1);
+            }
+            Assert.IsNull(_parsingScopes.Current);
+        }
+
+        [TestMethod]
         public void CurrentScopeShouldBeNullWhenScopeHasTerminated()
         {
             using (var scope = _parsingScopes.NewScope())
             { }
             Assert.IsNull(_parsingScopes.Current);
+        }
+
+        [TestMethod]
+        public void LifetimeEventHandlerShouldBeCalled()
+        {
+            using (var scope = _parsingScopes.NewScope())
+            { }
+            _lifeTimeEventHandler.AssertWasCalled(x => x.ParsingCompleted());
         }
     }
 }

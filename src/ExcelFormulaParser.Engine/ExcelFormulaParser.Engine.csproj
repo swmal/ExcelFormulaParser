@@ -75,6 +75,7 @@
     <Compile Include="ExpressionGraph\IntegerExpression.cs" />
     <Compile Include="ExpressionGraph\StringExpression.cs" />
     <Compile Include="FormulaParser.cs" />
+    <Compile Include="IParsingLifetimeEventHandler.cs" />
     <Compile Include="LexicalAnalysis\ILexer.cs" />
     <Compile Include="LexicalAnalysis\ISourceCodeTokenizer.cs" />
     <Compile Include="LexicalAnalysis\ISyntacticAnalyzer.cs" />
