@@ -12,16 +12,18 @@ namespace ExcelFormulaParser.EPPlus
     {
         private readonly ExcelPackage _package;
         private ExcelWorksheet _currentWorksheet;
+        private RangeAddressFactory _rangeAddressFactory;
 
         public EPPlusExcelDataProvider(ExcelPackage package)
         {
             _package = package;
+            _rangeAddressFactory = new RangeAddressFactory(this);
         }
 
         public override IEnumerable<ExcelDataItem> GetRangeValues(string address)
         {
             var returnList = new List<ExcelDataItem>();
-            var startAddress = RangeAddress.Parse(address);
+            var startAddress = _rangeAddressFactory.Create(address);
             if (AddressHasWorkbookName(address))
             {
                 _currentWorksheet = _package.Workbook.Worksheets[GetWorksheetName(address)];

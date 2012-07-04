@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExcelUtilities;
+using Rhino.Mocks;
+using ExcelFormulaParser.Engine;
 
 namespace ExcelFormulaParser.Tests.ExcelUtilities
 {

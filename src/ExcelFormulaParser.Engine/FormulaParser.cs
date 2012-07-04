@@ -17,18 +17,20 @@ namespace ExcelFormulaParser.Engine
     {
         private readonly ParsingContext _parsingContext;
         private readonly ExcelDataProvider _excelDataProvider;
+        private readonly RangeAddressFactory _rangeAddressFactory;
 
         public FormulaParser(ExcelDataProvider excelDataProvider)
-            : this(excelDataProvider, ParsingContext.Create())
+            : this(excelDataProvider, ParsingContext.Create(), new RangeAddressFactory(excelDataProvider))
         {
            
         }
 
-        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
+        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext, RangeAddressFactory rangeAddressFactory)
         {
             parsingContext.Parser = this;
             _parsingContext = parsingContext;
             _excelDataProvider = excelDataProvider;
+            _rangeAddressFactory = rangeAddressFactory;
             Configure(configuration =>
             {
                 configuration
@@ -73,7 +75,7 @@ namespace ExcelFormulaParser.Engine
 
         public virtual object Parse(string formula, string address)
         {
-            return Parse(formula, RangeAddress.Parse(address));
+            return Parse(formula, _rangeAddressFactory.Create(address));
         }
 
         public virtual object Parse(string formula)
@@ -86,7 +88,7 @@ namespace ExcelFormulaParser.Engine
             Require.That(address).Named("address").IsNotNullOrEmpty();
             var dataItem = _excelDataProvider.GetRangeValues(address).First();
             if (dataItem.Value == null) return null;
-            return Parse(dataItem.Value.ToString(), RangeAddress.Parse(address));
+            return Parse(dataItem.Value.ToString(), _rangeAddressFactory.Create(address));
         }
 
         private static bool IsFormulaCandidate(string formula)

@@ -14,11 +14,14 @@ namespace ExcelFormulaParser.Tests
     public class FormulaDependencyTests
     {
         private IParsingLifetimeEventHandler _lifeTimeEventHandler;
+        private RangeAddressFactory _factory;
 
         [TestInitialize]
         public void Setup()
         {
             _lifeTimeEventHandler = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _factory = new RangeAddressFactory(provider);
         }
 
         [TestMethod]
@@ -34,7 +37,7 @@ namespace ExcelFormulaParser.Tests
         public void ConstructorShouldSetAddress()
         {
             var scopes = new ParsingScopes(_lifeTimeEventHandler);
-            var expectedAddress = RangeAddress.Parse("A1");
+            var expectedAddress = _factory.Create("A1");
             var scope = new ParsingScope(scopes, expectedAddress);
             var dependency = new FormulaDependency(scope);
             Assert.AreEqual(expectedAddress, dependency.Address);
@@ -45,8 +48,8 @@ namespace ExcelFormulaParser.Tests
         {
             var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
             var scopes = new ParsingScopes(lifetimeMock);
-            var scope1 = scopes.NewScope(RangeAddress.Parse("A2"));
-            var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
+            var scope1 = scopes.NewScope(_factory.Create("A2"));
+            var scope2 = scopes.NewScope(_factory.Create("A2"));
             var formulaDependency = new FormulaDependency(scope1);
             formulaDependency.AddReferenceFrom(scope2.Address);
             formulaDependency.AddReferenceTo(scope2.Address);
@@ -57,8 +60,8 @@ namespace ExcelFormulaParser.Tests
         {
             var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
             var scopes = new ParsingScopes(lifetimeMock);
-            var scope1 = scopes.NewScope(RangeAddress.Parse("A2"));
-            var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
+            var scope1 = scopes.NewScope(_factory.Create("A2"));
+            var scope2 = scopes.NewScope(_factory.Create("A2"));
             var formulaDependency = new FormulaDependency(scope1);
             formulaDependency.AddReferenceTo(scope2.Address);
             formulaDependency.AddReferenceFrom(scope2.Address);
@@ -69,8 +72,8 @@ namespace ExcelFormulaParser.Tests
         {
             var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
             var scopes = new ParsingScopes(lifetimeMock);
-            var scope1 = scopes.NewScope(RangeAddress.Parse("A1"));
-            var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
+            var scope1 = scopes.NewScope(_factory.Create("A1"));
+            var scope2 = scopes.NewScope(_factory.Create("A2"));
             var formulaDependency = new FormulaDependency(scope1);
             formulaDependency.AddReferenceFrom(scope2.Address);
             formulaDependency.AddReferenceTo(scope2.Address);
@@ -81,8 +84,8 @@ namespace ExcelFormulaParser.Tests
         {
             var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
             var scopes = new ParsingScopes(lifetimeMock);
-            var scope1 = scopes.NewScope(RangeAddress.Parse("A1"));
-            var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
+            var scope1 = scopes.NewScope(_factory.Create("A1"));
+            var scope2 = scopes.NewScope(_factory.Create("A2"));
             var formulaDependency = new FormulaDependency(scope1);
             formulaDependency.AddReferenceTo(scope2.Address);
             formulaDependency.AddReferenceFrom(scope2.Address);

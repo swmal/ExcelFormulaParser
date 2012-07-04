@@ -14,10 +14,13 @@ namespace ExcelFormulaParser.Tests
     {
         private IParsingLifetimeEventHandler _lifeTimeEventHandler;
         private ParsingScopes _parsingScopes;
+        private RangeAddressFactory _factory;
 
         [TestInitialize]
         public void Setup()
         {
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _factory = new RangeAddressFactory(provider);
             _lifeTimeEventHandler = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
             _parsingScopes = MockRepository.GenerateStub<ParsingScopes>(_lifeTimeEventHandler);
         }
@@ -25,7 +28,7 @@ namespace ExcelFormulaParser.Tests
         [TestMethod]
         public void ConstructorShouldSetAddress()
         {
-            var expectedAddress =  RangeAddress.Parse("A1");
+            var expectedAddress =  _factory.Create("A1");
             var scope = new ParsingScope(_parsingScopes, expectedAddress);
             Assert.AreEqual(expectedAddress, scope.Address);
         }
@@ -33,15 +36,15 @@ namespace ExcelFormulaParser.Tests
         [TestMethod]
         public void ConstructorShouldSetParent()
         {
-            var parent = new ParsingScope(_parsingScopes, RangeAddress.Parse("A1"));
-            var scope = new ParsingScope(_parsingScopes, parent, RangeAddress.Parse("A2"));
+            var parent = new ParsingScope(_parsingScopes, _factory.Create("A1"));
+            var scope = new ParsingScope(_parsingScopes, parent, _factory.Create("A2"));
             Assert.AreEqual(parent, scope.Parent);
         }
 
         [TestMethod]
         public void ScopeShouldCallKillScopeOnDispose()
         {
-            var scope = new ParsingScope(_parsingScopes, RangeAddress.Parse("A1"));
+            var scope = new ParsingScope(_parsingScopes, _factory.Create("A1"));
             ((IDisposable)scope).Dispose();
             _parsingScopes.AssertWasCalled(x => x.KillScope(scope));
         }

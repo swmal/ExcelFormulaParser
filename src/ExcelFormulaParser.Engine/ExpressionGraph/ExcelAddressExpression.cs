@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExcelUtilities;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
@@ -10,21 +11,23 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     {
         private readonly ExcelDataProvider _excelDataProvider;
         private readonly ParsingContext _parsingContext;
-        private readonly IndexToAddressTranslator _indexToAddressTranslator = new IndexToAddressTranslator();
+        private readonly RangeAddressFactory _rangeAddressFactory;
 
         public ExcelAddressExpression(string expression, ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
+            : this(expression, excelDataProvider, parsingContext, new RangeAddressFactory(excelDataProvider))
+        {
+
+        }
+
+        public ExcelAddressExpression(string expression, ExcelDataProvider excelDataProvider, ParsingContext parsingContext, RangeAddressFactory rangeAddressFactory)
             : base(expression)
         {
-            if (excelDataProvider == null)
-            {
-                throw new ArgumentNullException("excelDataProvider");
-            }
-            if (parsingContext == null)
-            {
-                throw new ArgumentNullException("context");
-            }
+            Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
+            Require.That(parsingContext).Named("parsingContext").IsNotNull();
+            Require.That(rangeAddressFactory).Named("rangeAddressFactory").IsNotNull();
             _excelDataProvider = excelDataProvider;
             _parsingContext = parsingContext;
+            _rangeAddressFactory = rangeAddressFactory;
         }
 
         public override bool IsGroupedExpression
@@ -34,8 +37,6 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
-            //_parsingContext.Ranges.CheckCircularReference(_parsingContext.Scopes.Current, rangeAddress);
-            //_parsingContext.Ranges.Add(_parsingContext.Scopes.Current, rangeAddress);
             var result = _excelDataProvider.GetRangeValues(ExpressionString);
             if (result == null || result.Count() == 0)
             {
@@ -62,7 +63,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 var rangeValue = dataItem.Value;
                 if (IsFormula(rangeValue))
                 {
-                    var address = RangeAddress.Create(dataItem.ColIndex, dataItem.RowIndex);
+                    var address = _rangeAddressFactory.Create(dataItem.ColIndex, dataItem.RowIndex);
                     rangeValueList.Add(_parsingContext.Parser.Parse(rangeValue.ToString(), address));
                 }
                 else

@@ -48,6 +48,7 @@
     <Compile Include="ExcelUtilities\FormulaDependencyFactory.cs" />
     <Compile Include="ExcelUtilities\IndexToAddressTranslator.cs" />
     <Compile Include="ExcelUtilities\RangeAddress.cs" />
+    <Compile Include="ExcelUtilities\RangeAddressFactory.cs" />
     <Compile Include="Exceptions\CircularReferenceException.cs" />
     <Compile Include="Exceptions\UnrecognizedTokenException.cs" />
     <Compile Include="ExpressionGraph\AtomicExpression.cs" />
