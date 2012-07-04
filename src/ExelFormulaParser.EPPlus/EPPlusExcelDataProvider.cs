@@ -24,15 +24,16 @@ namespace ExcelFormulaParser.EPPlus
         {
             var returnList = new List<ExcelDataItem>();
             var startAddress = _rangeAddressFactory.Create(address);
-            if (AddressHasWorkbookName(address))
+            var addressInfo = ExcelAddressInfo.Parse(address);
+            if (addressInfo.WorksheetIsSpecified)
             {
-                _currentWorksheet = _package.Workbook.Worksheets[GetWorksheetName(address)];
+                _currentWorksheet = _package.Workbook.Worksheets[addressInfo.Worksheet];
             }
             else if(_currentWorksheet == null)
             {
                 _currentWorksheet = _package.Workbook.Worksheets.First();
             }
-            var range = _currentWorksheet.Cells[GetRangeAddress(address)];
+            var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];
             if (range.Value is object[,])
             {
                 var arr = (object[,])range.Value;
@@ -52,25 +53,6 @@ namespace ExcelFormulaParser.EPPlus
                 returnList.Add(new ExcelDataItem(range.Value, startAddress.FromCol, startAddress.FromRow)); 
             }
             return returnList;
-        }
-
-        private static bool AddressHasWorkbookName(string address)
-        {
-            return address.Contains("!");
-        }
-
-        private static string GetWorksheetName(string address)
-        {
-            return address.Split('!').First();
-        }
-
-        private static string GetRangeAddress(string address)
-        {
-            if (address.Contains("!"))
-            {
-                return address.Split('!')[1];
-            }
-            return address;
         }
 
         public override void Dispose()

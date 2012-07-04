@@ -9,13 +9,14 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
     public class RangeAddressFactory
     {
         private readonly ExcelDataProvider _excelDataProvider;
-        private static readonly AddressTranslator _addressTranslator = new AddressTranslator();
+        private readonly AddressTranslator _addressTranslator;
         private static readonly IndexToAddressTranslator _indexToAddressTranslator = new IndexToAddressTranslator();
 
         public RangeAddressFactory(ExcelDataProvider excelDataProvider)
         {
             Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
             _excelDataProvider = excelDataProvider;
+            _addressTranslator = new AddressTranslator(excelDataProvider);
         }
 
         public RangeAddress Create(int col, int row)
@@ -34,46 +35,40 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         public RangeAddress Create(string range)
         {
             Require.That(range).Named("range").IsNotNullOrEmpty();
-            var worksheet = string.Empty;
-            var worksheetAddress = range;
-            if (range.Contains("!"))
-            {
-                worksheet = range.Split('!')[0];
-                worksheetAddress = range.Split('!')[1];
-            }
-            var rangeAddress = new RangeAddress
+            var addressInfo = ExcelAddressInfo.Parse(range);
+            var rangeAddress = new RangeAddress()
             {
                 Address = range,
-                Worksheet = worksheet
+                Worksheet = addressInfo.Worksheet
             };
-            if (!worksheetAddress.Contains(":"))
+           
+            if (!addressInfo.IsMultipleCells)
             {
-                HandleSingleCellAddress(rangeAddress, worksheetAddress);
+                HandleSingleCellAddress(rangeAddress, addressInfo);
             }
             else
             {
-                HandleMultipleCellAddress(rangeAddress, worksheetAddress);
+                HandleMultipleCellAddress(rangeAddress, addressInfo);
             }
             return rangeAddress;
         }
 
-        private static void HandleSingleCellAddress(RangeAddress rangeAddress, string range)
+        private void HandleSingleCellAddress(RangeAddress rangeAddress, ExcelAddressInfo addressInfo)
         {
             int col, row;
-            _addressTranslator.ToColAndRow(range, out col, out row);
+            _addressTranslator.ToColAndRow(addressInfo.StartCell, out col, out row);
             rangeAddress.FromCol = col;
             rangeAddress.ToCol = col;
             rangeAddress.FromRow = row;
             rangeAddress.ToRow = row;
         }
 
-        private static void HandleMultipleCellAddress(RangeAddress rangeAddress, string range)
+        private void HandleMultipleCellAddress(RangeAddress rangeAddress, ExcelAddressInfo addressInfo)
         {
-            var rangeArr = range.Split(':');
             int fromCol, fromRow;
-            _addressTranslator.ToColAndRow(rangeArr[0], out fromCol, out fromRow);
+            _addressTranslator.ToColAndRow(addressInfo.StartCell, out fromCol, out fromRow);
             int toCol, toRow;
-            _addressTranslator.ToColAndRow(rangeArr[1], out toCol, out toRow);
+            _addressTranslator.ToColAndRow(addressInfo.EndCell, out toCol, out toRow, AddressTranslator.RangeCalculationBehaviour.LastPart);
             rangeAddress.FromCol = fromCol;
             rangeAddress.ToCol = toCol;
             rangeAddress.FromRow = fromRow;

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExcelUtilities\AddressTranslatorTests.cs" />
+    <Compile Include="ExcelUtilities\ExcelAddressInfoTests.cs" />
     <Compile Include="ExcelUtilities\IndexToAddressTranslatorTests.cs" />
     <Compile Include="ExcelUtilities\RangeAddressFactoryTests.cs" />
     <Compile Include="ExcelUtilities\RangeAddressTests.cs" />
