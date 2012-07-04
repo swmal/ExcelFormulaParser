@@ -13,12 +13,13 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
     public class RangeAddressFactoryTests
     {
         private RangeAddressFactory _factory;
+        private const int ExcelMaxRows = 123456;
 
         [TestInitialize]
         public void Setup()
         {
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
-            provider.Stub(x => x.ExcelMaxRows).Return(123456);
+            provider.Stub(x => x.ExcelMaxRows).Return(ExcelMaxRows);
             _factory = new RangeAddressFactory(provider);
         }
 
@@ -95,6 +96,16 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         {
             var address = _factory.Create(0, 1);
             Assert.AreEqual(string.Empty, address.Worksheet);
+        }
+
+        [TestMethod]
+        public void CreateShouldReturnEntireColumnRangeWhenNoRowsAreSpecified()
+        {
+            var address = _factory.Create("A:B");
+            Assert.AreEqual(0, address.FromCol);
+            Assert.AreEqual(1, address.ToCol);
+            Assert.AreEqual(0, address.FromRow);
+            Assert.AreEqual(ExcelMaxRows - 1, address.ToRow);
         }
     }
 }
