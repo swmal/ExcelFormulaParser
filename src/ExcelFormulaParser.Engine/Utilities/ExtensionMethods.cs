@@ -23,5 +23,11 @@ namespace ExcelFormulaParser.Engine.Utilities
                 throw new ArgumentNullException(val.Name);
             }
         }
+
+        public static bool IsNumeric(this object obj)
+        {
+            if (obj == null) return false;
+            return (obj is int) || (obj is double) || (obj is decimal) || (obj is short) || (obj is long);
+        }
     }
 }

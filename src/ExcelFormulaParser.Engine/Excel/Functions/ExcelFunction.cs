@@ -4,46 +4,41 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using System.Globalization;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
     public abstract class ExcelFunction
     {
+        public ExcelFunction()
+            : this(new ArgumentCollectionUtil(), new ArgumentParsers())
+        {
+
+        }
+
+        public ExcelFunction(ArgumentCollectionUtil argumentCollectionUtil, ArgumentParsers argumentParsers)
+        {
+            _argumentCollectionUtil = argumentCollectionUtil;
+            _argumentParsers = argumentParsers;
+        }
+
+        private readonly ArgumentCollectionUtil _argumentCollectionUtil;
+        private readonly ArgumentParsers _argumentParsers;
+
         public abstract CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context);
 
         public virtual void BeforeInvoke(ParsingContext context) { }
 
         protected void ValidateArguments(IEnumerable<FunctionArgument> arguments, int minLength)
         {
-            if (arguments == null)
-            {
-                throw new ArgumentNullException("arguments");
-            }
-            if (arguments.Count() < minLength)
-            {
-                throw new ArgumentException(string.Format("Expecting at least {0} arguments", minLength));
-            }
+            Require.That(arguments).Named("arguments").IsNotNull();
+            ThrowArgumentExceptionIf(() => arguments.Count() < minLength, "Expecting at least {0} arguments", minLength.ToString());
         }
 
         protected int ArgToInt(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var obj = arguments.ElementAt(index).Value;
-            if(obj == null) throw new ArgumentNullException("expected argument (int) was null");
-            int result;
-            var objType = obj.GetType();
-            if (objType == typeof(int))
-            {
-                return (int)obj;
-            }
-            if (objType == typeof(double) || objType == typeof(decimal))
-            {
-                return Convert.ToInt32(obj);
-            }
-            if(!int.TryParse(obj.ToString(), out result))
-            {
-                throw new ArgumentException("Could not parse " + obj.ToString() + " to int");
-            }
-            return result;
+            var val = arguments.ElementAt(index).Value;
+            return (int)_argumentParsers.GetParser(DataType.Integer).Parse(val);
         }
 
         protected string ArgToString(IEnumerable<FunctionArgument> arguments, int index)
@@ -54,13 +49,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
 
         protected double ArgToDecimal(object obj)
         {
-            var str = obj != null ? obj.ToString() : string.Empty;
-            var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
-            if (decimalSeparator == ",")
-            {
-                str = str.Replace('.', ',');
-            }
-            return double.Parse(str);
+            return (double)_argumentParsers.GetParser(DataType.Decimal).Parse(obj);
         }
 
         protected double ArgToDecimal(IEnumerable<FunctionArgument> arguments, int index)
@@ -79,17 +68,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
         protected bool ArgToBool(IEnumerable<FunctionArgument> arguments, int index)
         {
             var obj = arguments.ElementAt(index).Value ?? string.Empty;
-            bool result;
-            if (bool.TryParse(obj.ToString(), out result))
-            {
-                return result;
-            }
-            int intResult;
-            if (int.TryParse(obj.ToString(), out intResult))
-            {
-                return intResult != 0;
-            }
-            return result;
+            return (bool)_argumentParsers.GetParser(DataType.Boolean).Parse(obj);
         }
 
         protected void ThrowArgumentExceptionIf(Func<bool> condition, string message)
@@ -100,53 +79,21 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             }
         }
 
+        protected void ThrowArgumentExceptionIf(Func<bool> condition, string message, params string[] formats)
+        {
+            message = string.Format(message, formats);
+            ThrowArgumentExceptionIf(condition, message);
+        }
+
         protected bool IsNumeric(object val)
         {
             if (val == null) return false;
             return val.GetType() == typeof(int) || val.GetType() == typeof(double) || val.GetType() == typeof(decimal);
         }
 
-        protected virtual IEnumerable<FunctionArgument> FuncArgsToFlatEnumerable(IEnumerable<FunctionArgument> arguments)
-        {
-            var argList = new List<FunctionArgument>();
-            FuncArgsToFlatEnumerable(arguments, argList);
-            return argList;
-        }
-
-        private void FuncArgsToFlatEnumerable(IEnumerable<FunctionArgument> arguments, List<FunctionArgument> argList)
-        {
-            foreach (var arg in arguments)
-            {
-                if (arg.Value is IEnumerable<FunctionArgument>)
-                {
-                    FuncArgsToFlatEnumerable((IEnumerable<FunctionArgument>)arg.Value, argList);
-                }
-                else
-                {
-                    argList.Add(arg);
-                }
-            }
-        }
-
         protected virtual IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<FunctionArgument> arguments)
         {
-            var values = new List<double>();
-            var args = FuncArgsToFlatEnumerable(arguments);
-            for (var x = 0; x < args.Count(); x++)
-            {
-                var arg = args.ElementAt(x).Value;
-                if (IsNumeric(arg))
-                {
-                    values.Add(ArgToDecimal(arg));
-                }
-            }
-            return values;
-        }
-
-        protected void ThrowArgumentExceptionIf(Func<bool> condition, string message, params string[] formats)
-        {
-            message = string.Format(message, formats);
-            ThrowArgumentExceptionIf(condition, message);
+            return _argumentCollectionUtil.ArgsToDoubleEnumerable(arguments);
         }
 
         protected CompileResult CreateResult(object result, DataType dataType)
@@ -156,18 +103,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
 
         protected virtual double CalculateCollection(IEnumerable<FunctionArgument> collection, double result, Func<FunctionArgument,double,double> action)
         {
-            foreach (var item in collection)
-            {
-                if (item.Value is IEnumerable<FunctionArgument>)
-                {
-                    result = CalculateCollection((IEnumerable<FunctionArgument>)item.Value, result, action);
-                }
-                else
-                {
-                    result = action(item, result);
-                }
-            }
-            return result;
+            return _argumentCollectionUtil.CalculateCollection(collection, result, action);
         }
     }
 }
