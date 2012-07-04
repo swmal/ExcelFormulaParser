@@ -5,9 +5,9 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
-using ExcelFormulaParser.Engine.VBA.Operators;
-using ExcelFormulaParser.Engine.VBA;
-using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine.Excel.Operators;
+using ExcelFormulaParser.Engine.Excel;
+using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine;
 using Rhino.Mocks;
 

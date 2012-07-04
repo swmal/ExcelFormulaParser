@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.ExpressionGraph;
-using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.Excel.Functions;
 
 namespace ExcelFormulaParser.Engine
 {

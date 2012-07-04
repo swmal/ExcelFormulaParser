@@ -86,14 +86,14 @@
     <Compile Include="IntegrationTests\BasicCalcTests.cs" />
     <Compile Include="LexicalAnalysis\SyntacticAnalyzerTests.cs" />
     <Compile Include="TestHelpers\FunctionsHelper.cs" />
-    <Compile Include="VBA\Functions\DateTimeFunctionsTests.cs" />
-    <Compile Include="VBA\Functions\FunctionArgumentTests.cs" />
-    <Compile Include="VBA\Functions\LogicalFunctionsTests.cs" />
-    <Compile Include="VBA\Functions\MathFunctionsTests.cs" />
-    <Compile Include="VBA\Functions\NumberFunctionsTests.cs" />
-    <Compile Include="VBA\Functions\TextFunctionsTests.cs" />
-    <Compile Include="VBA\Functions\TimeStringParserTests.cs" />
-    <Compile Include="VBA\OperatorsTests.cs" />
+    <Compile Include="Excel\Functions\DateTimeFunctionsTests.cs" />
+    <Compile Include="Excel\Functions\FunctionArgumentTests.cs" />
+    <Compile Include="Excel\Functions\LogicalFunctionsTests.cs" />
+    <Compile Include="Excel\Functions\MathFunctionsTests.cs" />
+    <Compile Include="Excel\Functions\NumberFunctionsTests.cs" />
+    <Compile Include="Excel\Functions\TextFunctionsTests.cs" />
+    <Compile Include="Excel\Functions\TimeStringParserTests.cs" />
+    <Compile Include="Excel\OperatorsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExcelFormulaParser.Engine\ExcelFormulaParser.Engine.csproj">

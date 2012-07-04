@@ -1,0 +1,265 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ExcelFormulaParser.Engine.ExpressionGraph;
+
+namespace ExcelFormulaParser.Engine.Excel.Operators
+{
+    public class Operator : IOperator
+    {
+        private const int PrecedenceMultiplyDevide = 3;
+        private const int PrecedenceIntegerDivision = 4;
+        private const int PrecedenceModulus = 5;
+        private const int PrecedenceAddSubtract = 10;
+        private const int PrecedenceConcat = 15;
+        private const int PrecedenceComparison = 25;
+
+        private Operator() { }
+
+        private Operator(Operators @operator, int precedence, Func<CompileResult, CompileResult, CompileResult> implementation)
+        {
+            _implementation = implementation;
+            _precedence = precedence;
+            _operator = @operator;
+        }
+
+        private readonly Func<CompileResult, CompileResult, CompileResult> _implementation;
+        private int _precedence;
+        private Operators _operator;
+
+        int IOperator.Precedence
+        {
+            get { return _precedence; }
+        }
+
+        Operators IOperator.Operator
+        {
+            get { return _operator; }
+        }
+
+        public CompileResult Apply(CompileResult left, CompileResult right)
+        {
+            return _implementation(left, right);
+        }
+
+        public static IOperator Plus
+        {
+            get
+            {
+                return new Operator(Operators.Plus, PrecedenceAddSubtract, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) + ((int)r.Result), DataType.Integer);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((double)l.Result) + ((int)r.Result), DataType.Decimal);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((double)l.Result) + ((double)r.Result), DataType.Decimal);
+                    }
+                    return new CompileResult(0, DataType.Integer);
+                }); 
+            }
+        }
+
+        public static IOperator Minus
+        {
+            get
+            {
+                return new Operator(Operators.Minus, PrecedenceAddSubtract, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) - ((int)r.Result), DataType.Integer);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((double)l.Result) - ((int)r.Result), DataType.Decimal);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((double)l.Result) - ((double)r.Result), DataType.Decimal);
+                    }
+                    return new CompileResult(0, DataType.Integer);
+                });
+            }
+        }
+
+        public static IOperator Multiply
+        {
+            get
+            {
+                return new Operator(Operators.Multiply, PrecedenceMultiplyDevide, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) * ((int)r.Result), DataType.Integer);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((double)l.Result) * ((int)r.Result), DataType.Decimal);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((double)l.Result) * ((double)r.Result), DataType.Decimal);
+                    }
+                    return new CompileResult(0, DataType.Integer);
+                });
+            }
+        }
+
+        public static IOperator Divide
+        {
+            get
+            {
+                return new Operator(Operators.Divide, PrecedenceMultiplyDevide, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) / ((int)r.Result), DataType.Integer);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((double)l.Result) / ((int)r.Result), DataType.Decimal);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((double)l.Result) / ((double)r.Result), DataType.Decimal);
+                    }
+                    return new CompileResult(0, DataType.Integer);
+                });
+            }
+        }
+
+        public static IOperator Concat
+        {
+            get
+            {
+                return new Operator(Operators.Concat, PrecedenceConcat, (l, r) =>
+                    {
+                        var lStr = l.Result != null ? l.Result.ToString() : string.Empty;
+                        var rStr = r.Result != null ? r.Result.ToString() : string.Empty;
+                        return new CompileResult(string.Concat(lStr, rStr), DataType.String);
+                    });
+            }
+        }
+
+        public static IOperator Modulus
+        {
+            get
+            {
+                return new Operator(Operators.Modulus, PrecedenceModulus, (l, r) =>
+                {
+                    return new CompileResult((int)l.Result % (int)r.Result, DataType.Integer); ;
+                });
+            }
+        }
+
+        public static IOperator GreaterThan
+        {
+            get
+            {
+                return new Operator(Operators.GreaterThan, PrecedenceComparison, (l, r) =>
+                    {
+                        if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                        {
+                            return new CompileResult(((int)l.Result) > ((int)r.Result), DataType.Boolean);
+                        }
+                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                        {
+                            return new CompileResult(((double)l.Result) > ((int)r.Result), DataType.Boolean);
+                        }
+                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                        {
+                            return new CompileResult(((double)l.Result) > ((double)r.Result), DataType.Boolean);
+                        }
+                        return new CompileResult(false, DataType.Boolean);
+                    });
+            }
+        }
+
+        public static IOperator Eq
+        {
+            get
+            {
+                return new Operator(Operators.Equals, PrecedenceComparison, (l, r) =>
+                    {
+                        return new CompileResult(l.Result.Equals(r.Result), DataType.Boolean);
+                    });
+            }
+        }
+
+        public static IOperator GreaterThanOrEqual
+        {
+            get
+            {
+                return new Operator(Operators.GreaterThanOrEqual, PrecedenceComparison, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) >= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((double)l.Result) >= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((double)l.Result) >= ((double)r.Result), DataType.Boolean);
+                    }
+                    return new CompileResult(false, DataType.Boolean);
+                });
+            }
+        }
+
+        public static IOperator LessThan
+        {
+            get
+            {
+                return new Operator(Operators.LessThan, PrecedenceComparison, (l, r) =>
+                    {
+                        if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                        {
+                            return new CompileResult(((int)l.Result) < ((int)r.Result), DataType.Boolean);
+                        }
+                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                        {
+                            return new CompileResult(((double)l.Result) < ((int)r.Result), DataType.Boolean);
+                        }
+                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                        {
+                            return new CompileResult(((double)l.Result) < ((double)r.Result), DataType.Boolean);
+                        }
+                        return new CompileResult(false, DataType.Boolean);
+                    });
+            }
+        }
+
+        public static IOperator LessThanOrEqual
+        {
+            get
+            {
+                return new Operator(Operators.LessThanOrEqual, PrecedenceComparison, (l, r) =>
+                {
+                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((int)l.Result) <= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
+                    {
+                        return new CompileResult(((double)l.Result) <= ((int)r.Result), DataType.Boolean);
+                    }
+                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    {
+                        return new CompileResult(((double)l.Result) <= ((double)r.Result), DataType.Boolean);
+                    }
+                    return new CompileResult(false, DataType.Boolean);
+                });
+            }
+        }
+    }
+}

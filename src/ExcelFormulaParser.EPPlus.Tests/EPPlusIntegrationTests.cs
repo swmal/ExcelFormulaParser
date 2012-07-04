@@ -83,10 +83,22 @@ namespace ExcelFormulaParser.EPPlus.Tests
             ws.Cells["C2"].Value = 4;
             ws.Cells["D1"].Value = 2;
             ws.Cells["D2"].Value = 2;
-            ws.Cells["E1"].Value = "=SUM(B1:D2)";
+            ws.Cells["E1"].Formula = "SUM(B1:D2)";
 
             var result = _parser.ParseAt("E1");
             Assert.AreEqual(11d, result);
+        }
+
+        [TestMethod]
+        public void TestParser()
+        {
+            using (var package = new ExcelPackage(new FileInfo(@"c:\temp\Test.xlsx")))
+            {
+                var provider = new EPPlusExcelDataProvider(package);
+                var parser = new FormulaParser(provider);
+                var result = parser.ParseAt("B6");
+                Assert.AreEqual(30d, result);
+            }
         }
     }
 }

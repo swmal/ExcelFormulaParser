@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ExcelFormulaParser.Engine.VBA;
-using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine.Excel;
+using ExcelFormulaParser.Engine.Excel.Functions;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {

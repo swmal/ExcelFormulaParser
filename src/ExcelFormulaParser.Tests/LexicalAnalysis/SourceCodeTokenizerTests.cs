@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
-using ExcelFormulaParser.Engine.VBA;
-using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine.Excel;
+using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine;
 
 namespace ExcelFormulaParser.Tests.LexicalAnalysis

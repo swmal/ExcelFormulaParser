@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine;
-using ExcelFormulaParser.Engine.VBA.Operators;
+using ExcelFormulaParser.Engine.Excel.Operators;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
-using ExcelFormulaParser.Engine.VBA;
-using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine.Excel;
+using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine.ExcelUtilities;
 using ExcelFormulaParser.Engine.Utilities;
 

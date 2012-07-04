@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine.LexicalAnalysis

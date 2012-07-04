@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExpGraph = ExcelFormulaParser.Engine.ExpressionGraph.ExpressionGraph;
-using ExcelFormulaParser.Engine.VBA.Operators;
+using ExcelFormulaParser.Engine.Excel.Operators;
 
 namespace ExcelFormulaParser.Tests.ExpressionGraph
 {

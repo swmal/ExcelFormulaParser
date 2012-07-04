@@ -34,24 +34,37 @@ namespace ExcelFormulaParser.EPPlus
                 _currentWorksheet = _package.Workbook.Worksheets.First();
             }
             var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];
-            if (range.Value is object[,])
+            foreach (var cell in range)
             {
-                var arr = (object[,])range.Value;
-                var nRows = arr.GetUpperBound(0);
-                var nCols = arr.GetUpperBound(1);
-                for(int row = 0; row <= nRows; row++)
+                if (!string.IsNullOrEmpty(cell.Formula))
                 {
-                    for (int col = 0; col <= nCols; col++)
-                    {
-                        returnList.Add(new ExcelDataItem(arr[row, col], startAddress.FromCol + col, startAddress.FromRow + row));
-                    }
-
+                    //parse formula
+                    returnList.Add(new ExcelDataItem("=" + cell.Formula, cell.Start.Column, cell.Start.Row));
                 }
+                else
+                {
+                    returnList.Add(new ExcelDataItem(cell.Value, cell.Start.Column, cell.Start.Row));
+                }
+
             }
-            else 
-            { 
-                returnList.Add(new ExcelDataItem(range.Value, startAddress.FromCol, startAddress.FromRow)); 
-            }
+            //if (range.Value is object[,])
+            //{
+            //    var arr = (object[,])range.Value;
+            //    var nRows = arr.GetUpperBound(0);
+            //    var nCols = arr.GetUpperBound(1);
+            //    for(int row = 0; row <= nRows; row++)
+            //    {
+            //        for (int col = 0; col <= nCols; col++)
+            //        {
+            //            returnList.Add(new ExcelDataItem(arr[row, col], startAddress.FromCol + col, startAddress.FromRow + row));
+            //        }
+
+            //    }
+            //}
+            //else 
+            //{ 
+            //    returnList.Add(new ExcelDataItem(range.Value, startAddress.FromCol, startAddress.FromRow)); 
+            //}
             return returnList;
         }
 

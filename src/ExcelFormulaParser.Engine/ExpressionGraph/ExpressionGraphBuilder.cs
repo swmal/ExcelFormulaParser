@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ExcelFormulaParser.Engine.VBA.Operators;
+using ExcelFormulaParser.Engine.Excel.Operators;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
-using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.Excel;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
