@@ -16,6 +16,12 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
 
         }
 
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void ParseShouldThrowIfSuppliedAddressIsNull()
+        {
+            RangeAddress.Parse(null);
+        }
+
         [TestMethod]
         public void ParseShouldReturnAndInstanceWithColPropertiesSet()
         {

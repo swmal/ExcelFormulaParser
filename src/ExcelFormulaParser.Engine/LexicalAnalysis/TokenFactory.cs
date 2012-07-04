@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ExcelFormulaParser.Engine.VBA;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
@@ -39,19 +40,19 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             {
                 token = token.Trim();
             }
-            if (Regex.IsMatch(token, @"^[0-9]+\.[0-9]+$"))
+            if (Regex.IsMatch(token, RegexConstants.Decimal))
             {
                 return new Token(token, TokenType.Decimal);
             }
-            if(Regex.IsMatch(token, @"^[0-9]+$"))
+            if(Regex.IsMatch(token, RegexConstants.Integer))
             {
                 return new Token(token, TokenType.Integer);
             }
-            if (Regex.IsMatch(token, @"^(true|false)$", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(token, RegexConstants.Boolean, RegexOptions.IgnoreCase))
             {
                 return new Token(token, TokenType.Boolean);
             }
-            if (Regex.IsMatch(token, @"^(('[^/\\?*\[\]]{1,31}'|[A-Za-z_]{1,31})!)?[A-Z]{1,2}[1-9]{1}[0-9]{0,6}(\:[A-Z]{1,2}[1-9]{1}[0-9]{0,6}){0,1}$"))
+            if (Regex.IsMatch(token, RegexConstants.ExcelAddress))
             {
                 return new Token(token, TokenType.ExcelAddress);
             }

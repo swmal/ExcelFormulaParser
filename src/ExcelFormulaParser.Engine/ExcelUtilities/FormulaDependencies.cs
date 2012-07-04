@@ -27,25 +27,26 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         public void AddFormulaScope(ParsingScope parsingScope)
         {
             var dependency = _formulaDependencyFactory.Create(parsingScope);
-            try
+            var address = parsingScope.Address.ToString();
+            if (!_dependencies.ContainsKey(address))
             {
-                _dependencies.Add(parsingScope.Address.ToString(), dependency);
-            }
-            catch (ArgumentException ae)
-            {
-                //throw new CircularReferenceException("A circular exception was detected, address: " + parsingScope.Address.ToString());
+                _dependencies.Add(address, dependency);
             }
             if (parsingScope.Parent != null)
             {
-                if (_dependencies.ContainsKey(parsingScope.Parent.Address.ToString()))
+                var parentAddress = parsingScope.Parent.Address.ToString();
+                if (_dependencies.ContainsKey(parentAddress))
                 {
-                    var parent = _dependencies[parsingScope.Parent.Address.ToString()];
+                    var parent = _dependencies[parentAddress];
                     parent.AddReferenceTo(parsingScope.Address);
                     dependency.AddReferenceFrom(parent.Address);
                 }
-
-
             }
+        }
+
+        public void Clear()
+        {
+            _dependencies.Clear();
         }
     }
 }

@@ -18,7 +18,19 @@ namespace ExcelFormulaParser.Engine
         /// <returns>values from the required cells</returns>
         public abstract IEnumerable<ExcelDataItem> GetRangeValues(string address);
 
-
+        /// <summary>
+        /// Use this method to free unmanaged resources.
+        /// </summary>
         public abstract void Dispose();
+
+        /// <summary>
+        /// Max number of columns in a worksheet that the Excel data provider can handle.
+        /// </summary>
+        public abstract int ExcelMaxColumns { get; }
+
+        /// <summary>
+        /// Max number of rows in a worksheet that the Excel data provider can handle
+        /// </summary>
+        public abstract int ExcelMaxRows { get; }
     }
 }

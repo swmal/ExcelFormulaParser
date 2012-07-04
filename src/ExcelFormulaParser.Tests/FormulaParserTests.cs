@@ -100,5 +100,11 @@ namespace ExcelFormulaParser.Tests
             var result = parser.ParseAt("A1");
             Assert.AreEqual(3d, result);
         }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void ParseAtShouldThrowIfAddressIsNull()
+        {
+            _parser.ParseAt(null);
+        }
     }
 }

@@ -62,8 +62,8 @@ namespace ExcelFormulaParser.EPPlus.Tests
             ws.Cells["AM6"].Value = 2;
             ws.Cells["AO6"].Value = "=SUM(AM4:AM6)";
 
-            var result = _parser.Parse("=Int(AK5)");
-            Assert.AreEqual(20, result);
+            var result = _parser.ParseAt("AK5");
+            Assert.AreEqual(20d, result);
         }
 
         [TestMethod, ExpectedException(typeof(CircularReferenceException))]
@@ -72,7 +72,7 @@ namespace ExcelFormulaParser.EPPlus.Tests
             var ws = _package.Workbook.Worksheets.First();
             ws.Cells["A1"].Value = "=SUM(A2)";
             ws.Cells["A2"].Value = "=SUM(A1)";
-            _parser.Parse("=SUM(A2)", "A1");
+            _parser.ParseAt("A1");
         }
 
         [TestMethod]
@@ -85,8 +85,8 @@ namespace ExcelFormulaParser.EPPlus.Tests
             ws.Cells["D2"].Value = 2;
             ws.Cells["E1"].Value = "=SUM(B1:D2)";
 
-            var result = _parser.Parse("=Int(E1)");
-            Assert.AreEqual(11, result);
+            var result = _parser.ParseAt("E1");
+            Assert.AreEqual(11d, result);
         }
     }
 }

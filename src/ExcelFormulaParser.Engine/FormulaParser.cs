@@ -9,6 +9,7 @@ using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.VBA;
 using ExcelFormulaParser.Engine.VBA.Functions;
 using ExcelFormulaParser.Engine.ExcelUtilities;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine
 {
@@ -28,12 +29,13 @@ namespace ExcelFormulaParser.Engine
             parsingContext.Parser = this;
             _parsingContext = parsingContext;
             _excelDataProvider = excelDataProvider;
-            Configure(x =>
+            Configure(configuration =>
             {
-                x.SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository))
+                configuration
+                    .SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository))
                     .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _parsingContext))
-                    .SetExpresionCompiler(new ExpressionCompiler());
-                x.FunctionRepository.LoadModule(new BuiltInFunctions());
+                    .SetExpresionCompiler(new ExpressionCompiler())
+                    .FunctionRepository.LoadModule(new BuiltInFunctions());
             }); 
         }
 
@@ -81,7 +83,9 @@ namespace ExcelFormulaParser.Engine
 
         public virtual object ParseAt(string address)
         {
+            Require.That(address).Named("address").IsNotNullOrEmpty();
             var dataItem = _excelDataProvider.GetRangeValues(address).First();
+            if (dataItem.Value == null) return null;
             return Parse(dataItem.Value.ToString(), RangeAddress.Parse(address));
         }
 

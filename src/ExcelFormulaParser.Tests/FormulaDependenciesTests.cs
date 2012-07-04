@@ -41,12 +41,22 @@ namespace ExcelFormulaParser.Tests
             _formulaDependencyFactory.Stub(x => x.Create(parentScope)).Return(parentDependency);
             _formulaDependencies.AddFormulaScope(parentScope);
             
-            var childScope = new ParsingScope(_scopes,parentScope, RangeAddress.Parse("A2"));
+            var childScope = new ParsingScope(_scopes, parentScope, RangeAddress.Parse("A2"));
             var childDependency = MockRepository.GenerateStub<FormulaDependency>(childScope);
             _formulaDependencyFactory.Stub(x => x.Create(childScope)).Return(childDependency);
             _formulaDependencies.AddFormulaScope(childScope);
 
             parentDependency.AssertWasCalled(x => x.AddReferenceTo(childScope.Address));
+        }
+
+        [TestMethod]
+        public void ClearShouldClearDictionary()
+        {
+            var scope = new ParsingScope(_scopes, RangeAddress.Parse("A1"));
+            _formulaDependencies.AddFormulaScope(scope);
+            Assert.AreEqual(1, _formulaDependencies.Dependencies.Count());
+            _formulaDependencies.Clear();
+            Assert.AreEqual(0, _formulaDependencies.Dependencies.Count());
         }
 
     }

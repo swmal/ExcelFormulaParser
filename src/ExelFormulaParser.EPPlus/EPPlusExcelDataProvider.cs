@@ -75,5 +75,15 @@ namespace ExcelFormulaParser.EPPlus
         {
             _package.Dispose();
         }
+
+        public override int ExcelMaxColumns
+        {
+            get { return ExcelPackage.MaxColumns; }
+        }
+
+        public override int ExcelMaxRows
+        {
+            get { return ExcelPackage.MaxRows; }
+        }
     }
 }

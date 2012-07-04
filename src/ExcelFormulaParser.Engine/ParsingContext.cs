@@ -16,8 +16,6 @@ namespace ExcelFormulaParser.Engine
 
         public ParsingConfiguration Configuration { get; set; }
 
-        public Ranges Ranges { get; private set; }
-
         public FormulaDependencies Dependencies { get; private set; }
 
         public ParsingScopes Scopes { get; private set; }
@@ -26,7 +24,6 @@ namespace ExcelFormulaParser.Engine
         {
             var context = new ParsingContext();
             context.Configuration = ParsingConfiguration.Create();
-            context.Ranges = new Ranges();
             context.Scopes = new ParsingScopes(context);
             context.Dependencies = new FormulaDependencies();
             return context;
@@ -34,7 +31,7 @@ namespace ExcelFormulaParser.Engine
 
         void IParsingLifetimeEventHandler.ParsingCompleted()
         {
-            Ranges.Clear();
+            Dependencies.Clear();
         }
     }
 }

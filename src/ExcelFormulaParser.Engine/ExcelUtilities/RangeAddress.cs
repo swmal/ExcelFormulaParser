@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine.ExcelUtilities
 {
@@ -35,6 +36,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         /// <returns></returns>
         public static RangeAddress Parse(string range)
         {
+            Require.That(range).Named("range").IsNotNullOrEmpty();
             var worksheet = string.Empty;
             var worksheetAddress = range;
             if (range.Contains("!"))

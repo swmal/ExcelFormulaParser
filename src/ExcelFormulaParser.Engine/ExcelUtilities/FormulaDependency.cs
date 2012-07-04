@@ -25,7 +25,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         {
             if (Address.CollidesWith(rangeAddress) || _references.Exists(x => x.CollidesWith(rangeAddress)))
             {
-                throw new CircularReferenceException("Circular reference detected");
+                throw new CircularReferenceException("Circular reference detected at " + rangeAddress.ToString());
             }
             _referencedBy.Add(rangeAddress);
         }
@@ -34,7 +34,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         {
             if (Address.CollidesWith(rangeAddress) || _referencedBy.Exists(x => x.CollidesWith(rangeAddress)))
             {
-                throw new CircularReferenceException("Circular reference detected");
+                throw new CircularReferenceException("Circular reference detected at " + rangeAddress.ToString());
             }
             _references.Add(rangeAddress);
         }
