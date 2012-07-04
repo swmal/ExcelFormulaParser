@@ -4,18 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExcelUtilities;
+using ExcelFormulaParser.Engine;
+using Rhino.Mocks;
 
 namespace ExcelFormulaParser.Tests.ExcelUtilities
 {
     [TestClass]
     public class IndexToAddressTranslatorTests
     {
+        private ExcelDataProvider _excelDataProvider;
         private IndexToAddressTranslator _indexToAddressTranslator;
 
         [TestInitialize]
         public void Setup()
         {
-            _indexToAddressTranslator = new IndexToAddressTranslator();
+            _excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _indexToAddressTranslator = new IndexToAddressTranslator(_excelDataProvider);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldThrowIfExcelDataProviderIsNull()
+        {
+            new IndexToAddressTranslator(null);
         }
 
         [TestMethod]

@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine.ExcelUtilities
 {
     public class IndexToAddressTranslator
     {
+        public IndexToAddressTranslator(ExcelDataProvider excelDataProvider)
+        {
+            Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
+        }
+
         const int MaxAlphabetIndex = 25;
         const int NLettersInAlphabet = 26;
+        private readonly ExcelDataProvider _excelDataProvider;
 
         public string ToAddress(int col, int row)
         {

@@ -10,13 +10,14 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
     {
         private readonly ExcelDataProvider _excelDataProvider;
         private readonly AddressTranslator _addressTranslator;
-        private static readonly IndexToAddressTranslator _indexToAddressTranslator = new IndexToAddressTranslator();
+        private readonly IndexToAddressTranslator _indexToAddressTranslator;
 
         public RangeAddressFactory(ExcelDataProvider excelDataProvider)
         {
             Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
             _excelDataProvider = excelDataProvider;
             _addressTranslator = new AddressTranslator(excelDataProvider);
+            _indexToAddressTranslator = new IndexToAddressTranslator(excelDataProvider);
         }
 
         public RangeAddress Create(int col, int row)
