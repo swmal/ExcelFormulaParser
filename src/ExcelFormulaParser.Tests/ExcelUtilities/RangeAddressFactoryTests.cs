@@ -18,6 +18,7 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         public void Setup()
         {
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.ExcelMaxRows).Return(123456);
             _factory = new RangeAddressFactory(provider);
         }
 

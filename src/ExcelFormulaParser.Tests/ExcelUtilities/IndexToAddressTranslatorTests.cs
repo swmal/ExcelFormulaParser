@@ -19,6 +19,7 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         public void Setup()
         {
             _excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _excelDataProvider.Stub(x => x.ExcelMaxRows).Return(12345);
             _indexToAddressTranslator = new IndexToAddressTranslator(_excelDataProvider);
         }
 
@@ -54,6 +55,14 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         {
             var result = _indexToAddressTranslator.ToAddress(26 * 26 + 26, 4);
             Assert.AreEqual("AAA5", result);
+        }
+
+        [TestMethod]
+        public void ShouldTranslateToEntireColumnWhenRowIsEqualToMaxRows()
+        {
+            _excelDataProvider.Stub(x => x.ExcelMaxRows).Return(123456);
+            var result = _indexToAddressTranslator.ToAddress(0, 123456);
+            Assert.AreEqual("A", result);
         }
     }
 }
