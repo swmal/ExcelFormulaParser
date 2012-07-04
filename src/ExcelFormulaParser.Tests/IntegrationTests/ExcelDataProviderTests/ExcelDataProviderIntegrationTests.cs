@@ -20,7 +20,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
                 .Stub(x => x.GetRangeValues(expectedAddres))
                 .Return(new object[] { 1, 2 });
             var parser = new FormulaParser(provider);
-            var result = parser.Parse(string.Format("sum({0})", expectedAddres));
+            var result = parser.Parse(string.Format("=sum({0})", expectedAddres));
             Assert.AreEqual(3d, result);
         }
     }

@@ -40,6 +40,11 @@ namespace ExcelFormulaParser.Engine
 
         public virtual object Parse(string formula)
         {
+            if (string.IsNullOrEmpty(formula) || !formula.StartsWith("="))
+            {
+                return formula;
+            }
+            formula = formula.Substring(1);
             var tokens = _lexer.Tokenize(formula);
             var graph = _graphBuilder.Build(tokens);
             if (graph.Expressions.Count() == 0)

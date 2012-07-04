@@ -22,91 +22,91 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         [TestMethod]
         public void ShouldAddIntegersCorrectly()
         {
-            var result = _parser.Parse("1 + 2");
+            var result = _parser.Parse("=1 + 2");
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void ShouldSubtractIntegersCorrectly()
         {
-            var result = _parser.Parse("2 - 1");
+            var result = _parser.Parse("=2 - 1");
             Assert.AreEqual(1, result);
         }
 
         [TestMethod]
         public void ShouldMultiplyIntegersCorrectly()
         {
-            var result = _parser.Parse("2 * 3");
+            var result = _parser.Parse("=2 * 3");
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
         public void ShouldDivideIntegersCorrectly()
         {
-            var result = _parser.Parse("8 / 4");
+            var result = _parser.Parse("=8 / 4");
             Assert.AreEqual(2, result);
         }
 
         [TestMethod]
         public void ShouldDivideDecimalWithIntegerCorrectly()
         {
-            var result = _parser.Parse("2.5/2");
+            var result = _parser.Parse("=2.5/2");
             Assert.AreEqual(1.25d, result);
         }
 
         [TestMethod]
         public void ShouldMultiplyDecimalWithDecimalCorrectly()
         {
-            var result = _parser.Parse("2.5 * 1.5");
+            var result = _parser.Parse("=2.5 * 1.5");
             Assert.AreEqual(3.75d, result);
         }
 
         [TestMethod]
         public void ThreeGreaterThanTwoShouldBeTrue()
         {
-            var result = _parser.Parse("3 > 2");
+            var result = _parser.Parse("=3 > 2");
             Assert.IsTrue((bool)result);
         }
 
         [TestMethod]
         public void ThreeLessThanTwoShouldBeFalse()
         {
-            var result = _parser.Parse("3 < 2");
+            var result = _parser.Parse("=3 < 2");
             Assert.IsFalse((bool)result);
         }
 
         [TestMethod]
         public void ThreeLessThanOrEqualToThreeShouldBeTrue()
         {
-            var result = _parser.Parse("3 <= 3");
+            var result = _parser.Parse("=3 <= 3");
             Assert.IsTrue((bool)result);
         }
 
         [TestMethod]
         public void ThreeLessThanOrEqualToTwoDotThreeShouldBeFalse()
         {
-            var result = _parser.Parse("3 <= 2.3");
+            var result = _parser.Parse("=3 <= 2.3");
             Assert.IsFalse((bool)result);
         }
 
         [TestMethod]
         public void ThreeGreaterThanOrEqualToThreeShouldBeTrue()
         {
-            var result = _parser.Parse("3 >= 3");
+            var result = _parser.Parse("=3 >= 3");
             Assert.IsTrue((bool)result);
         }
 
         [TestMethod]
         public void TwoDotTwoGreaterThanOrEqualToThreeShouldBeFalse()
         {
-            var result = _parser.Parse("2.2 >= 3");
+            var result = _parser.Parse("=2.2 >= 3");
             Assert.IsFalse((bool)result);
         }
 
         [TestMethod]
         public void TwelweAndTwelweShouldBeEqual()
         {
-            var result = _parser.Parse("2=2");
+            var result = _parser.Parse("=2=2");
             Assert.IsTrue((bool)result);
         }
     }

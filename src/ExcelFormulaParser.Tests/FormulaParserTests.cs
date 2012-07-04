@@ -37,7 +37,7 @@ namespace ExcelFormulaParser.Tests
             lexer.Stub(x => x.Tokenize("ABC")).Return(Enumerable.Empty<Token>());
             _parser.Configure(x => x.SetLexer(lexer));
 
-            _parser.Parse("ABC");
+            _parser.Parse("=ABC");
 
             lexer.AssertWasCalled(x => x.Tokenize("ABC"));
         }
@@ -58,7 +58,7 @@ namespace ExcelFormulaParser.Tests
                         .SetGraphBuilder(graphBuilder);
                 });
 
-            _parser.Parse("ABC");
+            _parser.Parse("=ABC");
 
             graphBuilder.AssertWasCalled(x => x.Build(tokens));
         }
@@ -84,7 +84,7 @@ namespace ExcelFormulaParser.Tests
                     .SetExpresionCompiler(compiler);
             });
 
-            _parser.Parse("ABC");
+            _parser.Parse("=ABC");
 
             compiler.AssertWasCalled(x => x.Compile(expectedGraph.Expressions));
         }
