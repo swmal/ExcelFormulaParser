@@ -90,6 +90,8 @@
     <Compile Include="LexicalAnalysis\TokenType.cs" />
     <Compile Include="ParsingConfiguration.cs" />
     <Compile Include="ParsingContext.cs" />
+    <Compile Include="ParsingScope.cs" />
+    <Compile Include="ParsingScopes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VBA\BuiltInFunctions.cs" />
     <Compile Include="VBA\ExcelCellState.cs" />

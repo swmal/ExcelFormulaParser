@@ -104,7 +104,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         }
 
         [TestMethod]
-        public void TwelweAndTwelweShouldBeEqual()
+        public void TwelveAndTwelveShouldBeEqual()
         {
             var result = _parser.Parse("=2=2");
             Assert.IsTrue((bool)result);

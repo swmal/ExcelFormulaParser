@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
@@ -32,8 +33,9 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
-            _parsingContext.Ranges.Add(ExpressionString);
-            _parsingContext.Ranges.CheckCircularReference();
+            var rangeAddress = RangeAddress.Parse(ExpressionString);
+            _parsingContext.Ranges.CheckCircularReference(rangeAddress);
+            _parsingContext.Ranges.Add(rangeAddress);
             var result = _excelDataProvider.GetRangeValues(ExpressionString);
             if (result == null || result.Count() == 0)
             {

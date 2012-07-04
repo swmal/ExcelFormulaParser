@@ -25,16 +25,12 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             _rangeAddresses.Clear();
         }
 
-        public virtual void CheckCircularReference()
+        public virtual void CheckCircularReference(RangeAddress rangeAddress)
         {
-            _rangeAddresses.Aggregate((x, y) =>
-                {
-                    if (x.CollidesWith(y))
-                    {
-                        throw new CircularReferenceException("Circular reference detected");
-                    }
-                    return x;
-                });
+            if (_rangeAddresses.Exists(x => x.CollidesWith(rangeAddress)))
+            {
+                 throw new CircularReferenceException("Circular reference detected");
+            }
         }
     }
 }

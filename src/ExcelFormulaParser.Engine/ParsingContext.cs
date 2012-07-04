@@ -18,11 +18,14 @@ namespace ExcelFormulaParser.Engine
 
         public Ranges Ranges { get; private set; }
 
+        public ParsingScopes Scopes { get; private set; }
+
         public static ParsingContext Create()
         {
             var context = new ParsingContext();
             context.Configuration = ParsingConfiguration.Create();
             context.Ranges = new Ranges();
+            context.Scopes = new ParsingScopes();
             return context;
         }
     }

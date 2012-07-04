@@ -16,8 +16,7 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         {
             var ranges = new Ranges();
             ranges.Add("A1");
-            ranges.Add("A2");
-            ranges.CheckCircularReference();
+            ranges.CheckCircularReference(RangeAddress.Parse("A2"));
         }
 
         [TestMethod, ExpectedException(typeof(CircularReferenceException))]
@@ -25,8 +24,7 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         {
             var ranges = new Ranges();
             ranges.Add("A1:A3");
-            ranges.Add("A2");
-            ranges.CheckCircularReference();
+            ranges.CheckCircularReference(RangeAddress.Parse("A2"));
         }
     }
 }
