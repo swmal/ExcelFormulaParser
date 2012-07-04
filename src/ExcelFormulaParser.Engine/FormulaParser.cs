@@ -38,7 +38,7 @@ namespace ExcelFormulaParser.Engine
         private IExpressionGraphBuilder _graphBuilder;
         private IExpressionCompiler _compiler;
 
-        public object Parse(string formula)
+        public virtual object Parse(string formula)
         {
             var tokens = _lexer.Tokenize(formula);
             var graph = _graphBuilder.Build(tokens);
