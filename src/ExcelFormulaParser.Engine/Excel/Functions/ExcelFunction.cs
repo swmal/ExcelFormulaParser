@@ -52,9 +52,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             return obj != null ? obj.ToString() : string.Empty;
         }
 
-        protected double ArgToDecimal(IEnumerable<FunctionArgument> arguments, int index)
+        protected double ArgToDecimal(object obj)
         {
-            var obj = arguments.ElementAt(index).Value;
             var str = obj != null ? obj.ToString() : string.Empty;
             var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
             if (decimalSeparator == ",")
@@ -62,6 +61,11 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
                 str = str.Replace('.', ',');
             }
             return double.Parse(str);
+        }
+
+        protected double ArgToDecimal(IEnumerable<FunctionArgument> arguments, int index)
+        {
+            return ArgToDecimal(arguments.ElementAt(index).Value);
         }
 
         /// <summary>
@@ -102,15 +106,38 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             return val.GetType() == typeof(int) || val.GetType() == typeof(double) || val.GetType() == typeof(decimal);
         }
 
+        protected virtual IEnumerable<FunctionArgument> FuncArgsToFlatEnumerable(IEnumerable<FunctionArgument> arguments)
+        {
+            var argList = new List<FunctionArgument>();
+            FuncArgsToFlatEnumerable(arguments, argList);
+            return argList;
+        }
+
+        private void FuncArgsToFlatEnumerable(IEnumerable<FunctionArgument> arguments, List<FunctionArgument> argList)
+        {
+            foreach (var arg in arguments)
+            {
+                if (arg.Value is IEnumerable<FunctionArgument>)
+                {
+                    FuncArgsToFlatEnumerable((IEnumerable<FunctionArgument>)arg.Value, argList);
+                }
+                else
+                {
+                    argList.Add(arg);
+                }
+            }
+        }
+
         protected virtual IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<FunctionArgument> arguments)
         {
             var values = new List<double>();
-            for (var x = 0; x < arguments.Count(); x++)
+            var args = FuncArgsToFlatEnumerable(arguments);
+            for (var x = 0; x < args.Count(); x++)
             {
-                var arg = arguments.ElementAt(x).Value;
-                if(IsNumeric(arg))
+                var arg = args.ElementAt(x).Value;
+                if (IsNumeric(arg))
                 {
-                    values.Add((double)ArgToDecimal(arguments, x));
+                    values.Add(ArgToDecimal(arg));
                 }
             }
             return values;
