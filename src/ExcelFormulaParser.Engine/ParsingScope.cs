@@ -29,6 +29,8 @@ namespace ExcelFormulaParser.Engine
 
         public RangeAddress Address { get; private set; }
 
+        public bool IsSubtotal { get; set; }
+
         public void Dispose()
         {
             _parsingScopes.KillScope(this);

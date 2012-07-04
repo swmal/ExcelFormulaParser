@@ -8,15 +8,31 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
     public class Subtotal : ExcelFunction
     {
+        public override void BeforeInvoke(ParsingContext context)
+        {
+            base.BeforeInvoke(context);
+            context.Scopes.Current.IsSubtotal = true;
+        }
+
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 2);
             var calcType = ArgToInt(arguments, 0);
+            if (context.Scopes.Current.Parent != null && context.Scopes.Current.Parent.IsSubtotal)
+            {
+                return CreateResult(0d, DataType.Decimal);
+            }
             var actualArgs = arguments.Skip(1);
             ExcelFunction function = null;
-            switch(calcType)
+            function = GetFunctionByCalcType(calcType, function);
+            return function.Execute(actualArgs, context);
+        }
+
+        private static ExcelFunction GetFunctionByCalcType(int calcType, ExcelFunction function)
+        {
+            switch (calcType)
             {
-                case 1 :
+                case 1:
                     function = new Average();
                     break;
                 case 2:
@@ -50,8 +66,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
                     function = new VarP();
                     break;
             }
-            return function.Execute(actualArgs, context);
-            //throw new NotImplementedException();
+            return function;
         }
     }
 }

@@ -11,6 +11,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
     {
         public abstract CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context);
 
+        public virtual void BeforeInvoke(ParsingContext context) { }
+
         protected void ValidateArguments(IEnumerable<FunctionArgument> arguments, int minLength)
         {
             if (arguments == null)

@@ -74,6 +74,7 @@
     <Compile Include="IntegrationTests\BuiltInFunctions\LogicalFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\MathFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\StringFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\SubtotalTests.cs" />
     <Compile Include="IntegrationTests\ExcelDataProviderTests\ExcelDataProviderIntegrationTests.cs" />
     <Compile Include="IntegrationTests\FormulaParserTestBase.cs" />
     <Compile Include="IntegrationTests\PrecedenceTests.cs" />

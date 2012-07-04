@@ -28,12 +28,13 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         public override CompileResult Compile()
         {
             var args = new List<FunctionArgument>();
+            var function = _parsingContext.Configuration.FunctionRepository.GetFunction(ExpressionString);
+            function.BeforeInvoke(_parsingContext);
             foreach (var child in Children)
             {
                 var arg = child.Compile().Result;
                 BuildFunctionArguments(arg, args);
             }
-            var function = _parsingContext.Configuration.FunctionRepository.GetFunction(ExpressionString);
             return function.Execute(args, _parsingContext);
         }
 

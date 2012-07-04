@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.Excel.Functions.Math;
 using ExcelFormulaParser.Tests.TestHelpers;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Tests.Excel.Functions
 {
@@ -13,6 +14,13 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
     public class SubtotalTests
     {
         private ParsingContext _context;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _context = ParsingContext.Create();
+            _context.Scopes.NewScope(RangeAddress.Empty);
+        }
 
         [TestMethod]
         public void ShouldCalculateAverageWhenCalcTypeIs1()
