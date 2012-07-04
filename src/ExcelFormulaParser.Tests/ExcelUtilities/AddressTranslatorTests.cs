@@ -16,7 +16,7 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
             var translator = new AddressTranslator();
             int col, row;
             translator.ToColAndRow("A2", out col, out row);
-            Assert.AreEqual(2, row);
+            Assert.AreEqual(1, row);
         }
 
         [TestMethod]
@@ -25,11 +25,11 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
             var translator = new AddressTranslator();
             int col, row;
             translator.ToColAndRow("C1", out col, out row);
-            Assert.AreEqual(3, col);
+            Assert.AreEqual(2, col);
             translator.ToColAndRow("AA2", out col, out row);
-            Assert.AreEqual(27, col);
+            Assert.AreEqual(26, col);
             translator.ToColAndRow("BC1", out col, out row);
-            Assert.AreEqual(55, col);
+            Assert.AreEqual(54, col);
         }
     }
 }

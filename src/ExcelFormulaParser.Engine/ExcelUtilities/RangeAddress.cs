@@ -9,6 +9,8 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
     {
         private static readonly AddressTranslator _addressTranslator = new AddressTranslator();
 
+        private string _rangeAddress = string.Empty;
+
         public string Worksheet { get; private set; }
 
         public int FromCol { get; private set; }
@@ -19,6 +21,11 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
 
         public int ToRow { get; private set; }
 
+        public override string ToString()
+        {
+            return _rangeAddress;
+        }
+
         /// <summary>
         /// Creates a <see cref="RangeAddress"/> instance out of a valid
         /// speadsheet address, ex. A1, A1:B2, Worksheet!A1:B2
@@ -28,17 +35,26 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         public static RangeAddress Parse(string range)
         {
             var worksheet = string.Empty;
-            var rangeAddress = range;
+            var worksheetAddress = range;
             if (range.Contains("!"))
             {
                 worksheet = range.Split('!')[0];
-                rangeAddress = range.Split('!')[1];
+                worksheetAddress = range.Split('!')[1];
             }
-            if (!rangeAddress.Contains(":"))
+            var rangeAddress = new RangeAddress
             {
-                return HandleSingleCellAddress(rangeAddress, worksheet);
+                _rangeAddress = range,
+                Worksheet = worksheet
+            };
+            if (!worksheetAddress.Contains(":"))
+            {
+                HandleSingleCellAddress(rangeAddress, worksheetAddress);
             }
-            return HandleMultipleCellAddress(rangeAddress, worksheet);
+            else
+            {
+                HandleMultipleCellAddress(rangeAddress, worksheetAddress);
+            }
+            return rangeAddress;
         }
 
         /// <summary>
@@ -61,21 +77,27 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             return true;
         }
 
-        private static RangeAddress HandleSingleCellAddress(string range, string worksheet)
+        private static void HandleSingleCellAddress(RangeAddress rangeAddress, string range)
         {
             int col, row;
             _addressTranslator.ToColAndRow(range, out col, out row);
-            return new RangeAddress { FromCol = col, ToCol = col, FromRow = row, ToRow = row, Worksheet = worksheet };
+            rangeAddress.FromCol = col;
+            rangeAddress.ToCol = col;
+            rangeAddress.FromRow = row;
+            rangeAddress.ToRow = row;
         }
 
-        private static RangeAddress HandleMultipleCellAddress(string range, string worksheet)
+        private static void HandleMultipleCellAddress(RangeAddress rangeAddress, string range)
         {
             var rangeArr = range.Split(':');
             int fromCol, fromRow;
             _addressTranslator.ToColAndRow(rangeArr[0], out fromCol, out fromRow);
             int toCol, toRow;
             _addressTranslator.ToColAndRow(rangeArr[1], out toCol, out toRow);
-            return new RangeAddress { FromCol = fromCol, ToCol = toCol, FromRow = fromRow, ToRow = toRow, Worksheet = worksheet };
+            rangeAddress.FromCol = fromCol;
+            rangeAddress.ToCol = toCol;
+            rangeAddress.FromRow = fromRow;
+            rangeAddress.ToRow = toRow;
         }
     }
 }

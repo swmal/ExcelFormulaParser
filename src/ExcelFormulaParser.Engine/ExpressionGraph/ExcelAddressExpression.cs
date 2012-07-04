@@ -34,8 +34,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         public override CompileResult Compile()
         {
             var rangeAddress = RangeAddress.Parse(ExpressionString);
-            _parsingContext.Ranges.CheckCircularReference(rangeAddress);
-            _parsingContext.Ranges.Add(rangeAddress);
+            _parsingContext.Ranges.CheckCircularReference(_parsingContext.Scopes.Current, rangeAddress);
+            _parsingContext.Ranges.Add(_parsingContext.Scopes.Current, rangeAddress);
             var result = _excelDataProvider.GetRangeValues(ExpressionString);
             if (result == null || result.Count() == 0)
             {
@@ -49,7 +49,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             else
             {
                 var factory = new CompileResultFactory();
-                return factory.Create(result.First());
+                return factory.Create(rangeValueList.First());
             }
         }
 

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace ExcelFormulaParser.Engine.ExcelUtilities
 {
     /// <summary>
-    /// Handles translations from Spreadsheet addresses to numeric index.
+    /// Handles translations from Spreadsheet addresses to 0-based numeric index.
     /// </summary>
     public class AddressTranslator
     {
@@ -33,7 +33,8 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
                     col += currentNumericValue;
                 }
             }
-            row = GetIntPart(address);
+            col--;
+            row = GetIntPart(address) - 1;
 
         }
 

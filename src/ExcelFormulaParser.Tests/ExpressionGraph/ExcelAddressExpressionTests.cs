@@ -13,11 +13,19 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
     public class ExcelAddressExpressionTests
     {
         private ParsingContext _parsingContext;
+        private ParsingScope _scope;
 
         [TestInitialize]
         public void Setup()
         {
             _parsingContext = ParsingContext.Create();
+            _scope = _parsingContext.Scopes.NewScope();
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _scope.Dispose();
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]

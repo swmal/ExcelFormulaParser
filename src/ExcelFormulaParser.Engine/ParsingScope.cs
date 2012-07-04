@@ -12,7 +12,10 @@ namespace ExcelFormulaParser.Engine
         public ParsingScope(ParsingScopes parsingScope)
         {
             _parsingScopes = parsingScope;
+            ScopeId = Guid.NewGuid();
         }
+
+        public Guid ScopeId { get; private set; }
 
         public void Dispose()
         {
