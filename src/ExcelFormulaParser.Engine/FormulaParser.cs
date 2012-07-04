@@ -23,6 +23,7 @@ namespace ExcelFormulaParser.Engine
 
         public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
         {
+            parsingContext.Parser = this;
             _parsingContext = parsingContext;
             Configure(x =>
             {
@@ -47,7 +48,7 @@ namespace ExcelFormulaParser.Engine
 
         public virtual object Parse(string formula)
         {
-            if (string.IsNullOrEmpty(formula) || !formula.StartsWith("="))
+            if (!IsFormulaCandidate(formula))
             {
                 return formula;
             }
@@ -59,6 +60,11 @@ namespace ExcelFormulaParser.Engine
                 return null;
             }
             return _compiler.Compile(graph.Expressions).Result;
+        }
+
+        private static bool IsFormulaCandidate(string formula)
+        {
+            return !string.IsNullOrEmpty(formula) && formula.StartsWith("=");
         }
     }
 }

@@ -22,7 +22,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         public void Setup()
         {
             var excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
-            var parsingContext = new ParsingContext();
+            var parsingContext = ParsingContext.Create();
             _graphBuilder = new ExpressionGraphBuilder(excelDataProvider, parsingContext);
         }
 

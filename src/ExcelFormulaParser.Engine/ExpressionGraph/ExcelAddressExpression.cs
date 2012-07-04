@@ -54,14 +54,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         private List<object> HandleRangeValues(IEnumerable<object> result)
         {
             var rangeValueList = new List<object>();
-            FormulaParser parser = null;
             for (int x = 0; x < result.Count(); x++)
             {
                 var rangeValue = result.ElementAt(x);
                 if (IsFormula(rangeValue))
                 {
-                    if (parser == null) parser = new FormulaParser(_excelDataProvider, _parsingContext);
-                    rangeValueList.Add(parser.Parse(rangeValue.ToString()));
+                    rangeValueList.Add(_parsingContext.Parser.Parse(rangeValue.ToString()));
                 }
                 else
                 {

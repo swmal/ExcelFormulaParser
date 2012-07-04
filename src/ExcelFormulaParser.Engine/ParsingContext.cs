@@ -10,6 +10,10 @@ namespace ExcelFormulaParser.Engine
 {
     public class ParsingContext
     {
+        private ParsingContext() { }
+
+        public FormulaParser Parser { get; set; }
+
         public ParsingConfiguration Configuration { get; set; }
 
         public Ranges Ranges { get; private set; }
