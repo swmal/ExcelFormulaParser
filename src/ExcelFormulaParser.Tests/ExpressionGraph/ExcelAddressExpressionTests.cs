@@ -18,7 +18,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
         private ExcelDataItem CreateItem(object val)
         {
-            return new ExcelDataItem(val, 0, 0);
+            return new ExcelDataItem(val, null, 0, 0);
         }
 
         [TestInitialize]

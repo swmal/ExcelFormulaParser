@@ -41,14 +41,14 @@ namespace ExcelFormulaParser.EPPlus.Tests
         [TestMethod]
         public void ShouldRetrieveRangeValuesFromEPPlus()
         {
-            var result = _parser.Parse("=SUM(A1:A5) - SQRT(9)");
+            var result = _parser.Parse("SUM(A1:A5) - SQRT(9)");
             Assert.AreEqual(12d, result);
         }
 
         [TestMethod]
         public void ShouldRetrieveSingleValueFromEPPlus()
         {
-            var result = _parser.Parse("=INT(A2)");
+            var result = _parser.Parse("INT(A2)");
             Assert.AreEqual(2, result);
         }
 
@@ -56,11 +56,11 @@ namespace ExcelFormulaParser.EPPlus.Tests
         public void CircularRefsTest2()
         {
             var ws = _package.Workbook.Worksheets.First();
-            ws.Cells["AK5"].Value = "=SUM(AM4:AM6,AO6)";
+            ws.Cells["AK5"].Formula = "SUM(AM4:AM6,AO6)";
             ws.Cells["AM4"].Value = 4;
-            ws.Cells["AM5"].Value = "=SUM(AM4)";
+            ws.Cells["AM5"].Formula = "SUM(AM4)";
             ws.Cells["AM6"].Value = 2;
-            ws.Cells["AO6"].Value = "=SUM(AM4:AM6)";
+            ws.Cells["AO6"].Formula = "SUM(AM4:AM6)";
 
             var result = _parser.ParseAt("AK5");
             Assert.AreEqual(20d, result);
@@ -70,8 +70,8 @@ namespace ExcelFormulaParser.EPPlus.Tests
         public void ShouldDetectCircularRef()
         {
             var ws = _package.Workbook.Worksheets.First();
-            ws.Cells["A1"].Value = "=SUM(A2)";
-            ws.Cells["A2"].Value = "=SUM(A1)";
+            ws.Cells["A1"].Formula = "SUM(A2)";
+            ws.Cells["A2"].Formula = "SUM(A1)";
             _parser.ParseAt("A1");
         }
 

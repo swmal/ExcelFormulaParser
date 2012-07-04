@@ -15,7 +15,7 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
     [TestClass]
     public class MathFunctionsTests
     {
-        private ParsingContext _parsingContext;
+        private ParsingContext _parsingContext = ParsingContext.Create();
 
         [TestMethod]
         public void PiShouldReturnPIConstant()

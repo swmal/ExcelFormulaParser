@@ -14,7 +14,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
     {
         private ExcelDataItem CreateItem(object val, int row)
         {
-            return new ExcelDataItem(val, 0, row);
+            return new ExcelDataItem(val, null, 0, row);
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
                 .Stub(x => x.GetRangeValues(expectedAddres))
                 .Return(new ExcelDataItem[] { CreateItem(1, 0), CreateItem(2, 1) });
             var parser = new FormulaParser(provider);
-            var result = parser.Parse(string.Format("=sum({0})", expectedAddres));
+            var result = parser.Parse(string.Format("sum({0})", expectedAddres));
             Assert.AreEqual(3d, result);
         }
 
@@ -37,9 +37,9 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
             provider
                 .Stub(x => x.GetRangeValues(expectedAddres))
-                .Return(new ExcelDataItem[] { CreateItem(1, 0), CreateItem("=SUM(1,2)", 1) });
+                .Return(new ExcelDataItem[] { CreateItem(1, 0), new ExcelDataItem(null, "SUM(1,2)", 0, 1) });
             var parser = new FormulaParser(provider);
-            var result = parser.Parse(string.Format("=sum({0})", expectedAddres));
+            var result = parser.Parse(string.Format("sum({0})", expectedAddres));
             Assert.AreEqual(4d, result);
         }
 
@@ -50,9 +50,9 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
             provider
                 .Stub(x => x.GetRangeValues(expectedAddres))
-                .Return(new ExcelDataItem[] { CreateItem(1, 0), CreateItem("=SUM(A1:A2)", 1) });
+                .Return(new ExcelDataItem[] { CreateItem(1, 0), new ExcelDataItem(null, "SUM(A1:A2)",0, 1) });
             var parser = new FormulaParser(provider);
-            var result = parser.Parse(string.Format("=sum({0})", expectedAddres));
+            var result = parser.Parse(string.Format("sum({0})", expectedAddres));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ExcelFormulaParser.Tests.Excel.Functions.Text
     [TestClass]
     public class TextFunctionsTests
     {
-        private ParsingContext _parsingContext;
+        private ParsingContext _parsingContext = ParsingContext.Create();
         [TestMethod]
         public void CStrShouldConvertNumberToString()
         {

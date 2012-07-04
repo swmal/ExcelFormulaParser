@@ -60,23 +60,17 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             for (int x = 0; x < result.Count(); x++)
             {
                 var dataItem = result.ElementAt(x);
-                var rangeValue = dataItem.Value;
-                if (IsFormula(rangeValue))
+                if (!string.IsNullOrEmpty(dataItem.Formula))
                 {
                     var address = _rangeAddressFactory.Create(dataItem.ColIndex, dataItem.RowIndex);
-                    rangeValueList.Add(_parsingContext.Parser.Parse(rangeValue.ToString(), address));
+                    rangeValueList.Add(_parsingContext.Parser.Parse(dataItem.Formula, address));
                 }
                 else
                 {
-                    rangeValueList.Add(rangeValue);
+                    rangeValueList.Add(dataItem.Value);
                 }
             }
             return rangeValueList;
-        }
-
-        private static bool IsFormula(object rangeValue)
-        {
-            return rangeValue != null && rangeValue.ToString().StartsWith("=");
         }
     }
 }

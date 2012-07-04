@@ -105,7 +105,6 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 
         private Token CreateToken(TokenizerContext context)
         {
-            Token token = null;
             if (context.CurrentToken == "-")
             {
                 if (context.LastToken == null && context.LastToken.TokenType == TokenType.Operator)

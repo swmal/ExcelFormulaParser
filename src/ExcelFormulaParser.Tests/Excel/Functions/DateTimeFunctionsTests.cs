@@ -15,7 +15,7 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
     [TestClass]
     public class DateTimeFunctionsTests
     {
-        private ParsingContext _parsingContext;
+        private ParsingContext _parsingContext = ParsingContext.Create();
 
         private double GetTime(int hour, int minute, int second)
         {

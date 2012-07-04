@@ -36,16 +36,7 @@ namespace ExcelFormulaParser.EPPlus
             var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];
             foreach (var cell in range)
             {
-                if (!string.IsNullOrEmpty(cell.Formula))
-                {
-                    //parse formula
-                    returnList.Add(new ExcelDataItem("=" + cell.Formula, cell.Start.Column, cell.Start.Row));
-                }
-                else
-                {
-                    returnList.Add(new ExcelDataItem(cell.Value, cell.Start.Column, cell.Start.Row));
-                }
-
+                returnList.Add(new ExcelDataItem(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row));
             }
             //if (range.Value is object[,])
             //{

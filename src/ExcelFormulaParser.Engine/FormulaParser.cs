@@ -57,12 +57,7 @@ namespace ExcelFormulaParser.Engine
         {
             using (var scope = _parsingContext.Scopes.NewScope(rangeAddress))
             {
-                if (!IsFormulaCandidate(formula))
-                {
-                    return formula;
-                }
                 _parsingContext.Dependencies.AddFormulaScope(scope);
-                formula = formula.Substring(1);
                 var tokens = _lexer.Tokenize(formula);
                 var graph = _graphBuilder.Build(tokens);
                 if (graph.Expressions.Count() == 0)
@@ -87,13 +82,12 @@ namespace ExcelFormulaParser.Engine
         {
             Require.That(address).Named("address").IsNotNullOrEmpty();
             var dataItem = _excelDataProvider.GetRangeValues(address).First();
-            if (dataItem.Value == null) return null;
+            if (dataItem.Value == null && dataItem.Formula == null) return null;
+            if (!string.IsNullOrEmpty(dataItem.Formula))
+            {
+                return Parse(dataItem.Formula, _rangeAddressFactory.Create(address));
+            }
             return Parse(dataItem.Value.ToString(), _rangeAddressFactory.Create(address));
-        }
-
-        private static bool IsFormulaCandidate(string formula)
-        {
-            return !string.IsNullOrEmpty(formula) && formula.StartsWith("=");
         }
     }
 }

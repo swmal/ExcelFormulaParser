@@ -7,9 +7,10 @@ namespace ExcelFormulaParser.Engine
 {
     public class ExcelDataItem
     {
-        public ExcelDataItem(object val, int colIndex, int rowIndex)
+        public ExcelDataItem(object val, string formula, int colIndex, int rowIndex)
         {
             Value = val;
+            Formula = formula;
             ColIndex = colIndex;
             RowIndex = rowIndex;
         }
@@ -19,5 +20,7 @@ namespace ExcelFormulaParser.Engine
         public int RowIndex { get; private set; }
 
         public object Value { get; private set; }
+
+        public string Formula { get; private set; }
     }
 }
