@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
 {
@@ -37,11 +38,9 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
             Assert.AreEqual(4d, result);
         }
 
-        [TestMethod, Ignore]
-        public void ShouldHandleCircularReference()
+        [TestMethod, ExpectedException(typeof(CircularReferenceException))]
+        public void ShouldHandleCircularReference2()
         {
-            // This Test is currently causing an infinite loop due to circular reference.
-            // TODO fix this...
             var expectedAddres = "A1:A2";
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
             provider
@@ -49,7 +48,6 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.ExcelDataProviderTests
                 .Return(new object[] { 1, "=SUM(A1:A2)" });
             var parser = new FormulaParser(provider);
             var result = parser.Parse(string.Format("=sum({0})", expectedAddres));
-            Assert.AreEqual(4d, result);
         }
     }
 }
