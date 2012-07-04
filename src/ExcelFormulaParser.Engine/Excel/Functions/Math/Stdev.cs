@@ -16,10 +16,26 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             return CreateResult(StandardDeviation(values), DataType.Decimal);
         }
 
+        //private static double StandardDeviation(IEnumerable<double> values)
+        //{
+        //    double avg = values.Average();
+        //    return MathObj.Sqrt(values.Average(v => MathObj.Pow(v - avg, 2)));
+        //}
+
         private static double StandardDeviation(IEnumerable<double> values)
         {
-            double avg = values.Average();
-            return MathObj.Sqrt(values.Average(v => MathObj.Pow(v - avg, 2)));
-        }
+            double ret = 0;
+            if (values.Count() > 0)
+            {
+                //Compute the Average       
+                double avg = values.Average();
+                //Perform the Sum of (value-avg)_2_2       
+                double sum = values.Sum(d => MathObj.Pow(d - avg, 2));
+                //Put it all together       
+                ret = MathObj.Sqrt((sum) / (values.Count() - 1));
+            }
+            return ret;
+        } 
+
     }
 }

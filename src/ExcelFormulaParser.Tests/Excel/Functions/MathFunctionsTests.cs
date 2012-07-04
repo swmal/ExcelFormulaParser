@@ -110,7 +110,7 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var func = new Stdev();
             var args = FunctionsHelper.CreateArgs(1, 3, 5);
             var result = func.Execute(args, _parsingContext);
-            Assert.AreEqual(1.63299d, Math.Round((double)result.Result, 5));
+            Assert.AreEqual(2d, result.Result);
         }
 
         [TestMethod]

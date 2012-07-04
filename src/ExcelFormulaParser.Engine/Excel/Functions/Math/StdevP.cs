@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MathObj = System.Math;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
@@ -11,32 +12,13 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             var args = ArgsToDoubleEnumerable(arguments);
-            return CreateResult(StdevPImpl(args), DataType.Decimal);
+            return CreateResult(StandardDeviation(args), DataType.Decimal);
         }
 
-        private static object StdevPImpl(IEnumerable<double> args)
+        private static double StandardDeviation(IEnumerable<double> values)
         {
-            var result = double.NaN;
-            if (args != null)
-            {
-                double sum = 0d, sum2 = 0d;
-                int count=0;
-                foreach (var currentMember in args)
-                {
-                    if (currentMember != double.NaN)
-                    {
-                        sum += currentMember;
-                        sum2 += (currentMember*currentMember);
-                        count++;
-                    }
-                }
-                if (count > 0)
-                {
-                    result = System.Math.Sqrt(((count * sum2 - sum * sum) / (count * count)));
-                }
-            }
-            return result;
-
+            double avg = values.Average();
+            return MathObj.Sqrt(values.Average(v => MathObj.Pow(v - avg, 2)));
         }
     }
 }

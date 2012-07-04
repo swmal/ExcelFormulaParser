@@ -181,5 +181,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("=Mod(5,2)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void SubtotalShouldReturnAResult()
+        {
+            var result = _parser.Parse("=Subtotal(1, 10, 20)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }

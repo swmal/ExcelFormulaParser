@@ -21,6 +21,10 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
                     {
                         current *= (double)obj;
                     }
+                    else if (obj is int)
+                    {
+                        current *= (int)obj;
+                    }
                 }
                 return current;
             });

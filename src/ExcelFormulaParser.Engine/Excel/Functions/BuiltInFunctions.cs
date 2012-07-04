@@ -39,6 +39,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["sum"] = new Sum();
             _functions["stdev"] = new Stdev();
             _functions["stdevp"] = new StdevP();
+            _functions["subtotal"] = new Subtotal();
             _functions["exp"] = new Exp();
             _functions["max"] = new Max();
             _functions["min"] = new Min();
