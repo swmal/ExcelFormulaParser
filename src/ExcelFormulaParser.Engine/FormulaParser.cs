@@ -15,6 +15,7 @@ namespace ExcelFormulaParser.Engine
     public class FormulaParser
     {
         private readonly ParsingContext _parsingContext;
+        private readonly ExcelDataProvider _excelDataProvider;
 
         public FormulaParser(ExcelDataProvider excelDataProvider)
             : this(excelDataProvider, ParsingContext.Create())
@@ -26,6 +27,7 @@ namespace ExcelFormulaParser.Engine
         {
             parsingContext.Parser = this;
             _parsingContext = parsingContext;
+            _excelDataProvider = excelDataProvider;
             Configure(x =>
             {
                 x.SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository))
@@ -75,6 +77,12 @@ namespace ExcelFormulaParser.Engine
         public virtual object Parse(string formula)
         {
             return Parse(formula, RangeAddress.Empty);
+        }
+
+        public virtual object ParseAt(string address)
+        {
+            var dataItem = _excelDataProvider.GetRangeValues(address).First();
+            return Parse(dataItem.Value.ToString(), RangeAddress.Parse(address));
         }
 
         private static bool IsFormulaCandidate(string formula)

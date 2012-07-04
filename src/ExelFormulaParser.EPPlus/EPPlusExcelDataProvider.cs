@@ -70,5 +70,10 @@ namespace ExcelFormulaParser.EPPlus
             }
             return address;
         }
+
+        public override void Dispose()
+        {
+            _package.Dispose();
+        }
     }
 }

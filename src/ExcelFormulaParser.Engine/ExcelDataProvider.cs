@@ -9,7 +9,7 @@ namespace ExcelFormulaParser.Engine
     /// This class should be implemented to be able to deliver excel data
     /// to the formula parser.
     /// </summary>
-    public abstract class ExcelDataProvider
+    public abstract class ExcelDataProvider : IDisposable
     {
         /// <summary>
         /// Returns values from the required range.
@@ -18,5 +18,7 @@ namespace ExcelFormulaParser.Engine
         /// <returns>values from the required cells</returns>
         public abstract IEnumerable<ExcelDataItem> GetRangeValues(string address);
 
+
+        public abstract void Dispose();
     }
 }

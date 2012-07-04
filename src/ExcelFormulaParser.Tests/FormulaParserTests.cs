@@ -88,5 +88,17 @@ namespace ExcelFormulaParser.Tests
 
             compiler.AssertWasCalled(x => x.Compile(expectedGraph.Expressions));
         }
+
+        [TestMethod]
+        public void ParseAtShouldCallExcelDataProvider()
+        {
+            var excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            excelDataProvider
+                .Stub(x => x.GetRangeValues("A1"))
+                .Return(new List<ExcelDataItem> { new ExcelDataItem("=Sum(1,2)", 0, 0) });
+            var parser = new FormulaParser(excelDataProvider);
+            var result = parser.ParseAt("A1");
+            Assert.AreEqual(3d, result);
+        }
     }
 }
