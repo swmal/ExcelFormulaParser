@@ -43,13 +43,13 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
                 Worksheet = addressInfo.Worksheet
             };
            
-            if (!addressInfo.IsMultipleCells)
+            if (addressInfo.IsMultipleCells)
             {
-                HandleSingleCellAddress(rangeAddress, addressInfo);
+                HandleMultipleCellAddress(rangeAddress, addressInfo);
             }
             else
             {
-                HandleMultipleCellAddress(rangeAddress, addressInfo);
+                HandleSingleCellAddress(rangeAddress, addressInfo);
             }
             return rangeAddress;
         }
