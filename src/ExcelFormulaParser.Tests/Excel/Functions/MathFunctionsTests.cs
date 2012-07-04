@@ -325,5 +325,14 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(1.25d, result.Result);
         }
+
+        [TestMethod]
+        public void ModShouldReturnCorrectResult()
+        {
+            var func = new Mod();
+            var args = FunctionsHelper.CreateArgs(5, 2);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1d, result.Result);
+        }
     }
 }

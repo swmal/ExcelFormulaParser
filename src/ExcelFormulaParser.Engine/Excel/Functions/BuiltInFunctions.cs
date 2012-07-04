@@ -42,6 +42,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["exp"] = new Exp();
             _functions["max"] = new Max();
             _functions["min"] = new Min();
+            _functions["mod"] = new Mod();
             _functions["average"] = new Average();
             _functions["round"] = new Round();
             _functions["rand"] = new Rand();

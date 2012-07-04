@@ -174,5 +174,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("=VarP(1,2,3)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void ModShouldReturnAResult()
+        {
+            var result = _parser.Parse("=Mod(5,2)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }
