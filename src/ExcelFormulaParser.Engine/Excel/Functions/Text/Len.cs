@@ -11,7 +11,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Text
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
-            return CreateResult(arguments.First().Value.ToString().Length, DataType.Integer);
+            var length = arguments.First().Value.ToString().Length;
+            return CreateResult(Convert.ToDouble(length), DataType.Integer);
         }
     }
 }

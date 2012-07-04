@@ -151,7 +151,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             Assert.AreEqual(1, result.Expressions.First().Children.Count());
             Assert.IsInstanceOfType(result.Expressions.First().Children.First(), typeof(GroupExpression));
             Assert.IsInstanceOfType(result.Expressions.First().Children.First().Children.First(), typeof(IntegerExpression));
-            Assert.AreEqual(2, result.Expressions.First().Children.First().Compile().Result);
+            Assert.AreEqual(2d, result.Expressions.First().Children.First().Compile().Result);
         }
 
         [TestMethod]
@@ -204,7 +204,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var result = _graphBuilder.Build(tokens);
 
             Assert.AreEqual(1, result.Expressions.Count());
-            Assert.AreEqual(-2, result.Expressions.First().Compile().Result);
+            Assert.AreEqual(-2d, result.Expressions.First().Compile().Result);
         }
 
         [TestMethod]

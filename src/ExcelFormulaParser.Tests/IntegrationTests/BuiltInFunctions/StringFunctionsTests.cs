@@ -36,7 +36,7 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         public void LenShouldAddLengthUsingSuppliedOperator()
         {
             var result = _parser.Parse("=Len('abc') + 2");
-            Assert.AreEqual(5, result);
+            Assert.AreEqual(5d, result);
         }
 
         [TestMethod]

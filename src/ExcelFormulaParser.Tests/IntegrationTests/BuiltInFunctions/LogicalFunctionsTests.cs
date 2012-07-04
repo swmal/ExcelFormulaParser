@@ -22,14 +22,14 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         public void IfShouldReturnCorrectResult()
         {
             var result = _parser.Parse("=If(2 < 3, 1, 2)");
-            Assert.AreEqual(1, result);
+            Assert.AreEqual(1d, result);
         }
 
         [TestMethod]
         public void IIfShouldReturnCorrectResultWhenInnerFunctionExists()
         {
             var result = _parser.Parse("=If(NOT(Or(true, FALSE)), 1, 2)");
-            Assert.AreEqual(2, result);
+            Assert.AreEqual(2d, result);
         }
 
         [TestMethod]

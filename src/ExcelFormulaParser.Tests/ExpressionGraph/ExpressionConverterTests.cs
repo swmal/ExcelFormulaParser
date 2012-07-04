@@ -52,7 +52,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var compileResult = new CompileResult(1, DataType.Integer);
             var result = _converter.FromCompileResult(compileResult);
             Assert.IsInstanceOfType(result, typeof(IntegerExpression));
-            Assert.AreEqual(1, result.Compile().Result);
+            Assert.AreEqual(1d, result.Compile().Result);
         }
 
         [TestMethod]

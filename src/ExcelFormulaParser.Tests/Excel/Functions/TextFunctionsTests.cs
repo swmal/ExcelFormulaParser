@@ -29,7 +29,7 @@ namespace ExcelFormulaParser.Tests.Excel.Functions.Text
         {
             var func = new Len();
             var result = func.Execute(FunctionsHelper.CreateArgs("abc"), _parsingContext);
-            Assert.AreEqual(3, result.Result);
+            Assert.AreEqual(3d, result.Result);
         }
 
         [TestMethod]

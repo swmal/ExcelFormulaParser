@@ -20,8 +20,8 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
 
             Assert.IsInstanceOfType(result.Result, typeof(IEnumerable<object>));
             var resultList = (IEnumerable<object>)result.Result;
-            Assert.AreEqual(2, resultList.ElementAt(0));
-            Assert.AreEqual(3, resultList.ElementAt(1));
+            Assert.AreEqual(2d, resultList.ElementAt(0));
+            Assert.AreEqual(3d, resultList.ElementAt(1));
         }
     }
 }

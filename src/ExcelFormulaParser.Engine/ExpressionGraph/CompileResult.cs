@@ -23,5 +23,10 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             get;
             private set;
         }
+
+        public bool IsNumeric
+        {
+            get { return DataType == Engine.ExpressionGraph.DataType.Decimal || DataType == Engine.ExpressionGraph.DataType.Integer; }
+        }
     }
 }

@@ -23,28 +23,28 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         public void ShouldAddIntegersCorrectly()
         {
             var result = _parser.Parse("=1 + 2");
-            Assert.AreEqual(3, result);
+            Assert.AreEqual(3d, result);
         }
 
         [TestMethod]
         public void ShouldSubtractIntegersCorrectly()
         {
             var result = _parser.Parse("=2 - 1");
-            Assert.AreEqual(1, result);
+            Assert.AreEqual(1d, result);
         }
 
         [TestMethod]
         public void ShouldMultiplyIntegersCorrectly()
         {
             var result = _parser.Parse("=2 * 3");
-            Assert.AreEqual(6, result);
+            Assert.AreEqual(6d, result);
         }
 
         [TestMethod]
         public void ShouldDivideIntegersCorrectly()
         {
             var result = _parser.Parse("=8 / 4");
-            Assert.AreEqual(2, result);
+            Assert.AreEqual(2d, result);
         }
 
         [TestMethod]
@@ -59,6 +59,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests
         {
             var result = _parser.Parse("=2 ^ 4");
             Assert.AreEqual(16d, result);
+        }
+
+        [TestMethod]
+        public void ShouldHandleExpWithDecimalCorrectly()
+        {
+            var result = _parser.Parse("=2.5 ^ 2");
+            Assert.AreEqual(6.25d, result);
         }
 
         [TestMethod]

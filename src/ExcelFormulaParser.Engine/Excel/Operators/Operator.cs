@@ -52,13 +52,9 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((int)l.Result) + ((int)r.Result), DataType.Integer);
+                        return new CompileResult(((double)l.Result) + ((double)r.Result), DataType.Integer);
                     }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((double)l.Result) + ((int)r.Result), DataType.Decimal);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    else if (l.IsNumeric && r.IsNumeric)
                     {
                         return new CompileResult(((double)l.Result) + ((double)r.Result), DataType.Decimal);
                     }
@@ -75,13 +71,9 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((int)l.Result) - ((int)r.Result), DataType.Integer);
+                        return new CompileResult(((double)l.Result) - ((double)r.Result), DataType.Integer);
                     }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((double)l.Result) - ((int)r.Result), DataType.Decimal);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    else if (l.IsNumeric && r.IsNumeric)
                     {
                         return new CompileResult(((double)l.Result) - ((double)r.Result), DataType.Decimal);
                     }
@@ -98,13 +90,9 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((int)l.Result) * ((int)r.Result), DataType.Integer);
+                        return new CompileResult(((double)l.Result) * ((double)r.Result), DataType.Integer);
                     }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((double)l.Result) * ((int)r.Result), DataType.Decimal);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    if (l.IsNumeric && r.IsNumeric)
                     {
                         return new CompileResult(((double)l.Result) * ((double)r.Result), DataType.Decimal);
                     }
@@ -121,13 +109,9 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((int)l.Result) / ((int)r.Result), DataType.Integer);
+                        return new CompileResult(((double)l.Result) / ((double)r.Result), DataType.Integer);
                     }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((double)l.Result) / ((int)r.Result), DataType.Decimal);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    if (l.IsNumeric && r.IsNumeric)
                     {
                         return new CompileResult(((double)l.Result) / ((double)r.Result), DataType.Decimal);
                     }
@@ -142,7 +126,11 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.Exponentiation, PrecedenceExp, (l, r) =>
                     {
-                        return new CompileResult(Math.Pow(Convert.ToDouble(l.Result), Convert.ToDouble(r.Result)), DataType.Decimal);
+                        if (l.IsNumeric && r.IsNumeric)
+                        {
+                            return new CompileResult(Math.Pow(Convert.ToDouble(l.Result), Convert.ToDouble(r.Result)), DataType.Decimal);
+                        }
+                        return new CompileResult(0d, DataType.Decimal);
                     });
             }
         }
@@ -166,7 +154,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.Modulus, PrecedenceModulus, (l, r) =>
                 {
-                    return new CompileResult((int)l.Result % (int)r.Result, DataType.Integer); ;
+                    return new CompileResult((double)l.Result % (double)r.Result, DataType.Integer); ;
                 });
             }
         }
@@ -177,15 +165,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.GreaterThan, PrecedenceComparison, (l, r) =>
                     {
-                        if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
-                        {
-                            return new CompileResult(((int)l.Result) > ((int)r.Result), DataType.Boolean);
-                        }
-                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                        {
-                            return new CompileResult(((double)l.Result) > ((int)r.Result), DataType.Boolean);
-                        }
-                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                        if (l.IsNumeric && r.IsNumeric)
                         {
                             return new CompileResult(((double)l.Result) > ((double)r.Result), DataType.Boolean);
                         }
@@ -211,15 +191,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.GreaterThanOrEqual, PrecedenceComparison, (l, r) =>
                 {
-                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((int)l.Result) >= ((int)r.Result), DataType.Boolean);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((double)l.Result) >= ((int)r.Result), DataType.Boolean);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    if (l.IsNumeric && r.IsNumeric)
                     {
                         return new CompileResult(((double)l.Result) >= ((double)r.Result), DataType.Boolean);
                     }
@@ -234,15 +206,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.LessThan, PrecedenceComparison, (l, r) =>
                     {
-                        if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
-                        {
-                            return new CompileResult(((int)l.Result) < ((int)r.Result), DataType.Boolean);
-                        }
-                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                        {
-                            return new CompileResult(((double)l.Result) < ((int)r.Result), DataType.Boolean);
-                        }
-                        if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                        if (l.IsNumeric && r.IsNumeric)
                         {
                             return new CompileResult(((double)l.Result) < ((double)r.Result), DataType.Boolean);
                         }
@@ -257,15 +221,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.LessThanOrEqual, PrecedenceComparison, (l, r) =>
                 {
-                    if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((int)l.Result) <= ((int)r.Result), DataType.Boolean);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Integer)
-                    {
-                        return new CompileResult(((double)l.Result) <= ((int)r.Result), DataType.Boolean);
-                    }
-                    if (l.DataType == DataType.Decimal && r.DataType == DataType.Decimal)
+                    if (l.IsNumeric && r.IsNumeric)
                     {
                         return new CompileResult(((double)l.Result) <= ((double)r.Result), DataType.Boolean);
                     }
