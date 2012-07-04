@@ -51,14 +51,14 @@ namespace ExcelFormulaParser.EPPlus.Tests
             Assert.AreEqual(2, result);
         }
 
-        [TestMethod, Ignore]
-        public void CircularRefsTest()
+        [TestMethod]
+        public void CircularRefsTest2()
         {
             var ws = _package.Workbook.Worksheets.First();
             ws.Cells["AK5"].Value = "=SUM(AM4:AM6,AO6)";
-            ws.Cells["AM4"].Value = "4";
+            ws.Cells["AM4"].Value = 4;
             ws.Cells["AM5"].Value = "=SUM(AM4)";
-            ws.Cells["AM6"].Value = "2";
+            ws.Cells["AM6"].Value = 2;
             ws.Cells["AO6"].Value = "=SUM(AM4:AM6)";
 
             var result = _parser.Parse("=Int(AK5)");
@@ -66,14 +66,14 @@ namespace ExcelFormulaParser.EPPlus.Tests
         }
 
         [TestMethod]
-        public void ShouldReturnExcelCells()
+        public void ShouldHandleMatrixValues()
         {
             var ws = _package.Workbook.Worksheets.First();
             ws.Cells["C1"].Value = 3;
             ws.Cells["C2"].Value = 4;
             ws.Cells["D1"].Value = 2;
             ws.Cells["D2"].Value = 2;
-            ws.Cells["E1"].Value = "=SUM(C1:D2)";
+            ws.Cells["E1"].Value = "=SUM(B1:D2)";
 
             var result = _parser.Parse("=Int(E1)");
             Assert.AreEqual(11, result);

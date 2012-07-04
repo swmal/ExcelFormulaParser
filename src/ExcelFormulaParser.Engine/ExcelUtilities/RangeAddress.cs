@@ -8,6 +8,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
     public class RangeAddress
     {
         private static readonly AddressTranslator _addressTranslator = new AddressTranslator();
+        private static readonly IndexToAddressTranslator _indexToAddressTranslator = new IndexToAddressTranslator();
 
         private string _rangeAddress = string.Empty;
 
@@ -55,6 +56,25 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
                 HandleMultipleCellAddress(rangeAddress, worksheetAddress);
             }
             return rangeAddress;
+        }
+
+        public static RangeAddress Create(int col, int row)
+        {
+            return new RangeAddress()
+            {
+                _rangeAddress = _indexToAddressTranslator.ToAddress(col, row),
+                Worksheet = string.Empty,
+                FromCol = col,
+                ToCol = col,
+                FromRow = row,
+                ToRow = row
+            };
+        }
+
+        private static RangeAddress _empty = new RangeAddress();
+        public static RangeAddress Empty
+        {
+            get { return _empty; }
         }
 
         /// <summary>

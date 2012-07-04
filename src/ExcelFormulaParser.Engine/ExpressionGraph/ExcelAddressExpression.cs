@@ -10,6 +10,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     {
         private readonly ExcelDataProvider _excelDataProvider;
         private readonly ParsingContext _parsingContext;
+        private readonly IndexToAddressTranslator _indexToAddressTranslator = new IndexToAddressTranslator();
 
         public ExcelAddressExpression(string expression, ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
             : base(expression)
@@ -33,9 +34,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
-            var rangeAddress = RangeAddress.Parse(ExpressionString);
-            _parsingContext.Ranges.CheckCircularReference(_parsingContext.Scopes.Current, rangeAddress);
-            _parsingContext.Ranges.Add(_parsingContext.Scopes.Current, rangeAddress);
+            //_parsingContext.Ranges.CheckCircularReference(_parsingContext.Scopes.Current, rangeAddress);
+            //_parsingContext.Ranges.Add(_parsingContext.Scopes.Current, rangeAddress);
             var result = _excelDataProvider.GetRangeValues(ExpressionString);
             if (result == null || result.Count() == 0)
             {
@@ -58,10 +58,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             var rangeValueList = new List<object>();
             for (int x = 0; x < result.Count(); x++)
             {
-                var rangeValue = result.ElementAt(x).Value;
+                var dataItem = result.ElementAt(x);
+                var rangeValue = dataItem.Value;
                 if (IsFormula(rangeValue))
                 {
-                    rangeValueList.Add(_parsingContext.Parser.Parse(rangeValue.ToString()));
+                    var address = RangeAddress.Create(dataItem.ColIndex, dataItem.RowIndex);
+                    rangeValueList.Add(_parsingContext.Parser.Parse(rangeValue.ToString(), address));
                 }
                 else
                 {

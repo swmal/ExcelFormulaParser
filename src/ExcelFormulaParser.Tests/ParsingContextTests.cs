@@ -25,6 +25,13 @@ namespace ExcelFormulaParser.Tests
         }
 
         [TestMethod]
+        public void DependenciesShouldBeSetByFactoryMethod()
+        {
+            var context = ParsingContext.Create();
+            Assert.IsNotNull(context.Dependencies);
+        }
+
+        [TestMethod]
         public void ScopesShouldBeSetByFactoryMethod()
         {
             var context = ParsingContext.Create();

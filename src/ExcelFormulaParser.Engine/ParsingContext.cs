@@ -18,6 +18,8 @@ namespace ExcelFormulaParser.Engine
 
         public Ranges Ranges { get; private set; }
 
+        public FormulaDependencies Dependencies { get; private set; }
+
         public ParsingScopes Scopes { get; private set; }
 
         public static ParsingContext Create()
@@ -26,6 +28,7 @@ namespace ExcelFormulaParser.Engine
             context.Configuration = ParsingConfiguration.Create();
             context.Ranges = new Ranges();
             context.Scopes = new ParsingScopes(context);
+            context.Dependencies = new FormulaDependencies();
             return context;
         }
 

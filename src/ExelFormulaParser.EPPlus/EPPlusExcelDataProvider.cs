@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine;
 using OfficeOpenXml;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.EPPlus
 {
@@ -20,6 +21,7 @@ namespace ExcelFormulaParser.EPPlus
         public override IEnumerable<ExcelDataItem> GetRangeValues(string address)
         {
             var returnList = new List<ExcelDataItem>();
+            var startAddress = RangeAddress.Parse(address);
             if (AddressHasWorkbookName(address))
             {
                 _currentWorksheet = _package.Workbook.Worksheets[GetWorksheetName(address)];
@@ -31,15 +33,21 @@ namespace ExcelFormulaParser.EPPlus
             var range = _currentWorksheet.Cells[GetRangeAddress(address)];
             if (range.Value is object[,])
             {
-                
-                foreach (var obj in (object[,])range.Value)
+                var arr = (object[,])range.Value;
+                var nRows = arr.GetUpperBound(0);
+                var nCols = arr.GetUpperBound(1);
+                for(int row = 0; row <= nRows; row++)
                 {
-                    returnList.Add(new ExcelDataItem(obj, 0, 0));
+                    for (int col = 0; col <= nCols; col++)
+                    {
+                        returnList.Add(new ExcelDataItem(arr[row, col], startAddress.FromCol + col, startAddress.FromRow + row));
+                    }
+
                 }
             }
             else 
             { 
-                returnList.Add(new ExcelDataItem(range.Value, 0, 0)); 
+                returnList.Add(new ExcelDataItem(range.Value, startAddress.FromCol, startAddress.FromRow)); 
             }
             return returnList;
         }

@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using Rhino.Mocks;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Tests.ExpressionGraph
 {
@@ -24,7 +25,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         public void Setup()
         {
             _parsingContext = ParsingContext.Create();
-            _scope = _parsingContext.Scopes.NewScope();
+            _scope = _parsingContext.Scopes.NewScope(RangeAddress.Empty);
         }
 
         [TestCleanup]

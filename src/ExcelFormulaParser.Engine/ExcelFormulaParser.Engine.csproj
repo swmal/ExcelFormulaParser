@@ -43,6 +43,9 @@
     <Compile Include="ExcelDataItem.cs" />
     <Compile Include="ExcelDataProvider.cs" />
     <Compile Include="ExcelUtilities\AddressTranslator.cs" />
+    <Compile Include="ExcelUtilities\FormulaDependencies.cs" />
+    <Compile Include="ExcelUtilities\FormulaDependency.cs" />
+    <Compile Include="ExcelUtilities\FormulaDependencyFactory.cs" />
     <Compile Include="ExcelUtilities\IndexToAddressTranslator.cs" />
     <Compile Include="ExcelUtilities\RangeAddress.cs" />
     <Compile Include="ExcelUtilities\Ranges.cs" />

@@ -78,5 +78,35 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
             var address2 = RangeAddress.Parse("A5");
             Assert.IsFalse(address1.CollidesWith(address2));
         }
+
+        [TestMethod]
+        public void CreateShouldReturnAnInstanceWithStringAddressSet()
+        {
+            var address = RangeAddress.Create(0, 0);
+            Assert.AreEqual("A1", address.ToString());
+        }
+
+        [TestMethod]
+        public void CreateShouldReturnAnInstanceWithFromAndToColSet()
+        {
+            var address = RangeAddress.Create(1, 0);
+            Assert.AreEqual(1, address.FromCol);
+            Assert.AreEqual(1, address.ToCol);
+        }
+
+        [TestMethod]
+        public void CreateShouldReturnAnInstanceWithFromAndToRowSet()
+        {
+            var address = RangeAddress.Create(0, 1);
+            Assert.AreEqual(1, address.FromRow);
+            Assert.AreEqual(1, address.ToRow);
+        }
+
+        [TestMethod]
+        public void CreateShouldReturnAnInstanceWithWorksheetSetToEmptyString()
+        {
+            var address = RangeAddress.Create(0, 1);
+            Assert.AreEqual(string.Empty, address.Worksheet);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine
 {
@@ -9,13 +10,24 @@ namespace ExcelFormulaParser.Engine
     {
         private readonly ParsingScopes _parsingScopes;
 
-        public ParsingScope(ParsingScopes parsingScope)
+        public ParsingScope(ParsingScopes parsingScopes, RangeAddress address)
+            : this(parsingScopes, null, address)
         {
-            _parsingScopes = parsingScope;
+        }
+
+        public ParsingScope(ParsingScopes parsingScopes, ParsingScope parent, RangeAddress address)
+        {
+            _parsingScopes = parsingScopes;
+            Parent = parent;
+            Address = address;
             ScopeId = Guid.NewGuid();
         }
 
         public Guid ScopeId { get; private set; }
+
+        public ParsingScope Parent { get; private set; }
+
+        public RangeAddress Address { get; private set; }
 
         public void Dispose()
         {

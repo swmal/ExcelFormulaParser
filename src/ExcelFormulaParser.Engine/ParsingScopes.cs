@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine
 {
@@ -15,9 +16,17 @@ namespace ExcelFormulaParser.Engine
         }
         private Stack<ParsingScope> _scopes = new Stack<ParsingScope>();
 
-        public virtual ParsingScope NewScope()
+        public virtual ParsingScope NewScope(RangeAddress address)
         {
-            var scope = new ParsingScope(this);
+            ParsingScope scope;
+            if (_scopes.Count() > 0)
+            {
+                scope = new ParsingScope(this, _scopes.Peek(), address);
+            }
+            else
+            {
+                scope = new ParsingScope(this, address);
+            }
             _scopes.Push(scope);
             return scope;
         }

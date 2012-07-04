@@ -8,6 +8,7 @@ using ExcelFormulaParser.Engine.VBA.Operators;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.VBA;
 using ExcelFormulaParser.Engine.VBA.Functions;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine
 {
@@ -46,14 +47,15 @@ namespace ExcelFormulaParser.Engine
         private IExpressionGraphBuilder _graphBuilder;
         private IExpressionCompiler _compiler;
 
-        public virtual object Parse(string formula)
+        internal virtual object Parse(string formula, RangeAddress rangeAddress)
         {
-            using (var scope = _parsingContext.Scopes.NewScope())
+            using (var scope = _parsingContext.Scopes.NewScope(rangeAddress))
             {
                 if (!IsFormulaCandidate(formula))
                 {
                     return formula;
                 }
+                _parsingContext.Dependencies.AddFormulaScope(scope);
                 formula = formula.Substring(1);
                 var tokens = _lexer.Tokenize(formula);
                 var graph = _graphBuilder.Build(tokens);
@@ -63,6 +65,16 @@ namespace ExcelFormulaParser.Engine
                 }
                 return _compiler.Compile(graph.Expressions).Result;
             }
+        }
+
+        public virtual object Parse(string formula, string address)
+        {
+            return Parse(formula, RangeAddress.Parse(address));
+        }
+
+        public virtual object Parse(string formula)
+        {
+            return Parse(formula, RangeAddress.Empty);
         }
 
         private static bool IsFormulaCandidate(string formula)
