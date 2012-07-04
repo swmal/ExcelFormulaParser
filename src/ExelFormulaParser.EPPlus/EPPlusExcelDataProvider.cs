@@ -17,9 +17,9 @@ namespace ExcelFormulaParser.EPPlus
             _package = package;
         }
 
-        public override IEnumerable<object> GetRangeValues(string address)
+        public override IEnumerable<ExcelDataItem> GetRangeValues(string address)
         {
-            var returnList = new List<object>();
+            var returnList = new List<ExcelDataItem>();
             if (AddressHasWorkbookName(address))
             {
                 _currentWorksheet = _package.Workbook.Worksheets[GetWorksheetName(address)];
@@ -31,14 +31,15 @@ namespace ExcelFormulaParser.EPPlus
             var range = _currentWorksheet.Cells[GetRangeAddress(address)];
             if (range.Value is object[,])
             {
+                
                 foreach (var obj in (object[,])range.Value)
                 {
-                    returnList.Add(obj);
+                    returnList.Add(new ExcelDataItem(obj, 0, 0));
                 }
             }
             else 
             { 
-                returnList.Add(range.Value); 
+                returnList.Add(new ExcelDataItem(range.Value, 0, 0)); 
             }
             return returnList;
         }

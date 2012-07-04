@@ -15,6 +15,11 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         private ParsingContext _parsingContext;
         private ParsingScope _scope;
 
+        private ExcelDataItem CreateItem(object val)
+        {
+            return new ExcelDataItem(val, 0, 0);
+        }
+
         [TestInitialize]
         public void Setup()
         {
@@ -47,7 +52,7 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
             provider
                 .Stub(x => x.GetRangeValues(expectedAddress))
-                .Return(new object[] { 1 });
+                .Return(new ExcelDataItem[] {CreateItem(1) });
 
             var expression = new ExcelAddressExpression(expectedAddress, provider, _parsingContext);
             var result = expression.Compile();

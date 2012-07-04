@@ -16,7 +16,7 @@ namespace ExcelFormulaParser.Engine
         /// </summary>
         /// <param name="address">An Excel address</param>
         /// <returns>values from the required cells</returns>
-        public abstract IEnumerable<object> GetRangeValues(string address);
+        public abstract IEnumerable<ExcelDataItem> GetRangeValues(string address);
 
     }
 }

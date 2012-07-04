@@ -53,12 +53,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             }
         }
 
-        private List<object> HandleRangeValues(IEnumerable<object> result)
+        private List<object> HandleRangeValues(IEnumerable<ExcelDataItem> result)
         {
             var rangeValueList = new List<object>();
             for (int x = 0; x < result.Count(); x++)
             {
-                var rangeValue = result.ElementAt(x);
+                var rangeValue = result.ElementAt(x).Value;
                 if (IsFormula(rangeValue))
                 {
                     rangeValueList.Add(_parsingContext.Parser.Parse(rangeValue.ToString()));
