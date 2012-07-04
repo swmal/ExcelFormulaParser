@@ -8,15 +8,21 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
     public class ExcelAddressExpression : Expression
     {
         private readonly ExcelDataProvider _excelDataProvider;
+        private readonly ParsingContext _context;
 
-        public ExcelAddressExpression(string expression, ExcelDataProvider excelDataProvider)
+        public ExcelAddressExpression(string expression, ExcelDataProvider excelDataProvider, ParsingContext context)
             : base(expression)
         {
             if (excelDataProvider == null)
             {
                 throw new ArgumentNullException("excelDataProvider");
             }
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
             _excelDataProvider = excelDataProvider;
+            _context = context;
         }
 
         public override bool IsGroupedExpression
@@ -32,9 +38,22 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 return null;
             }
-            if (result.Count() > 1)
+            var rangeValueList = new List<object>();
+            FormulaParser parser = null;
+            for (int x = 0; x < result.Count(); x++ )
             {
-                return new CompileResult(result, DataType.Enumerable);
+                var rangeValue = result.ElementAt(x);
+                if (rangeValue != null && rangeValue.ToString().StartsWith("="))
+                {
+                    if (parser == null) parser = new FormulaParser(_excelDataProvider);
+                    rangeValueList.Add(parser.Parse(rangeValue.ToString()));
+                    continue;
+                }
+                rangeValueList.Add(rangeValue);
+            }
+            if (rangeValueList.Count > 1)
+            {
+                return new CompileResult(rangeValueList, DataType.Enumerable);
             }
             else
             {

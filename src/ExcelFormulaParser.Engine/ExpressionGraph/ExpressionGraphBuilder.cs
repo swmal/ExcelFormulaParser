@@ -17,7 +17,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         private bool _negateNextExpression;
 
         public ExpressionGraphBuilder(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
-            : this(new ExpressionFactory(excelDataProvider), parsingContext)
+            : this(new ExpressionFactory(excelDataProvider, parsingContext), parsingContext)
         {
 
         }

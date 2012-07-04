@@ -14,12 +14,14 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
     public class ExpressionFactoryTests
     {
         private IExpressionFactory _factory;
+        private ParsingContext _parsingContext;
 
         [TestInitialize]
         public void Setup()
         {
+            _parsingContext = ParsingContext.Create();
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
-            _factory = new ExpressionFactory(provider);
+            _factory = new ExpressionFactory(provider, _parsingContext);
         }
 
         [TestMethod]
