@@ -64,7 +64,7 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
         }
 
         [TestMethod]
-        public void CollideShouldReturnFalseIfRangesCollides()
+        public void CollideShouldReturnFalseIfRangesDoesNotCollide()
         {
             var address1 = RangeAddress.Parse("A1:A6");
             var address2 = RangeAddress.Parse("A8");

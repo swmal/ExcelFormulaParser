@@ -32,7 +32,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
-
+            _parsingContext.Ranges.Add(ExpressionString);
+            _parsingContext.Ranges.CheckCircularReference();
             var result = _excelDataProvider.GetRangeValues(ExpressionString);
             if (result == null || result.Count() == 0)
             {
@@ -57,15 +58,22 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             for (int x = 0; x < result.Count(); x++)
             {
                 var rangeValue = result.ElementAt(x);
-                if (rangeValue != null && rangeValue.ToString().StartsWith("="))
+                if (IsFormula(rangeValue))
                 {
-                    if (parser == null) parser = new FormulaParser(_excelDataProvider);
+                    if (parser == null) parser = new FormulaParser(_excelDataProvider, _parsingContext);
                     rangeValueList.Add(parser.Parse(rangeValue.ToString()));
-                    continue;
                 }
-                rangeValueList.Add(rangeValue);
+                else
+                {
+                    rangeValueList.Add(rangeValue);
+                }
             }
             return rangeValueList;
+        }
+
+        private static bool IsFormula(object rangeValue)
+        {
+            return rangeValue != null && rangeValue.ToString().StartsWith("=");
         }
     }
 }

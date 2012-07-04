@@ -18,19 +18,18 @@ namespace ExcelFormulaParser.Engine
         public FormulaParser(ExcelDataProvider excelDataProvider)
             : this(excelDataProvider, ParsingContext.Create())
         {
-            
-        }
-
-        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
-        {
-            _parsingContext = parsingContext;
             Configure(x =>
             {
                 x.SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository))
                     .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _parsingContext))
                     .SetExpresionCompiler(new ExpressionCompiler());
                 x.FunctionRepository.LoadModule(new BuiltInFunctions());
-            });
+            }); 
+        }
+
+        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
+        {
+            _parsingContext = parsingContext;
         }
 
         public void Configure(Action<ParsingConfiguration> configMethod)

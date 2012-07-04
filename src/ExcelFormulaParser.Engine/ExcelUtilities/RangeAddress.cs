@@ -7,7 +7,6 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
 {
     public class RangeAddress
     {
-
         private static readonly AddressTranslator _addressTranslator = new AddressTranslator();
 
         public string Worksheet { get; private set; }
@@ -20,6 +19,12 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
 
         public int ToRow { get; private set; }
 
+        /// <summary>
+        /// Creates a <see cref="RangeAddress"/> instance out of a valid
+        /// speadsheet address, ex. A1, A1:B2, Worksheet!A1:B2
+        /// </summary>
+        /// <param name="range">The range to parse</param>
+        /// <returns></returns>
         public static RangeAddress Parse(string range)
         {
             var worksheet = string.Empty;
@@ -36,6 +41,11 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             return HandleMultipleCellAddress(rangeAddress, worksheet);
         }
 
+        /// <summary>
+        /// Returns true if this range collides (full or partly) with the supplied range
+        /// </summary>
+        /// <param name="other">The range to check</param>
+        /// <returns></returns>
         public bool CollidesWith(RangeAddress other)
         {
             if (other.Worksheet != Worksheet)
