@@ -16,7 +16,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         public ExpressionCompiler()
             : this(new ExpressionConverter(), new CompileStrategyFactory())
         {
-
+ 
         }
 
         public ExpressionCompiler(IExpressionConverter expressionConverter, ICompileStrategyFactory compileStrategyFactory)

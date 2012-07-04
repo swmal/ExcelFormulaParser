@@ -25,13 +25,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         {
             _excelDataProvider
                 .Stub(x => x.GetRangeValues("A1"))
-                .Return(new List<ExcelDataItem> { new ExcelDataItem(null, "SUBTOTAL(9, A2:A3)", 0, 0)});
+                .Return(new List<ExcelCell> { new ExcelCell(null, "SUBTOTAL(9, A2:A3)", 0, 0)});
             _excelDataProvider
                 .Stub(x => x.GetRangeValues("A2:A3"))
-                .Return(new List<ExcelDataItem> { new ExcelDataItem(null, "SUBTOTAL(9, A5:A6)", 0, 1), new ExcelDataItem(2d, null, 0, 2)});
+                .Return(new List<ExcelCell> { new ExcelCell(null, "SUBTOTAL(9, A5:A6)", 0, 1), new ExcelCell(2d, null, 0, 2)});
             _excelDataProvider
                 .Stub(x => x.GetRangeValues("A5:A6"))
-                .Return(new List<ExcelDataItem> { new ExcelDataItem(2d, null, 0, 4), new ExcelDataItem(2d, null, 0, 5)});
+                .Return(new List<ExcelCell> { new ExcelCell(2d, null, 0, 4), new ExcelCell(2d, null, 0, 5)});
             var result = _parser.ParseAt("A1");
             Assert.AreEqual(2d, result);
         }

@@ -20,9 +20,9 @@ namespace ExcelFormulaParser.EPPlus
             _rangeAddressFactory = new RangeAddressFactory(this);
         }
 
-        public override IEnumerable<ExcelDataItem> GetRangeValues(string address)
+        public override IEnumerable<ExcelCell> GetRangeValues(string address)
         {
-            var returnList = new List<ExcelDataItem>();
+            var returnList = new List<ExcelCell>();
             var startAddress = _rangeAddressFactory.Create(address);
             var addressInfo = ExcelAddressInfo.Parse(address);
             if (addressInfo.WorksheetIsSpecified)
@@ -36,7 +36,7 @@ namespace ExcelFormulaParser.EPPlus
             var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];
             foreach (var cell in range)
             {
-                returnList.Add(new ExcelDataItem(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row));
+                returnList.Add(new ExcelCell(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row));
             }
             //if (range.Value is object[,])
             //{

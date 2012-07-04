@@ -54,7 +54,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             }
         }
 
-        private List<object> HandleRangeValues(IEnumerable<ExcelDataItem> result)
+        private List<object> HandleRangeValues(IEnumerable<ExcelCell> result)
         {
             var rangeValueList = new List<object>();
             for (int x = 0; x < result.Count(); x++)

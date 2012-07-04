@@ -11,6 +11,19 @@ namespace ExcelFormulaParser.Tests.Excel
     [TestClass]
     public class OperatorsTests
     {
+        [TestMethod, ExpectedException(typeof(DivideByZeroException))]
+        public void OperatorDivideShouldThrowDivideByZeroExceptionIfRightOperandIsZero()
+        {
+            Operator.Divide.Apply(new CompileResult(1d, DataType.Decimal), new CompileResult(0d, DataType.Decimal));
+        }
+
+        [TestMethod]
+        public void OperatorDivideShouldDivideCorrectly()
+        {
+            var result = Operator.Divide.Apply(new CompileResult(9d, DataType.Decimal), new CompileResult(3d, DataType.Decimal));
+            Assert.AreEqual(3d, result.Result);
+        }
+
         [TestMethod]
         public void OperatorConcatShouldConcatTwoStrings()
         {

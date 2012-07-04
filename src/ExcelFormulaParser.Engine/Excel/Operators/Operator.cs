@@ -107,13 +107,19 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.Divide, PrecedenceMultiplyDevide, (l, r) =>
                 {
+                    var left = (double)l.Result;
+                    var right = (double)r.Result;
+                    if (right == 0d)
+                    {
+                        throw new DivideByZeroException(string.Format("left: {0}, right: {1}", left, right));
+                    }
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((double)l.Result) / ((double)r.Result), DataType.Integer);
+                        return new CompileResult(left / right, DataType.Integer);
                     }
                     if (l.IsNumeric && r.IsNumeric)
                     {
-                        return new CompileResult(((double)l.Result) / ((double)r.Result), DataType.Decimal);
+                        return new CompileResult(left / right, DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
