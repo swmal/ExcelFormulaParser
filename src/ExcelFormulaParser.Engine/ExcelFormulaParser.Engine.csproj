@@ -55,7 +55,9 @@
     <Compile Include="Excel\Functions\ArgumentParserFactory.cs" />
     <Compile Include="Excel\Functions\ArgumentParsers.cs" />
     <Compile Include="Excel\Functions\BoolArgumentParser.cs" />
+    <Compile Include="Excel\Functions\CollectionFlattener.cs" />
     <Compile Include="Excel\Functions\DoubleArgumentParser.cs" />
+    <Compile Include="Excel\Functions\DoubleEnumerableArgConverter.cs" />
     <Compile Include="Excel\Functions\HiddenValuesHandlingFunction.cs" />
     <Compile Include="Excel\Functions\IntArgumentParser.cs" />
     <Compile Include="Excel\Functions\Math\Mod.cs" />

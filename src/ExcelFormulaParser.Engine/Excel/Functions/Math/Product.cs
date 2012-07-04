@@ -39,37 +39,57 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 
         private double CalculateFirstItem(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var firstElement = arguments.ElementAt(index);
-            if (ShouldIgnore(firstElement))
+            var element = arguments.ElementAt(index);
+            var argList = new List<FunctionArgument> { element };
+            var valueList = ArgsToDoubleEnumerable(argList);
+            var result = 0d;
+            foreach (var value in valueList)
             {
-                return 0d;
-            }
-            var elementValue = firstElement.Value;
-            if (elementValue is IEnumerable<FunctionArgument>)
-            {
-                var items = (IEnumerable<FunctionArgument>)elementValue;
-                double? result = null;
-                foreach (var item in items)
+                if (result == 0d && value > 0d)
                 {
-                    if (ShouldIgnore(item))
-                    {
-                        continue;
-                    }
-                    if (item.Value is double)
-                    {
-                        if (result.HasValue)
-                        {
-                            result *= (double)item.Value;
-                        }
-                        else
-                        {
-                            result = (double)item.Value;
-                        }
-                    }
+                    result = value;
                 }
-                return result ?? 0d;
+                else
+                {
+                    result *= value;
+                }
             }
-            return ArgToDecimal(arguments, 0);
+            return result;
         }
+
+        //private double CalculateFirstItem2(IEnumerable<FunctionArgument> arguments, int index)
+        //{
+        //    var firstElement = arguments.ElementAt(index);
+        //    if (ShouldIgnore(firstElement))
+        //    {
+        //        return 0d;
+        //    }
+        //    var elementValue = firstElement.Value;
+        //    if (elementValue is IEnumerable<FunctionArgument>)
+        //    {
+        //        var items = (IEnumerable<FunctionArgument>)elementValue;
+        //        double? result = null;
+        //        foreach (var item in items)
+        //        {
+        //            if (ShouldIgnore(item))
+        //            {
+        //                continue;
+        //            }
+        //            if (item.Value is double)
+        //            {
+        //                if (result.HasValue)
+        //                {
+        //                    result *= (double)item.Value;
+        //                }
+        //                else
+        //                {
+        //                    result = (double)item.Value;
+        //                }
+        //            }
+        //        }
+        //        return result ?? 0d;
+        //    }
+        //    return ArgToDecimal(arguments, 0);
+        //}
     }
 }
