@@ -13,14 +13,21 @@ namespace ExcelFormulaParser.Engine
 {
     public class FormulaParser
     {
-        private readonly ParsingContext _context = ParsingContext.Create();
+        private readonly ParsingContext _parsingContext;
 
         public FormulaParser(ExcelDataProvider excelDataProvider)
+            : this(excelDataProvider, ParsingContext.Create())
         {
+            
+        }
+
+        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
+        {
+            _parsingContext = parsingContext;
             Configure(x =>
             {
-                x.SetLexer(new Lexer(_context.Configuration.FunctionRepository))
-                    .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _context))
+                x.SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository))
+                    .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _parsingContext))
                     .SetExpresionCompiler(new ExpressionCompiler());
                 x.FunctionRepository.LoadModule(new BuiltInFunctions());
             });
@@ -28,10 +35,10 @@ namespace ExcelFormulaParser.Engine
 
         public void Configure(Action<ParsingConfiguration> configMethod)
         {
-            configMethod.Invoke(_context.Configuration);
-            _lexer = _context.Configuration.Lexer ?? _lexer;
-            _graphBuilder = _context.Configuration.GraphBuilder ?? _graphBuilder;
-            _compiler = _context.Configuration.ExpressionCompiler ?? _compiler;
+            configMethod.Invoke(_parsingContext.Configuration);
+            _lexer = _parsingContext.Configuration.Lexer ?? _lexer;
+            _graphBuilder = _parsingContext.Configuration.GraphBuilder ?? _graphBuilder;
+            _compiler = _parsingContext.Configuration.ExpressionCompiler ?? _compiler;
         }
 
         private ILexer _lexer;

@@ -160,5 +160,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("=CountA(1,2,2,'', 'a')");
             Assert.AreEqual(4d, result);
         }
+
+        [TestMethod]
+        public void VarShouldReturnAResult()
+        {
+            var result = _parser.Parse("=Var(1,2,3)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
+        public void VarPShouldReturnAResult()
+        {
+            var result = _parser.Parse("=VarP(1,2,3)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }

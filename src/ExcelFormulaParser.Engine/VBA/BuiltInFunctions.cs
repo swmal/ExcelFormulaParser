@@ -46,6 +46,8 @@ namespace ExcelFormulaParser.Engine.VBA.Functions
             _functions["round"] = new Round();
             _functions["rand"] = new Rand();
             _functions["randbetween"] = new RandBetween();
+            _functions["var"] = new Var();
+            _functions["varp"] = new VarP();
             // Logical
             _functions["if"] = new If();
             _functions["not"] = new Not();

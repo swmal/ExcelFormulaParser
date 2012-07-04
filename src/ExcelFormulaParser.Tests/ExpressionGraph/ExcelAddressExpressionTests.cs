@@ -23,19 +23,25 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorShouldThrowIfExcelDataProviderIsNull()
         {
-            var expression = new ExcelAddressExpression("A1", null, _parsingContext);
+            new ExcelAddressExpression("A1", null, _parsingContext);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructorShouldThrowIfParsingContextIsNull()
+        {
+            new ExcelAddressExpression("A1", MockRepository.GenerateStub<ExcelDataProvider>(), null);
         }
 
         [TestMethod]
         public void ShouldCallReturnResultFromProvider()
         {
-            var expectedAddres = "A1";
+            var expectedAddress = "A1";
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
             provider
-                .Stub(x => x.GetRangeValues(expectedAddres))
+                .Stub(x => x.GetRangeValues(expectedAddress))
                 .Return(new object[] { 1 });
 
-            var expression = new ExcelAddressExpression(expectedAddres, provider, _parsingContext);
+            var expression = new ExcelAddressExpression(expectedAddress, provider, _parsingContext);
             var result = expression.Compile();
             Assert.AreEqual(1, result.Result);
         }

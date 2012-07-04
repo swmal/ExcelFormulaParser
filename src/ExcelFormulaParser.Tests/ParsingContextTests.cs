@@ -16,5 +16,13 @@ namespace ExcelFormulaParser.Tests
             var context = ParsingContext.Create();
             Assert.IsNotNull(context.Configuration);
         }
+
+        [TestMethod]
+        public void ShouldSetReferencedCell()
+        {
+            var context = ParsingContext.Create();
+            context.AddReferencedCell("A1");
+            Assert.IsTrue(context.IsReferencedCell("A1"));
+        }
     }
 }
