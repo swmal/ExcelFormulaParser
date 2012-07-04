@@ -12,7 +12,7 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
     [TestClass]
     public class LogicalFunctionsTests
     {
-        private ParsingContext _parsingContext;
+        private ParsingContext _parsingContext = ParsingContext.Create();
 
         [TestMethod]
         public void IfShouldReturnCorrectResult()

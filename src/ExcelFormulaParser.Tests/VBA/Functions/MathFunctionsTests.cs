@@ -307,5 +307,23 @@ namespace ExcelFormulaParser.Tests.VBA.Functions
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(32d, result.Result);
         }
+
+        [TestMethod]
+        public void VarShouldReturnCorrectResult()
+        {
+            var func = new Var();
+            var args = FunctionsHelper.CreateArgs(1, 2, 3, 4);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1.6667d, System.Math.Round((double)result.Result, 4)); 
+        }
+
+        [TestMethod]
+        public void VarPShouldReturnCorrectResult()
+        {
+            var func = new VarP();
+            var args = FunctionsHelper.CreateArgs(1, 2, 3, 4);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1.25d, result.Result);
+        }
     }
 }
