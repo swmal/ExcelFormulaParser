@@ -17,26 +17,26 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
 
         public RangeAddress Address { get; private set; }
 
-        private Dictionary<Guid, RangeAddress> _referencedBy = new Dictionary<Guid, RangeAddress>();
+        private List<RangeAddress> _referencedBy = new List<RangeAddress>();
 
-        private Dictionary<Guid, RangeAddress> _references = new Dictionary<Guid, RangeAddress>();
+        private List<RangeAddress> _references = new List<RangeAddress>();
 
-        public virtual void AddReferenceFrom(Guid scopeId, RangeAddress rangeAddress)
+        public virtual void AddReferenceFrom(RangeAddress rangeAddress)
         {
-            if (_references.ContainsKey(scopeId) || rangeAddress.CollidesWith(this.Address))
+            if (Address.CollidesWith(rangeAddress) || _references.Exists(x => x.CollidesWith(rangeAddress)))
             {
                 throw new CircularReferenceException("Circular reference detected");
             }
-            _referencedBy.Add(scopeId, rangeAddress);
+            _referencedBy.Add(rangeAddress);
         }
 
-        public virtual void AddReferenceTo(Guid scopeId, RangeAddress rangeAddress)
+        public virtual void AddReferenceTo(RangeAddress rangeAddress)
         {
-            if (_referencedBy.ContainsKey(scopeId) || rangeAddress.CollidesWith(this.Address))
+            if (Address.CollidesWith(rangeAddress) || _referencedBy.Exists(x => x.CollidesWith(rangeAddress)))
             {
-                throw new CircularReferenceException("");
+                throw new CircularReferenceException("Circular reference detected");
             }
-            _references.Add(scopeId, rangeAddress);
+            _references.Add(rangeAddress);
         }
     }
 }

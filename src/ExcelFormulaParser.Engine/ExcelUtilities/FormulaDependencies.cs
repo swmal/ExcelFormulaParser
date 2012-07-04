@@ -40,8 +40,8 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
                 if (_dependencies.ContainsKey(parsingScope.Parent.Address.ToString()))
                 {
                     var parent = _dependencies[parsingScope.Parent.Address.ToString()];
-                    parent.AddReferenceTo(parsingScope.ScopeId, parsingScope.Address);
-                    dependency.AddReferenceFrom(parent.ScopeId, parent.Address);
+                    parent.AddReferenceTo(parsingScope.Address);
+                    dependency.AddReferenceFrom(parent.Address);
                 }
 
 

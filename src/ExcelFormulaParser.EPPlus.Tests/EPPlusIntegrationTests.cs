@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeOpenXml;
 using System.IO;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.EPPlus.Tests
 {
@@ -63,6 +64,15 @@ namespace ExcelFormulaParser.EPPlus.Tests
 
             var result = _parser.Parse("=Int(AK5)");
             Assert.AreEqual(20, result);
+        }
+
+        [TestMethod, ExpectedException(typeof(CircularReferenceException))]
+        public void ShouldDetectCircularRef()
+        {
+            var ws = _package.Workbook.Worksheets.First();
+            ws.Cells["A1"].Value = "=SUM(A2)";
+            ws.Cells["A2"].Value = "=SUM(A1)";
+            _parser.Parse("=SUM(A2)", "A1");
         }
 
         [TestMethod]

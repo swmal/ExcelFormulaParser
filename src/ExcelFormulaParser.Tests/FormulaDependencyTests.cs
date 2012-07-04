@@ -41,17 +41,6 @@ namespace ExcelFormulaParser.Tests
         }
 
         [TestMethod, ExpectedException(typeof(CircularReferenceException))]
-        public void AddReferenceFromShouldThrowWhenReferenceToItSelf()
-        {
-            var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
-            var scopes = new ParsingScopes(lifetimeMock);
-            var scope1 = scopes.NewScope(RangeAddress.Parse("A2"));
-            var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
-            var formulaDependency = new FormulaDependency(scope1);
-            formulaDependency.AddReferenceFrom(scope2.ScopeId, scope2.Address);
-        }
-
-        [TestMethod, ExpectedException(typeof(CircularReferenceException))]
         public void AddReferenceToShouldThrowWhenReferenceToItSelf()
         {
             var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
@@ -59,7 +48,20 @@ namespace ExcelFormulaParser.Tests
             var scope1 = scopes.NewScope(RangeAddress.Parse("A2"));
             var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
             var formulaDependency = new FormulaDependency(scope1);
-            formulaDependency.AddReferenceTo(scope2.ScopeId, scope2.Address);
+            formulaDependency.AddReferenceFrom(scope2.Address);
+            formulaDependency.AddReferenceTo(scope2.Address);
+        }
+
+        [TestMethod, ExpectedException(typeof(CircularReferenceException))]
+        public void AddReferenceFromShouldThrowWhenReferenceToItSelf()
+        {
+            var lifetimeMock = MockRepository.GenerateStub<IParsingLifetimeEventHandler>();
+            var scopes = new ParsingScopes(lifetimeMock);
+            var scope1 = scopes.NewScope(RangeAddress.Parse("A2"));
+            var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
+            var formulaDependency = new FormulaDependency(scope1);
+            formulaDependency.AddReferenceTo(scope2.Address);
+            formulaDependency.AddReferenceFrom(scope2.Address);
         }
 
         [TestMethod, ExpectedException(typeof(CircularReferenceException))]
@@ -70,8 +72,8 @@ namespace ExcelFormulaParser.Tests
             var scope1 = scopes.NewScope(RangeAddress.Parse("A1"));
             var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
             var formulaDependency = new FormulaDependency(scope1);
-            formulaDependency.AddReferenceFrom(scope2.ScopeId, scope2.Address);
-            formulaDependency.AddReferenceTo(scope2.ScopeId, scope2.Address);
+            formulaDependency.AddReferenceFrom(scope2.Address);
+            formulaDependency.AddReferenceTo(scope2.Address);
         }
 
         [TestMethod, ExpectedException(typeof(CircularReferenceException))]
@@ -82,8 +84,8 @@ namespace ExcelFormulaParser.Tests
             var scope1 = scopes.NewScope(RangeAddress.Parse("A1"));
             var scope2 = scopes.NewScope(RangeAddress.Parse("A2"));
             var formulaDependency = new FormulaDependency(scope1);
-            formulaDependency.AddReferenceTo(scope2.ScopeId, scope2.Address);
-            formulaDependency.AddReferenceFrom(scope2.ScopeId, scope2.Address);
+            formulaDependency.AddReferenceTo(scope2.Address);
+            formulaDependency.AddReferenceFrom(scope2.Address);
         }
     }
 }

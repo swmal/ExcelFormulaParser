@@ -46,7 +46,7 @@ namespace ExcelFormulaParser.Tests
             _formulaDependencyFactory.Stub(x => x.Create(childScope)).Return(childDependency);
             _formulaDependencies.AddFormulaScope(childScope);
 
-            parentDependency.AssertWasCalled(x => x.AddReferenceTo(childScope.ScopeId, childScope.Address));
+            parentDependency.AssertWasCalled(x => x.AddReferenceTo(childScope.Address));
         }
 
     }
