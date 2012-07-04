@@ -188,5 +188,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("=Subtotal(1, 10, 20)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void ProductShouldReturnAResult()
+        {
+            var result = _parser.Parse("=Product(1,2,3)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }

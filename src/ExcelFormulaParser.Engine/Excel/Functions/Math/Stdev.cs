@@ -7,7 +7,7 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
-    public class Stdev : ExcelFunction
+    public class Stdev : HiddenValuesHandlingFunction
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
@@ -15,12 +15,6 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             var values = ArgsToDoubleEnumerable(arguments);
             return CreateResult(StandardDeviation(values), DataType.Decimal);
         }
-
-        //private static double StandardDeviation(IEnumerable<double> values)
-        //{
-        //    double avg = values.Average();
-        //    return MathObj.Sqrt(values.Average(v => MathObj.Pow(v - avg, 2)));
-        //}
 
         private static double StandardDeviation(IEnumerable<double> values)
         {

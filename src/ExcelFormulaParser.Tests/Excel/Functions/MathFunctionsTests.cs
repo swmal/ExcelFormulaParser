@@ -8,6 +8,7 @@ using System.Threading;
 using ExcelFormulaParser.Engine;
 using ExcelFormulaParser.Tests.TestHelpers;
 using ExcelFormulaParser.Engine.Excel.Functions;
+using ExcelFormulaParser.Engine.Excel;
 
 namespace ExcelFormulaParser.Tests.Excel.Functions
 {
@@ -105,6 +106,17 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void SumShouldIgnoreHiddenValuesWhenIgnoreHiddenValuesIsSet()
+        {
+            var func = new Sum();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(2, 5), 3, 4);
+            args.Last().SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(10d, result.Result);
+        }
+
+        [TestMethod]
         public void StdevShouldCalculateCorrectResult()
         {
             var func = new Stdev();
@@ -114,10 +126,32 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void StdevShouldIgnoreHiddenValuesWhenIgnoreHiddenValuesIsSet()
+        {
+            var func = new Stdev();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(1, 3, 5, 6);
+            args.Last().SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(2d, result.Result);
+        }
+
+        [TestMethod]
         public void StdevPShouldCalculateCorrectResult()
         {
             var func = new StdevP();
             var args = FunctionsHelper.CreateArgs(2, 3, 4);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(0.8165d, Math.Round((double)result.Result, 5));
+        }
+
+        [TestMethod]
+        public void StdevPShouldIgnoreHiddenValuesWhenIgnoreHiddenValuesIsSet()
+        {
+            var func = new StdevP();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(2, 3, 4, 165);
+            args.Last().SetExcelStateFlag(ExcelCellState.HiddenCell);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(0.8165d, Math.Round((double)result.Result, 5));
         }
@@ -141,12 +175,34 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void MaxShouldIgnoreHiddenValuesIfIgnoreHiddenValuesIsTrue()
+        {
+            var func = new Max();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(4, 2, 5, 2);
+            args.ElementAt(2).SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(4d, result.Result);
+        }
+
+        [TestMethod]
         public void MinShouldCalculateCorrectResult()
         {
             var func = new Min();
             var args = FunctionsHelper.CreateArgs(4, 2, 5, 2);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(2d, result.Result);
+        }
+
+        [TestMethod]
+        public void MinShouldIgnoreHiddenValuesIfIgnoreHiddenValuesIsTrue()
+        {
+            var func = new Min();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(4, 2, 5, 3);
+            args.ElementAt(1).SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(3d, result.Result);
         }
 
         [TestMethod]
@@ -165,6 +221,18 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var expectedResult = (4d + 2d + 5d + 2d + 1d) / 5d;
             var func = new Average();
             var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(4d, 2d), 5d, 2d, true);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(expectedResult, result.Result);
+        }
+
+        [TestMethod]
+        public void AverageShouldIgnoreHiddenFieldsIfIgnoreHiddenValuesIsTrue()
+        {
+            var expectedResult = (4d + 2d + 2d + 1d) / 4d;
+            var func = new Average();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(4d, 2d), 5d, 2d, true);
+            args.ElementAt(1).SetExcelStateFlag(Engine.Excel.ExcelCellState.HiddenCell);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(expectedResult, result.Result);
         }
@@ -264,6 +332,17 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void CountShouldIgnoreHiddenValuesIfIgnoreHiddenValuesIsTrue()
+        {
+            var func = new Count();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(1d, FunctionsHelper.CreateArgs(12, 13));
+            args.ElementAt(0).SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(2d, result.Result);
+        }
+
+        [TestMethod]
         public void CountAShouldReturnNumberOfNonWhitespaceItems()
         {
             var func = new CountA();
@@ -279,6 +358,17 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var args = FunctionsHelper.CreateArgs(1d, FunctionsHelper.CreateArgs(12, 13));
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(3d, result.Result);
+        }
+
+        [TestMethod]
+        public void CountAShouldIgnoreHiddenValuesIfIgnoreHiddenValuesIsTrue()
+        {
+            var func = new CountA();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(1d, FunctionsHelper.CreateArgs(12, 13));
+            args.ElementAt(0).SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(2d, result.Result);
         }
 
         [TestMethod]
@@ -300,6 +390,17 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void ProductShouldIgnoreHiddenValuesIfIgnoreHiddenIsTrue()
+        {
+            var func = new Product();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(2d, 2d, FunctionsHelper.CreateArgs(4d, 2d));
+            args.ElementAt(1).SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(16d, result.Result);
+        }
+
+        [TestMethod]
         public void ProductShouldHandleFirstItemIsEnumerable()
         {
             var func = new Product();
@@ -318,10 +419,32 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void VarShouldIgnoreHiddenValuesIfIgnoreHiddenIsTrue()
+        {
+            var func = new Var();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(1, 2, 3, 4, 9);
+            args.Last().SetExcelStateFlag(ExcelCellState.HiddenCell);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1.6667d, System.Math.Round((double)result.Result, 4));
+        }
+
+        [TestMethod]
         public void VarPShouldReturnCorrectResult()
         {
             var func = new VarP();
             var args = FunctionsHelper.CreateArgs(1, 2, 3, 4);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1.25d, result.Result);
+        }
+
+        [TestMethod]
+        public void VarPShouldIgnoreHiddenValuesIfIgnoreHiddenIsTrue()
+        {
+            var func = new VarP();
+            func.IgnoreHiddenValues = true;
+            var args = FunctionsHelper.CreateArgs(1, 2, 3, 4, 9);
+            args.Last().SetExcelStateFlag(ExcelCellState.HiddenCell);
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(1.25d, result.Result);
         }

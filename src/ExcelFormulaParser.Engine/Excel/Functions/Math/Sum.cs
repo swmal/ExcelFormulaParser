@@ -6,7 +6,7 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
-    public class Sum : ExcelFunction
+    public class Sum : HiddenValuesHandlingFunction
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
@@ -24,6 +24,10 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
         private double Calculate(FunctionArgument arg)
         {
             var retVal = 0d;
+            if (ShouldIgnore(arg))
+            {
+                return retVal;
+            }
             if (arg.Value is double)
             {
                 retVal += Convert.ToDouble((double)arg.Value);

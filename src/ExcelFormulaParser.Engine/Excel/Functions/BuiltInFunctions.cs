@@ -32,6 +32,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["power"] = new Power();
             _functions["sqrt"] = new Sqrt();
             _functions["pi"] = new Pi();
+            _functions["product"] = new Product();
             _functions["ceiling"] = new Ceiling();
             _functions["count"] = new Count();
             _functions["counta"] = new CountA();

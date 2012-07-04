@@ -6,7 +6,7 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
-    public class Average : ExcelFunction
+    public class Average : HiddenValuesHandlingFunction
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
@@ -14,33 +14,37 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             double nValues = 0d, result = 0d;
             foreach (var arg in arguments)
             {
-                Calculate(arg.Value, ref result, ref nValues);
+                Calculate(arg, ref result, ref nValues);
             }
             return CreateResult(result/nValues, DataType.Decimal);
         }
 
-        private void Calculate(object arg, ref double retVal, ref double nValues)
+        private void Calculate(FunctionArgument arg, ref double retVal, ref double nValues)
         {
-            if (arg is double)
+            if (ShouldIgnore(arg))
+            {
+                return;
+            }
+            if (arg.Value is double)
             {
                 nValues++;
-                retVal += Convert.ToDouble(arg);
+                retVal += Convert.ToDouble(arg.Value);
             }
-            else if (arg is int)
+            else if (arg.Value is int)
             {
                 nValues++;
-                retVal += Convert.ToDouble((int)arg);
+                retVal += Convert.ToDouble((int)arg.Value);
             }
-            else if(arg is bool)
+            else if(arg.Value is bool)
             {
                 nValues++;
-                retVal += (bool)arg ? 1 : 0;
+                retVal += (bool)arg.Value ? 1 : 0;
             }
-            else if (arg is IEnumerable<FunctionArgument>)
+            else if (arg.Value is IEnumerable<FunctionArgument>)
             {
-                foreach (var item in (IEnumerable<FunctionArgument>)arg)
+                foreach (var item in (IEnumerable<FunctionArgument>)arg.Value)
                 {
-                    Calculate(item.Value, ref retVal, ref nValues);
+                    Calculate(item, ref retVal, ref nValues);
                 }
             }
         }

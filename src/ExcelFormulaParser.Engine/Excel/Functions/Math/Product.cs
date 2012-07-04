@@ -6,14 +6,20 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
-    public class Product : ExcelFunction
+    public class Product : HiddenValuesHandlingFunction
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 2);
-            var first = CalculateFirstItem(arguments);
-            var result = CalculateCollection(arguments.Skip(1), first, (arg, current) =>
+            var result = 0d;
+            var index = 0;
+            while (result == 0d && index < arguments.Count())
             {
+                result = CalculateFirstItem(arguments, index++);
+            }
+            result = CalculateCollection(arguments.Skip(index), result, (arg, current) =>
+            {
+                if (ShouldIgnore(arg)) return current;
                 var obj = arg.Value;
                 if (obj != null)
                 {
@@ -31,15 +37,24 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             return CreateResult(result, DataType.Decimal);
         }
 
-        private double CalculateFirstItem(IEnumerable<FunctionArgument> arguments)
+        private double CalculateFirstItem(IEnumerable<FunctionArgument> arguments, int index)
         {
-            var firstElement = arguments.ElementAt(0).Value;
-            if (firstElement is IEnumerable<FunctionArgument>)
+            var firstElement = arguments.ElementAt(index);
+            if (ShouldIgnore(firstElement))
             {
-                var items = (IEnumerable<FunctionArgument>)firstElement;
+                return 0d;
+            }
+            var elementValue = firstElement.Value;
+            if (elementValue is IEnumerable<FunctionArgument>)
+            {
+                var items = (IEnumerable<FunctionArgument>)elementValue;
                 double? result = null;
                 foreach (var item in items)
                 {
+                    if (ShouldIgnore(item))
+                    {
+                        continue;
+                    }
                     if (item.Value is double)
                     {
                         if (result.HasValue)

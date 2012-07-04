@@ -6,7 +6,7 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
-    public class CountA : ExcelFunction
+    public class CountA : HiddenValuesHandlingFunction
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
@@ -24,7 +24,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
                 {
                     Calculate((IEnumerable<FunctionArgument>)item.Value, ref nItems);
                 }
-                else if (ShouldCount(item.Value))
+                else if (ShouldCount(item))
                 {
                     nItems++;
                 }
@@ -32,10 +32,14 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             }
         }
 
-        private bool ShouldCount(object item)
+        private bool ShouldCount(FunctionArgument item)
         {
-            if (item == null) return false;
-            return (!string.IsNullOrEmpty(item.ToString()));
+            if (ShouldIgnore(item))
+            {
+                return false;
+            }
+            if (item.Value == null) return false;
+            return (!string.IsNullOrEmpty(item.Value.ToString()));
         }
     }
 }

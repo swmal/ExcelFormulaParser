@@ -102,7 +102,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             return val.GetType() == typeof(int) || val.GetType() == typeof(double) || val.GetType() == typeof(decimal);
         }
 
-        protected IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<FunctionArgument> arguments)
+        protected virtual IEnumerable<double> ArgsToDoubleEnumerable(IEnumerable<FunctionArgument> arguments)
         {
             var values = new List<double>();
             for (var x = 0; x < arguments.Count(); x++)
