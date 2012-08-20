@@ -17,6 +17,18 @@ namespace ExcelFormulaParser.Engine
         /// <param name="sheetName"></param>
         /// <returns></returns>
         public abstract IDictionary<string, string> GetWorksheetFormulas(string sheetName);
+
+        /// <summary>
+        /// Returns all formulas in a workbook
+        /// </summary>
+        /// <returns></returns>
+        public abstract IDictionary<string, string> GetWorkbookFormulas();
+
+        /// <summary>
+        /// Returns all defined names in a workbook
+        /// </summary>
+        /// <returns></returns>
+        public abstract IDictionary<string, object> GetWorkbookNameValues();
         /// <summary>
         /// Returns values from the required range.
         /// </summary>

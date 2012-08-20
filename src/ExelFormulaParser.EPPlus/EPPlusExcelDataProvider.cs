@@ -27,10 +27,21 @@ namespace ExcelFormulaParser.EPPlus
             return ((ICalcEngineFormulaInfo)ws).GetFormulas();
         }
 
+        public override IDictionary<string, string> GetWorkbookFormulas()
+        {
+            var wb = (ICalcEngineFormulaInfo)_package.Workbook;
+            return wb.GetFormulas();
+        }
+
+        public override IDictionary<string, object> GetWorkbookNameValues()
+        {
+            var wb = (ICalcEngineFormulaInfo)_package.Workbook;
+            return wb.GetNameValues();
+        }
+
         public override IEnumerable<ExcelCell> GetRangeValues(string address)
         {
             var returnList = new List<ExcelCell>();
-            //var startAddress = _rangeAddressFactory.Create(address);
             var addressInfo = ExcelAddressInfo.Parse(address);
             SetCurrentWorksheet(addressInfo);
             var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];

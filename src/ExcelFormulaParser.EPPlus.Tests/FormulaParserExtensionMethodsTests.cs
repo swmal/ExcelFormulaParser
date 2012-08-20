@@ -15,7 +15,6 @@ namespace ExcelFormulaParser.EPPlus.Tests
     {
         private ExcelPackage _package;
         private ExcelWorksheet _workSheet;
-        private FormulaParser _parser;
 
 
         [TestInitialize]
