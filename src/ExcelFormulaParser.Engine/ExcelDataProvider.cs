@@ -12,11 +12,24 @@ namespace ExcelFormulaParser.Engine
     public abstract class ExcelDataProvider : IDisposable
     {
         /// <summary>
+        /// Returns all formulas on a worksheet
+        /// </summary>
+        /// <param name="sheetName"></param>
+        /// <returns></returns>
+        public abstract IDictionary<string, string> GetWorksheetFormulas(string sheetName);
+        /// <summary>
         /// Returns values from the required range.
         /// </summary>
         /// <param name="address">An Excel address</param>
         /// <returns>values from the required cells</returns>
         public abstract IEnumerable<ExcelCell> GetRangeValues(string address);
+
+        /// <summary>
+        /// Sets the value on the cell
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        public abstract void SetCellValue(string address, object value);
 
         /// <summary>
         /// Use this method to free unmanaged resources.

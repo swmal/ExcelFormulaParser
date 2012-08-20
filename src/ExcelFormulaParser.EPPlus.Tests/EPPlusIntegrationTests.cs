@@ -89,16 +89,35 @@ namespace ExcelFormulaParser.EPPlus.Tests
             Assert.AreEqual(11d, result);
         }
 
+        //[TestMethod]
+        //public void TestParser()
+        //{
+        //    using (var package = new ExcelPackage(new FileInfo(@"c:\temp\Test.xlsx")))
+        //    {
+        //        var provider = new EPPlusExcelDataProvider(package);
+        //        var parser = new FormulaParser(provider);
+        //        var result = parser.ParseAt("B6");
+        //        Assert.AreEqual(30d, result);
+        //    }
+        //}
+
         [TestMethod]
-        public void TestParser()
+        public void PerformanceTest()
         {
-            using (var package = new ExcelPackage(new FileInfo(@"c:\temp\Test.xlsx")))
+            _workSheet.Cells["B1"].Formula = "SUM(A1:A4) * 2 - AVERAGE(A1:A3)";
+            var startTime = DateTime.Now;
+            int nIterations = 0;
+            while(true)
             {
-                var provider = new EPPlusExcelDataProvider(package);
-                var parser = new FormulaParser(provider);
-                var result = parser.ParseAt("B6");
-                Assert.AreEqual(30d, result);
+                // _parser.ParseAt("B1");
+                _parser.Parse("SUM({1,2,3,4}) * 2 - AVERAGE({1,2,3})");
+                nIterations++;
+                if (DateTime.Now.Subtract(startTime).TotalMilliseconds > 1000)
+                    break;
             }
+            Console.WriteLine("Result: " + nIterations);
+            // Current result on Parse("B1"): 5800
+            // Non excel address formula: 8500
         }
     }
 }

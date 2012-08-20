@@ -107,6 +107,7 @@
     <Compile Include="LexicalAnalysis\TokenizerContext.cs" />
     <Compile Include="LexicalAnalysis\TokenSeparatorProvider.cs" />
     <Compile Include="LexicalAnalysis\TokenType.cs" />
+    <Compile Include="ParsedValue.cs" />
     <Compile Include="ParsingConfiguration.cs" />
     <Compile Include="ParsingContext.cs" />
     <Compile Include="ParsingScope.cs" />

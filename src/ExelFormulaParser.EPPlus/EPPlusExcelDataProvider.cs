@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine;
 using OfficeOpenXml;
+using OfficeOpenXml.Calculation;
 using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.EPPlus
@@ -20,43 +21,45 @@ namespace ExcelFormulaParser.EPPlus
             _rangeAddressFactory = new RangeAddressFactory(this);
         }
 
+        public override IDictionary<string, string> GetWorksheetFormulas(string sheetName)
+        {
+            var ws = _package.Workbook.Worksheets[sheetName];
+            return ((ICalcEngineFormulaInfo)ws).GetFormulas();
+        }
+
         public override IEnumerable<ExcelCell> GetRangeValues(string address)
         {
             var returnList = new List<ExcelCell>();
-            var startAddress = _rangeAddressFactory.Create(address);
+            //var startAddress = _rangeAddressFactory.Create(address);
             var addressInfo = ExcelAddressInfo.Parse(address);
-            if (addressInfo.WorksheetIsSpecified)
-            {
-                _currentWorksheet = _package.Workbook.Worksheets[addressInfo.Worksheet];
-            }
-            else if(_currentWorksheet == null)
-            {
-                _currentWorksheet = _package.Workbook.Worksheets.First();
-            }
+            SetCurrentWorksheet(addressInfo);
             var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];
             foreach (var cell in range)
             {
                 returnList.Add(new ExcelCell(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row));
             }
-            //if (range.Value is object[,])
-            //{
-            //    var arr = (object[,])range.Value;
-            //    var nRows = arr.GetUpperBound(0);
-            //    var nCols = arr.GetUpperBound(1);
-            //    for(int row = 0; row <= nRows; row++)
-            //    {
-            //        for (int col = 0; col <= nCols; col++)
-            //        {
-            //            returnList.Add(new ExcelDataItem(arr[row, col], startAddress.FromCol + col, startAddress.FromRow + row));
-            //        }
-
-            //    }
-            //}
-            //else 
-            //{ 
-            //    returnList.Add(new ExcelDataItem(range.Value, startAddress.FromCol, startAddress.FromRow)); 
-            //}
             return returnList;
+        }
+
+        private void SetCurrentWorksheet(ExcelAddressInfo addressInfo)
+        {
+            if (addressInfo.WorksheetIsSpecified)
+            {
+                _currentWorksheet = _package.Workbook.Worksheets[addressInfo.Worksheet];
+            }
+            else if (_currentWorksheet == null)
+            {
+                _currentWorksheet = _package.Workbook.Worksheets.First();
+            }
+        }
+
+        public override void SetCellValue(string address, object value)
+        {
+            var addressInfo = ExcelAddressInfo.Parse(address);
+            var ra = _rangeAddressFactory.Create(address);
+            SetCurrentWorksheet(addressInfo);
+            var valueInfo = (ICalcEngineValueInfo)_currentWorksheet;
+            valueInfo.SetFormulaValue(ra.FromRow + 1, ra.FromCol + 1, value);
         }
 
         public override void Dispose()
