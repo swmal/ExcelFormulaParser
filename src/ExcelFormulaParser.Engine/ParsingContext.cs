@@ -14,6 +14,8 @@ namespace ExcelFormulaParser.Engine
 
         public FormulaParser Parser { get; set; }
 
+        public NameValueProvider NameValueProvider { get; set; }
+
         public ParsingConfiguration Configuration { get; set; }
 
         public FormulaDependencies Dependencies { get; private set; }

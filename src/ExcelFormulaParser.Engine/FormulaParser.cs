@@ -28,6 +28,7 @@ namespace ExcelFormulaParser.Engine
         public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext, RangeAddressFactory rangeAddressFactory)
         {
             parsingContext.Parser = this;
+            parsingContext.NameValueProvider = new NameValueProvider(excelDataProvider);
             _parsingContext = parsingContext;
             _excelDataProvider = excelDataProvider;
             _rangeAddressFactory = rangeAddressFactory;
