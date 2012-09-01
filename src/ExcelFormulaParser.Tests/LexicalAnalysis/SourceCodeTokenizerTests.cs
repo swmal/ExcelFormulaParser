@@ -19,7 +19,7 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
         public void Setup()
         {
             var context = ParsingContext.Create();
-            _tokenizer = new SourceCodeTokenizer(context.Configuration.FunctionRepository);
+            _tokenizer = new SourceCodeTokenizer(context.Configuration.FunctionRepository, null);
         }
 
         [TestCleanup]

@@ -32,6 +32,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                     return new BooleanExpression(token.Value);
                 case TokenType.ExcelAddress:
                     return new ExcelAddressExpression(token.Value, _excelDataProvider, _parsingContext);
+                case TokenType.NameValue:
+                    return new NamedValueExpression(token.Value, _parsingContext);
                 default:
                     return new StringExpression(token.Value);
             }

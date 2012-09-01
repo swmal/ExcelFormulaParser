@@ -10,20 +10,22 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
     public class TokenFactory : ITokenFactory
     {
-        public TokenFactory(FunctionRepository functionRepository)
-            : this(new TokenSeparatorProvider(), functionRepository)
+        public TokenFactory(FunctionRepository functionRepository, NameValueProvider nameValueProvider)
+            : this(new TokenSeparatorProvider(), nameValueProvider, functionRepository)
         {
 
         }
 
-        public TokenFactory(ITokenSeparatorProvider tokenSeparatorProvider, FunctionRepository functionRepository)
+        public TokenFactory(ITokenSeparatorProvider tokenSeparatorProvider, NameValueProvider nameValueProvider, FunctionRepository functionRepository)
         {
             _tokenSeparatorProvider = tokenSeparatorProvider;
             _functionRepository = functionRepository;
+            _nameValueProvider = nameValueProvider;
         }
 
         private readonly ITokenSeparatorProvider _tokenSeparatorProvider;
         private readonly FunctionRepository _functionRepository;
+        private readonly NameValueProvider _nameValueProvider;
 
         public Token Create(IEnumerable<Token> tokens, string token)
         {
@@ -59,6 +61,10 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
             if (_functionRepository.Exists(token))
             {
                 return new Token(token, TokenType.Function);
+            }
+            if (_nameValueProvider.IsNamedValue(token))
+            {
+                return new Token(token, TokenType.NameValue);
             }
             return new Token(token, TokenType.Unrecognized);
 

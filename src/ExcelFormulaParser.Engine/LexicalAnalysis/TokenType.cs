@@ -22,6 +22,7 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
         Decimal,
         Function,
         ExcelAddress,
+        NameValue,
         Unrecognized
     }
 }

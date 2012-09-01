@@ -8,8 +8,8 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
     public class Lexer : ILexer
     {
-        public Lexer(FunctionRepository functionRepository)
-            :this(new SourceCodeTokenizer(functionRepository), new SyntacticAnalyzer())
+        public Lexer(FunctionRepository functionRepository, NameValueProvider nameValueProvider)
+            :this(new SourceCodeTokenizer(functionRepository, nameValueProvider), new SyntacticAnalyzer())
         {
 
         }

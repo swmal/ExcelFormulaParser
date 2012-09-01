@@ -7,6 +7,7 @@ using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.Excel;
 using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine;
+using Rhino.Mocks;
 
 namespace ExcelFormulaParser.Tests.LexicalAnalysis
 {
@@ -14,13 +15,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
     public class TokenFactoryTests
     {
         private ITokenFactory _tokenFactory;
+        private NameValueProvider _nameValueProvider;
 
 
         [TestInitialize]
         public void Setup()
         {
             var context = ParsingContext.Create();
-            _tokenFactory = new TokenFactory(context.Configuration.FunctionRepository);
+            var excelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            _nameValueProvider = MockRepository.GenerateStub<NameValueProvider>(excelDataProvider);
+            _tokenFactory = new TokenFactory(context.Configuration.FunctionRepository, _nameValueProvider);
         }
 
         [TestCleanup]
@@ -153,6 +157,16 @@ namespace ExcelFormulaParser.Tests.LexicalAnalysis
             var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
             Assert.AreEqual(TokenType.ExcelAddress, token.TokenType);
             Assert.AreEqual("ws!A1:B15", token.Value);
+        }
+
+        [TestMethod]
+        public void CreateShouldCreateNamedValueAsExcelAddressToken()
+        {
+            var input = "NamedValue";
+            _nameValueProvider.Stub(x => x.IsNamedValue("NamedValue")).Return(true);
+            var token = _tokenFactory.Create(Enumerable.Empty<Token>(), input);
+            Assert.AreEqual(TokenType.NameValue, token.TokenType);
+            Assert.AreEqual("NamedValue", token.Value);
         }
     }
 }

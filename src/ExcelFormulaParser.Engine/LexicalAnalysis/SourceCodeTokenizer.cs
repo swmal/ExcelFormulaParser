@@ -8,8 +8,8 @@ namespace ExcelFormulaParser.Engine.LexicalAnalysis
 {
     public class SourceCodeTokenizer : ISourceCodeTokenizer
     {
-        public SourceCodeTokenizer(FunctionRepository functionRepository)
-            : this(new TokenFactory(functionRepository), new TokenSeparatorProvider())
+        public SourceCodeTokenizer(FunctionRepository functionRepository, NameValueProvider nameValueProvider)
+            : this(new TokenFactory(functionRepository, nameValueProvider), new TokenSeparatorProvider())
         {
 
         }

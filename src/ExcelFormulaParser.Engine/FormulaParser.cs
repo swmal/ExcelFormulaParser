@@ -35,7 +35,7 @@ namespace ExcelFormulaParser.Engine
             Configure(configuration =>
             {
                 configuration
-                    .SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository))
+                    .SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository, _parsingContext.NameValueProvider))
                     .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _parsingContext))
                     .SetExpresionCompiler(new ExpressionCompiler())
                     .FunctionRepository.LoadModule(new BuiltInFunctions());

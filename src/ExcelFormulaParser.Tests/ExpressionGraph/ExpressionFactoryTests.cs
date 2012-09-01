@@ -55,5 +55,13 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var expression = _factory.Create(token);
             Assert.IsInstanceOfType(expression, typeof(ExcelAddressExpression));
         }
+
+        [TestMethod]
+        public void ShouldReturnNamedValueExpressionWhenTokenIsNamedValue()
+        {
+            var token = new Token("NamedValue", TokenType.NameValue);
+            var expression = _factory.Create(token);
+            Assert.IsInstanceOfType(expression, typeof(NamedValueExpression));
+        }
     }
 }

@@ -91,6 +91,7 @@
     <Compile Include="ExpressionGraph\IExpressionFactory.cs" />
     <Compile Include="ExpressionGraph\IExpressionGraphBuilder.cs" />
     <Compile Include="ExpressionGraph\IntegerExpression.cs" />
+    <Compile Include="ExpressionGraph\NamedValueExpression.cs" />
     <Compile Include="ExpressionGraph\StringExpression.cs" />
     <Compile Include="FormulaParser.cs" />
     <Compile Include="IParsingLifetimeEventHandler.cs" />
