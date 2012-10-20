@@ -109,8 +109,8 @@ namespace ExcelFormulaParser.EPPlus.Tests
             int nIterations = 0;
             while(true)
             {
-                // _parser.ParseAt("B1");
-                _parser.Parse("SUM({1,2,3,4}) * 2 - AVERAGE({1,2,3})");
+                 _parser.ParseAt("B1");
+                //_parser.Parse("SUM({1,2,3,4}) * 2 - AVERAGE({1,2,3})");
                 nIterations++;
                 if (DateTime.Now.Subtract(startTime).TotalMilliseconds > 1000)
                     break;
@@ -118,6 +118,20 @@ namespace ExcelFormulaParser.EPPlus.Tests
             Console.WriteLine("Result: " + nIterations);
             // Current result on Parse("B1"): 5800
             // Non excel address formula: 8500
+        }
+
+        [TestMethod]
+        public void DefinedNameTest()
+        {
+            //lopment\ExcelFormulaParser\src\ExcelFormulaParser.EPPlus.Tests\Files\lite
+            var fileInfo = new FileInfo("..\\..\\..\\ExcelFormulaParser.EPPlus.Tests\\Files\\lite_olika_namn.xlsx");
+            using (var package = new ExcelPackage(fileInfo))
+            {
+                var provider = new EPPlusExcelDataProvider(package);
+                var parser = new FormulaParser(provider);
+                var result = parser.ParseAt("C4");
+                Assert.AreEqual(2d, result);
+            }
         }
     }
 }

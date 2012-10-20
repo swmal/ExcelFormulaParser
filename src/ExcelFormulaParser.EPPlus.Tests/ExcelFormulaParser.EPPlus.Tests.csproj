@@ -54,6 +54,9 @@
     <Compile Include="EPPlusIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Files\lite_olika_namn.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
