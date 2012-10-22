@@ -63,6 +63,7 @@
     <Compile Include="Excel\Functions\ArgumentParsersImplementationsTests.cs" />
     <Compile Include="Excel\Functions\ArgumentParsersTests.cs" />
     <Compile Include="Excel\Functions\ExcelFunctionTests.cs" />
+    <Compile Include="Excel\Functions\RefAndLookupTests.cs" />
     <Compile Include="Excel\Functions\SubtotalTests.cs" />
     <Compile Include="ExpressionGraph\EnumerableExpressionTests.cs" />
     <Compile Include="ExpressionGraph\ExcelAddressExpressionTests.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="IntegrationTests\BuiltInFunctions\DateAndTimeFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\LogicalFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\MathFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\RefAndLookupTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\StringFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\SubtotalTests.cs" />
     <Compile Include="IntegrationTests\ExcelDataProviderTests\ExcelDataProviderIntegrationTests.cs" />

@@ -56,40 +56,5 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             }
             return result;
         }
-
-        //private double CalculateFirstItem2(IEnumerable<FunctionArgument> arguments, int index)
-        //{
-        //    var firstElement = arguments.ElementAt(index);
-        //    if (ShouldIgnore(firstElement))
-        //    {
-        //        return 0d;
-        //    }
-        //    var elementValue = firstElement.Value;
-        //    if (elementValue is IEnumerable<FunctionArgument>)
-        //    {
-        //        var items = (IEnumerable<FunctionArgument>)elementValue;
-        //        double? result = null;
-        //        foreach (var item in items)
-        //        {
-        //            if (ShouldIgnore(item))
-        //            {
-        //                continue;
-        //            }
-        //            if (item.Value is double)
-        //            {
-        //                if (result.HasValue)
-        //                {
-        //                    result *= (double)item.Value;
-        //                }
-        //                else
-        //                {
-        //                    result = (double)item.Value;
-        //                }
-        //            }
-        //        }
-        //        return result ?? 0d;
-        //    }
-        //    return ArgToDecimal(arguments, 0);
-        //}
     }
 }

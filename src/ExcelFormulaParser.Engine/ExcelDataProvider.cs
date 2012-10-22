@@ -37,6 +37,13 @@ namespace ExcelFormulaParser.Engine
         public abstract IEnumerable<ExcelCell> GetRangeValues(string address);
 
         /// <summary>
+        /// Returs a matrix for lookup functions like VLOOKUP and HLOOKUP.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public abstract IDictionary<int, IList<ExcelCell>> GetLookupArray(string address);
+
+        /// <summary>
         /// Sets the value on the cell
         /// </summary>
         /// <param name="address"></param>

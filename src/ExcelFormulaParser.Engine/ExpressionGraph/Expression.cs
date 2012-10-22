@@ -28,6 +28,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             Operator = null;
         }
 
+        public bool ParentIsLookupFunction
+        {
+            get;
+            set;
+        }
+
         public virtual Expression AddChild(Expression child)
         {
             if (_children.Any())
@@ -39,25 +45,6 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             _children.Add(child);
             return child;
         }
-
-        //public virtual Expression MergeWithNext()
-        //{
-        //    if (Next != null && Operator != null)
-        //    {
-        //        var result = Operator.Apply(Compile(), Next.Compile());
-        //        ExpressionString = result.Result.ToString();
-        //        if (Next != null)
-        //        {
-        //            Operator = Next.Operator;
-        //        }
-        //        else
-        //        {
-        //            Operator = null;
-        //        }
-        //        Next = Next.Next;
-        //    }
-        //    return this;
-        //}
 
         public virtual Expression MergeWithNext()
         {

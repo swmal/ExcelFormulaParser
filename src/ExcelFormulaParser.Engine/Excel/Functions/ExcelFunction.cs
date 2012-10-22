@@ -29,6 +29,14 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
 
         public virtual void BeforeInvoke(ParsingContext context) { }
 
+        public virtual bool IsLookupFuction 
+        { 
+            get 
+            { 
+                return false; 
+            } 
+        }
+
         protected void ValidateArguments(IEnumerable<FunctionArgument> arguments, int minLength)
         {
             Require.That(arguments).Named("arguments").IsNotNull();

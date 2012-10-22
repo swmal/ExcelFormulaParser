@@ -18,7 +18,7 @@ namespace ExcelFormulaParser.Engine
 
         public virtual bool IsNamedValue(string key)
         {
-            return _values.ContainsKey(key);
+            return _values != null && _values.ContainsKey(key);
         }
 
         public virtual object GetNamedValue(string key)

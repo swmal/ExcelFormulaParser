@@ -13,6 +13,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         Boolean,
         Date,
         Time,
-        Enumerable
+        Enumerable,
+        LookupArray
     }
 }

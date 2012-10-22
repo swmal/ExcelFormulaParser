@@ -7,6 +7,7 @@ using ExcelFormulaParser.Engine.Excel.Functions.Math;
 using ExcelFormulaParser.Engine.Excel.Functions.Logical;
 using ExcelFormulaParser.Engine.Excel.Functions.DateTime;
 using ExcelFormulaParser.Engine.Excel.Functions.Numeric;
+using ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
@@ -56,6 +57,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["not"] = new Not();
             _functions["and"] = new And();
             _functions["or"] = new Or();
+            // Reference and lookup
+            _functions["vlookup"] = new VLookup();
             // Date
             _functions["date"] = new Date();
             _functions["today"] = new Today();
