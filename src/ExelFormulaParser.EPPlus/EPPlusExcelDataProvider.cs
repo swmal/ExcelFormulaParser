@@ -52,6 +52,18 @@ namespace ExcelFormulaParser.EPPlus
             return returnList;
         }
 
+        public override ExcelCell GetCellValue(string address)
+        {
+            var addressInfo = ExcelAddressInfo.Parse(address);
+            SetCurrentWorksheet(addressInfo);
+            var cell = _currentWorksheet.Cells[addressInfo.AddressOnSheet].FirstOrDefault();
+            if (cell != null)
+            {
+                return new ExcelCell(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row);
+            }
+            return null;
+        }
+
         public override IDictionary<int, IList<ExcelCell>> GetLookupArray(string address)
         {
             var dictionary = new Dictionary<int, IList<ExcelCell>>();

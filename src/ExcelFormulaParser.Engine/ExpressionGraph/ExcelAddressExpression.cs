@@ -53,11 +53,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             var result = _excelDataProvider.GetLookupArray(ExpressionString);
             if (result == null || result.Count() == 0)
             {
-                return null;
+                return new CompileResult(resultList, DataType.LookupArray); ;
             }
             for (var row = 0; row < result.Count; row++)
             {
-                resultList[row].Add(new List<object>());
+                resultList.Add(new List<object>());
                 for (var col = 0; col < result[row].Count; col++ )
                 {
                     var dataItem = result[row][col];

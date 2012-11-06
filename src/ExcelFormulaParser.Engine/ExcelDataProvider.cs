@@ -44,6 +44,13 @@ namespace ExcelFormulaParser.Engine
         public abstract IDictionary<int, IList<ExcelCell>> GetLookupArray(string address);
 
         /// <summary>
+        /// Returns a single cell value
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public abstract ExcelCell GetCellValue(string address);
+
+        /// <summary>
         /// Sets the value on the cell
         /// </summary>
         /// <param name="address"></param>

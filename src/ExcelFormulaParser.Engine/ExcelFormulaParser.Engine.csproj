@@ -86,6 +86,7 @@
     <Compile Include="ExpressionGraph\ExpressionFactory.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraph.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilder.cs" />
+    <Compile Include="ExpressionGraph\FunctionArgumentExpression.cs" />
     <Compile Include="ExpressionGraph\FunctionExpression.cs" />
     <Compile Include="ExpressionGraph\GroupExpression.cs" />
     <Compile Include="ExpressionGraph\IExpressionCompiler.cs" />

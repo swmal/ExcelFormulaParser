@@ -103,7 +103,14 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 if (parent.GetType() != typeof(EnumerableExpression))
                 {
-                    parent.AddChild(new GroupExpression());
+                    if (parent.IsFunctionExpression)
+                    {
+                        parent.AddChild(new FunctionArgumentExpression());
+                    }
+                    else
+                    {
+                        parent.AddChild(new GroupExpression());
+                    }
                 }
                 return;
             }
@@ -121,7 +128,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             {
                 if (parent.Children.Count() == 0)
                 {
-                    var group = parent.AddChild(new GroupExpression());
+                    var group = parent.AddChild(new FunctionArgumentExpression());
                     group.AddChild(expression);
                 }
                 else

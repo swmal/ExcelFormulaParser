@@ -28,7 +28,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             Operator = null;
         }
 
-        public bool ParentIsLookupFunction
+        public virtual bool ParentIsLookupFunction
         {
             get;
             set;
