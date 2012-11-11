@@ -14,6 +14,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         Date,
         Time,
         Enumerable,
-        LookupArray
+        LookupArray,
+        ExcelAddress
     }
 }

@@ -59,5 +59,21 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             var result = expression.Compile();
             Assert.AreEqual(1, result.Result);
         }
+
+        [TestMethod]
+        public void CompileShouldReturnAddress()
+        {
+            var expectedAddress = "A1";
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider
+                .Stub(x => x.GetRangeValues(expectedAddress))
+                .Return(new ExcelCell[] { CreateItem(1) });
+
+            var expression = new ExcelAddressExpression(expectedAddress, provider, _parsingContext);
+            expression.ParentIsLookupFunction = true;
+            var result = expression.Compile();
+            Assert.AreEqual(expectedAddress, result.Result);
+
+        }
     }
 }

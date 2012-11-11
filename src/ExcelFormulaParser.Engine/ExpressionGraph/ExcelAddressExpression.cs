@@ -39,7 +39,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             if (ParentIsLookupFunction)
             {
-                return CompileLookupArray();
+                return new CompileResult(ExpressionString, DataType.ExcelAddress);
             }
             else
             {
@@ -47,34 +47,34 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             }
         }
 
-        private CompileResult CompileLookupArray()
-        {
-            List<List<object>> resultList = new List<List<object>>();
-            var result = _excelDataProvider.GetLookupArray(ExpressionString);
-            if (result == null || result.Count() == 0)
-            {
-                return new CompileResult(resultList, DataType.LookupArray); ;
-            }
-            for (var row = 0; row < result.Count; row++)
-            {
-                resultList.Add(new List<object>());
-                for (var col = 0; col < result[row].Count; col++ )
-                {
-                    var dataItem = result[row][col];
-                    if (!string.IsNullOrEmpty(dataItem.Formula))
-                    {
-                        var address = _rangeAddressFactory.Create(dataItem.ColIndex, dataItem.RowIndex);
-                        var parsedItem = _parsingContext.Parser.Parse(dataItem.Formula, address);
-                        resultList[row].Add(parsedItem);
-                    }
-                    else
-                    {
-                        resultList[row].Add(dataItem.Value);
-                    }
-                }
-            }
-            return new CompileResult(resultList, DataType.LookupArray);
-        }
+        //private CompileResult CompileLookupArray()
+        //{
+        //    List<List<object>> resultList = new List<List<object>>();
+        //    var result = _excelDataProvider.GetLookupArray(ExpressionString);
+        //    if (result == null || result.Count() == 0)
+        //    {
+        //        return new CompileResult(resultList, DataType.LookupArray); ;
+        //    }
+        //    for (var row = 0; row < result.Count; row++)
+        //    {
+        //        resultList.Add(new List<object>());
+        //        for (var col = 0; col < result[row].Count; col++ )
+        //        {
+        //            var dataItem = result[row][col];
+        //            if (!string.IsNullOrEmpty(dataItem.Formula))
+        //            {
+        //                var address = _rangeAddressFactory.Create(dataItem.ColIndex, dataItem.RowIndex);
+        //                var parsedItem = _parsingContext.Parser.Parse(dataItem.Formula, address);
+        //                resultList[row].Add(parsedItem);
+        //            }
+        //            else
+        //            {
+        //                resultList[row].Add(dataItem.Value);
+        //            }
+        //        }
+        //    }
+        //    return new CompileResult(resultList, DataType.LookupArray);
+        //}
 
         private CompileResult CompileRangeValues()
         {

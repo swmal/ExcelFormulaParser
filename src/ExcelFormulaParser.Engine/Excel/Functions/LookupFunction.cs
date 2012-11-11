@@ -14,5 +14,13 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
                 return true;
             }
         }
+
+        protected bool IsMatch(object o1, object o2)
+        {
+            if (o1 == null && o2 != null) return false;
+            if (o1 != null && o2 == null) return false;
+            if (o1 == null && o2 == null) return true;
+            return o1.ToString().Equals(o2.ToString());
+        }
     }
 }

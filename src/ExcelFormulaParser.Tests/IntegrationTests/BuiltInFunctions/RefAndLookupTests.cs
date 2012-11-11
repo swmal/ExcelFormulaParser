@@ -23,13 +23,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         [TestMethod]
         public void VLookupShouldReturnAResult()
         {
-            var returnDict = new Dictionary<int, IList<ExcelCell>>();
-            returnDict.Add(0, new List<ExcelCell>() { new ExcelCell(1, "A1", 0, 0), new ExcelCell(1, "B1", 1, 0) });
             var lookupAddress = "A1:B2";
-            _excelDataProvider.Stub(x => x.GetLookupArray(lookupAddress)).Return(returnDict);
-            _excelDataProvider.Stub(x => x.GetRangeValues("A1")).Return(new List<ExcelCell> { new ExcelCell(1, null, 0, 0) });
-            _excelDataProvider.Stub(x => x.GetRangeValues("B1")).Return(new List<ExcelCell> { new ExcelCell(1, null, 0, 0) });
-            var result = _parser.Parse("VLOOKUP(1, " + lookupAddress + ", 2)");
+            _excelDataProvider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            _excelDataProvider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(1, null, 0, 0));
+            _excelDataProvider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(2, null, 0, 0));
+            _excelDataProvider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell(5, null, 0, 0));
+            var result = _parser.Parse("VLOOKUP(2, " + lookupAddress + ", 1)");
+            Assert.AreEqual(5, result);
         }
     }
 }

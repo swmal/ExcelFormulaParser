@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
 {
@@ -12,14 +13,23 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
         {
             ValidateArguments(arguments, 3);
             var searchedValue = arguments.ElementAt(0).Value;
-            var lookupMatrix = arguments.ElementAt(1).Value as List<FunctionArgument>;
+            var address = arguments.ElementAt(1).Value.ToString();
             var colIndex = ArgToInt(arguments, 2);
-            for (var ix = 0; ix < lookupMatrix.Count; ix++)
+            var factory = new RangeAddressFactory(context.ExcelDataProvider);
+            var rangeAddress = factory.Create(address);
+            var fromRow = rangeAddress.FromRow;
+            var col = rangeAddress.FromCol;
+            for (var row = fromRow; row <= rangeAddress.ToRow; row++)
             {
-                //if (lookupMatrix[ix].Value[0].ToString() == searchedValue.ToString())
-                //{
-                //    return CreateResult(lookupMatrix[ix][colIndex], DataType.String);
-                //}
+                var cellValue = context.ExcelDataProvider.GetCellValue(row, col);
+                if (cellValue != null && IsMatch(cellValue.Value, searchedValue))
+                {
+                    var correspondingVal = context.ExcelDataProvider.GetCellValue(row, col + colIndex);
+                    if (correspondingVal != null)
+                    {
+                        return CreateResult(correspondingVal.Value, DataType.String);
+                    }
+                }
             }
             return CreateResult(null, DataType.String);
         }

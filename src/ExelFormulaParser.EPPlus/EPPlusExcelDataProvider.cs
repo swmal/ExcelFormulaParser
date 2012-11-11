@@ -64,27 +64,14 @@ namespace ExcelFormulaParser.EPPlus
             return null;
         }
 
-        public override IDictionary<int, IList<ExcelCell>> GetLookupArray(string address)
+        public override ExcelCell GetCellValue(int row, int col)
         {
-            var dictionary = new Dictionary<int, IList<ExcelCell>>();
-            var addressInfo = ExcelAddressInfo.Parse(address);
-            var ra = _rangeAddressFactory.Create(address);
-            SetCurrentWorksheet(addressInfo);
-            var range = _currentWorksheet.Cells[addressInfo.AddressOnSheet];
-            for (var row = 0; row < ra.ToRow - ra.FromRow; row++)
+            var cell = _currentWorksheet.Cells[row, col];
+            if (cell != null)
             {
-                dictionary[row] = new List<ExcelCell>();
-                for (var col = 0; col < ra.ToCol - ra.FromCol; col++)
-                {
-                    dictionary[row].Add(new ExcelCell(null, null, col, row));
-                }
+                return new ExcelCell(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row);
             }
-            foreach (var cell in range)
-            {
-                var existingCell = new ExcelCell(cell.Value, cell.Formula, cell.Start.Column, cell.Start.Row);
-                dictionary[cell.Start.Row][cell.Start.Column] = existingCell;
-            }
-            return dictionary;
+            return null;
         }
 
         private void SetCurrentWorksheet(ExcelAddressInfo addressInfo)
