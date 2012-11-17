@@ -15,10 +15,50 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
     public class RefAndLookupTests
     {
         [TestMethod]
+        public void LookupArgumentsShouldSetSearchedValue()
+        {
+            var args = FunctionsHelper.CreateArgs(1, "A:B", 2);
+            var lookupArgs = new LookupArguments(args);
+            Assert.AreEqual(1, lookupArgs.SearchedValue);
+        }
+
+        [TestMethod]
+        public void LookupArgumentsShouldSetRangeAddress()
+        {
+            var args = FunctionsHelper.CreateArgs(1, "A:B", 2);
+            var lookupArgs = new LookupArguments(args);
+            Assert.AreEqual("A:B", lookupArgs.RangeAddress);
+        }
+
+        [TestMethod]
+        public void LookupArgumentsShouldSetColIndex()
+        {
+            var args = FunctionsHelper.CreateArgs(1, "A:B", 2);
+            var lookupArgs = new LookupArguments(args);
+            Assert.AreEqual(2, lookupArgs.ColumnIndex);
+        }
+
+        [TestMethod]
+        public void LookupArgumentsShouldSetRangeLookupToFalseAsDefaultValue()
+        {
+            var args = FunctionsHelper.CreateArgs(1, "A:B", 2);
+            var lookupArgs = new LookupArguments(args);
+            Assert.IsFalse(lookupArgs.RangeLookup);
+        }
+
+        [TestMethod]
+        public void LookupArgumentsShouldSetRangeLookupToTrueWhenTrueIsSupplied()
+        {
+            var args = FunctionsHelper.CreateArgs(1, "A:B", 2, true);
+            var lookupArgs = new LookupArguments(args);
+            Assert.IsTrue(lookupArgs.RangeLookup);
+        }
+
+        [TestMethod]
         public void VLookupShouldReturnResultFromMatchingRow()
         {
             var func = new VLookup();
-            var args = FunctionsHelper.CreateArgs(2, "A1:B2", 1);
+            var args = FunctionsHelper.CreateArgs(2, "A1:B2", 2);
             var parsingContext = ParsingContext.Create();
             
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();
