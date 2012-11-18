@@ -50,6 +50,7 @@
     <Compile Include="ExcelUtilities\IndexToAddressTranslator.cs" />
     <Compile Include="ExcelUtilities\RangeAddress.cs" />
     <Compile Include="ExcelUtilities\RangeAddressFactory.cs" />
+    <Compile Include="ExcelUtilities\ValueMatcher.cs" />
     <Compile Include="Excel\Functions\ArgumentCollectionUtil.cs" />
     <Compile Include="Excel\Functions\ArgumentParser.cs" />
     <Compile Include="Excel\Functions\ArgumentParserFactory.cs" />

@@ -59,6 +59,7 @@
     <Compile Include="ExcelUtilities\RangeAddressFactoryTests.cs" />
     <Compile Include="ExcelUtilities\RangeAddressTests.cs" />
     <Compile Include="ExcelUtilities\RangesTest.cs" />
+    <Compile Include="ExcelUtilities\ValueMatcherTests.cs" />
     <Compile Include="Excel\Functions\ArgumentParserFactoryTests.cs" />
     <Compile Include="Excel\Functions\ArgumentParsersImplementationsTests.cs" />
     <Compile Include="Excel\Functions\ArgumentParsersTests.cs" />
