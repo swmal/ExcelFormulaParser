@@ -13,24 +13,36 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
         {
             ValidateArguments(arguments, 3);
             var lookupArgs = new LookupArguments(arguments);
-            var factory = new RangeAddressFactory(context.ExcelDataProvider);
-            var rangeAddress = factory.Create(lookupArgs.RangeAddress);
-            var fromRow = rangeAddress.FromRow;
-            var col = rangeAddress.FromCol;
-            for (var row = fromRow; row <= rangeAddress.ToRow; row++)
+
+            var navigator = new LookupNavigator(LookupDirection.Vertical, lookupArgs, context.ExcelDataProvider);
+            do
             {
-                var cellValue = context.ExcelDataProvider.GetCellValue(row, col);
-                if (cellValue != null && IsMatch(cellValue.Value, lookupArgs.SearchedValue))
+                if (IsMatch(navigator.CurrentValue, lookupArgs.SearchedValue))
                 {
-                    // colIndex is one-based
-                    var column = col + lookupArgs.ColumnIndex - 1;
-                    var correspondingVal = context.ExcelDataProvider.GetCellValue(row, column);
-                    if (correspondingVal != null)
-                    {
-                        return CreateResult(correspondingVal.Value, DataType.String);
-                    }
+                    return CreateResult(navigator.GetLookupValue(), DataType.String);
                 }
             }
+            while (navigator.MoveNext());
+
+
+            //var factory = new RangeAddressFactory(context.ExcelDataProvider);
+            //var rangeAddress = factory.Create(lookupArgs.RangeAddress);
+            //var fromRow = rangeAddress.FromRow;
+            //var col = rangeAddress.FromCol;
+            //for (var row = fromRow; row <= rangeAddress.ToRow; row++)
+            //{
+            //    var cellValue = context.ExcelDataProvider.GetCellValue(row, col);
+            //    if (cellValue != null && IsMatch(cellValue.Value, lookupArgs.SearchedValue))
+            //    {
+            //        // colIndex is one-based
+            //        var column = col + lookupArgs.ColumnIndex - 1;
+            //        var correspondingVal = context.ExcelDataProvider.GetCellValue(row, column);
+            //        if (correspondingVal != null)
+            //        {
+            //            return CreateResult(correspondingVal.Value, DataType.String);
+            //        }
+            //    }
+            //}
             return CreateResult(null, DataType.String);
         }
     }

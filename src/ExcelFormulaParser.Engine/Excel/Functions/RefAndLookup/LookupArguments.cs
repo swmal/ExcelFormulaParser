@@ -19,7 +19,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             _argumentParsers = argumentParsers;
             SearchedValue = arguments.ElementAt(0).Value;
             RangeAddress = arguments.ElementAt(1).Value.ToString();
-            ColumnIndex = (int)_argumentParsers.GetParser(DataType.Integer).Parse(arguments.ElementAt(2).Value);
+            LookupIndex = (int)_argumentParsers.GetParser(DataType.Integer).Parse(arguments.ElementAt(2).Value);
             if (arguments.Count() > 3)
             {
                 RangeLookup = (bool)_argumentParsers.GetParser(DataType.Boolean).Parse(arguments.ElementAt(3).Value);
@@ -32,7 +32,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
 
         public string RangeAddress { get; private set; }
 
-        public int ColumnIndex { get; private set; }
+        public int LookupIndex { get; private set; }
 
         public bool RangeLookup { get; private set; }
     }

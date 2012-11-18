@@ -63,7 +63,8 @@
     <Compile Include="Excel\Functions\ArgumentParsersImplementationsTests.cs" />
     <Compile Include="Excel\Functions\ArgumentParsersTests.cs" />
     <Compile Include="Excel\Functions\ExcelFunctionTests.cs" />
-    <Compile Include="Excel\Functions\RefAndLookupTests.cs" />
+    <Compile Include="Excel\Functions\RefAndLookup\LookupNavigatorTests.cs" />
+    <Compile Include="Excel\Functions\RefAndLookup\RefAndLookupTests.cs" />
     <Compile Include="Excel\Functions\SubtotalTests.cs" />
     <Compile Include="ExpressionGraph\EnumerableExpressionTests.cs" />
     <Compile Include="ExpressionGraph\ExcelAddressExpressionTests.cs" />
