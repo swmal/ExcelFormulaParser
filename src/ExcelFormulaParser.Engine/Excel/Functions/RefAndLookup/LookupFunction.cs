@@ -33,18 +33,5 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
         {
             return _valueMatcher.IsMatch(o1, o2);
         }
-
-        protected double? ToNumeric(object o)
-        {
-            if (o == null) return default(double?);
-            if (o is double) return (double)o;
-            var str = o.ToString();
-            double res;
-            if (double.TryParse(str, out res))
-            {
-                return res;
-            }
-            return default(double?);
-        }
     }
 }

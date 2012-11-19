@@ -54,6 +54,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["round"] = new Round();
             _functions["rand"] = new Rand();
             _functions["randbetween"] = new RandBetween();
+            _functions["tan"] = new Tan();
+            _functions["tanh"] = new Tanh();
             _functions["var"] = new Var();
             _functions["varp"] = new VarP();
             // Logical

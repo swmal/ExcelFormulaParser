@@ -415,7 +415,7 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var func = new Var();
             var args = FunctionsHelper.CreateArgs(1, 2, 3, 4);
             var result = func.Execute(args, _parsingContext);
-            Assert.AreEqual(1.6667d, System.Math.Round((double)result.Result, 4)); 
+            Assert.AreEqual(1.6667d, System.Math.Round((double)result.Result, 4));
         }
 
         [TestMethod]
@@ -495,7 +495,27 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var args = FunctionsHelper.CreateArgs(2);
             var result = func.Execute(args, _parsingContext);
             var roundedResult = Math.Round((double)result.Result, 9);
-            Assert.AreEqual(3.626860408, roundedResult);
+            Assert.AreEqual(3.626860408d, roundedResult);
+        }
+
+        [TestMethod]
+        public void TanShouldReturnCorrectResult()
+        {
+            var func = new Tan();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(-2.185039863d, roundedResult);
+        }
+
+        [TestMethod]
+        public void TanhShouldReturnCorrectResult()
+        {
+            var func = new Tanh();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(0.96402758d, roundedResult);
         }
     }
 }
