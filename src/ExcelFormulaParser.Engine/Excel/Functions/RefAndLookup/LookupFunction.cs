@@ -2,11 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
 {
     public abstract class LookupFunction : ExcelFunction
     {
+        private readonly ValueMatcher _valueMatcher;
+
+        public LookupFunction()
+            : this(new ValueMatcher())
+        {
+
+        }
+
+        public LookupFunction(ValueMatcher valueMatcher)
+        {
+            _valueMatcher = valueMatcher;
+        }
+
         public override bool IsLookupFuction
         {
             get
@@ -15,12 +29,9 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             }
         }
 
-        protected bool IsMatch(object o1, object o2)
+        protected int IsMatch(object o1, object o2)
         {
-            if (o1 == null && o2 != null) return false;
-            if (o1 != null && o2 == null) return false;
-            if (o1 == null && o2 == null) return true;
-            return o1.ToString().Equals(o2.ToString());
+            return _valueMatcher.IsMatch(o1, o2);
         }
 
         protected double? ToNumeric(object o)

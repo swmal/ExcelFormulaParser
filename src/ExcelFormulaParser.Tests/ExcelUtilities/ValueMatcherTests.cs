@@ -80,5 +80,28 @@ namespace ExcelFormulaParser.Tests.ExcelUtilities
             var result = _matcher.IsMatch(o1, o2);
             Assert.AreEqual(0, result);
         }
+
+        [TestMethod]
+        public void ShouldReturn0WhenParamsAreEqualButDifferentTypes()
+        {
+            object o1 = "2";
+            object o2 = 2d;
+            var result = _matcher.IsMatch(o1, o2);
+            Assert.AreEqual(0, result, "IsMatch did not return 0 as expected when first param is a string and second a double");
+
+            o1 = 2d;
+            o2 = "2";
+            result = _matcher.IsMatch(o1, o2);
+            Assert.AreEqual(0, result, "IsMatch did not return 0 as expected when first param is a double and second a string");
+        }
+
+        [TestMethod]
+        public void ShouldReturnMînus2WhenTypesDifferAndStringConversionToDoubleFails()
+        {
+            object o1 = 2d;
+            object o2 = "T";
+            var result = _matcher.IsMatch(o1, o2);
+            Assert.AreEqual(-2, result);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             var navigator = new LookupNavigator(LookupDirection.Vertical, lookupArgs, context.ExcelDataProvider);
             do
             {
-                if (IsMatch(navigator.CurrentValue, lookupArgs.SearchedValue))
+                if (IsMatch(navigator.CurrentValue, lookupArgs.SearchedValue) == 0)
                 {
                     return CreateResult(navigator.GetLookupValue(), DataType.String);
                 }
