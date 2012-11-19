@@ -477,5 +477,15 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var roundedResult = Math.Round((double)result.Result, 9);
             Assert.AreEqual(3.762195691, roundedResult);
         }
+
+        [TestMethod]
+        public void SinShouldReturnCorrectResult()
+        {
+            var func = new Cosh();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(0.909297427, roundedResult);
+        }
     }
 }

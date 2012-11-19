@@ -63,6 +63,7 @@
     <Compile Include="Excel\Functions\IntArgumentParser.cs" />
     <Compile Include="Excel\Functions\Math\Cos.cs" />
     <Compile Include="Excel\Functions\Math\Cosh.cs" />
+    <Compile Include="Excel\Functions\Math\Sin.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\LookupArguments.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\LookupDirection.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\LookupFunction.cs" />
