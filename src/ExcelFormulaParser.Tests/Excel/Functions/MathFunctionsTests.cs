@@ -481,11 +481,21 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         [TestMethod]
         public void SinShouldReturnCorrectResult()
         {
-            var func = new Cosh();
+            var func = new Sin();
             var args = FunctionsHelper.CreateArgs(2);
             var result = func.Execute(args, _parsingContext);
             var roundedResult = Math.Round((double)result.Result, 9);
             Assert.AreEqual(0.909297427, roundedResult);
+        }
+
+        [TestMethod]
+        public void SinhShouldReturnCorrectResult()
+        {
+            var func = new Sinh();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(3.626860408, roundedResult);
         }
     }
 }

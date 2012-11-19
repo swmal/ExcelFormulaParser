@@ -40,6 +40,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["count"] = new Count();
             _functions["counta"] = new CountA();
             _functions["floor"] = new Floor();
+            _functions["sin"] = new Sin();
+            _functions["sinh"] = new Sinh();
             _functions["sum"] = new Sum();
             _functions["stdev"] = new Stdev();
             _functions["stdevp"] = new StdevP();

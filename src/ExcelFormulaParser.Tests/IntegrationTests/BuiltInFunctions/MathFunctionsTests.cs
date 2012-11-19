@@ -209,5 +209,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Cosh(2)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void SinShouldReturnAResult()
+        {
+            var result = _parser.Parse("Sin(2)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
+        public void SinhShouldReturnAResult()
+        {
+            var result = _parser.Parse("Sinh(2)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }

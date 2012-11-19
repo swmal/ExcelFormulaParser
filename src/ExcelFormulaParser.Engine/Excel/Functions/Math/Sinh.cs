@@ -6,13 +6,13 @@ using ExcelFormulaParser.Engine.ExpressionGraph;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
-    public class Sin : ExcelFunction
+    public class Sinh : ExcelFunction
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
             var arg = ArgToDecimal(arguments, 0);
-            return CreateResult(System.Math.Sin(arg), DataType.Decimal);
+            return CreateResult(System.Math.Sinh(arg), DataType.Decimal);
         }
     }
 }
