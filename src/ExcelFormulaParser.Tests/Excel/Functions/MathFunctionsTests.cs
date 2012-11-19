@@ -457,5 +457,25 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(1d, result.Result);
         }
+
+        [TestMethod]
+        public void CosShouldReturnCorrectResult()
+        {
+            var func = new Cos();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(-0.416146837d, roundedResult);
+        }
+
+        [TestMethod]
+        public void CosHShouldReturnCorrectResult()
+        {
+            var func = new Cosh();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(3.762195691, roundedResult);
+        }
     }
 }

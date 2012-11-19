@@ -30,6 +30,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             // Numbers
             _functions["int"] = new CInt();
             // Math
+            _functions["cos"] = new Cos();
+            _functions["cosh"] = new Cosh();
             _functions["power"] = new Power();
             _functions["sqrt"] = new Sqrt();
             _functions["pi"] = new Pi();
