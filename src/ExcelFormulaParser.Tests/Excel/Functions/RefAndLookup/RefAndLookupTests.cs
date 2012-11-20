@@ -71,5 +71,59 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, parsingContext);
             Assert.AreEqual(5, result.Result);
         }
+
+        [TestMethod]
+        public void VLookupShouldReturnClosestValueBelowWhenRangeLookupIsTrue()
+        {
+            var func = new VLookup();
+            var args = FunctionsHelper.CreateArgs(4, "A1:B2", 2, true);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(5, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell(4, null, 0, 0));
+
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(1, result.Result);
+        }
+
+        [TestMethod]
+        public void VLookupShouldReturnClosestStringValueBelowWhenRangeLookupIsTrue()
+        {
+            var func = new VLookup();
+            var args = FunctionsHelper.CreateArgs("B", "A1:B2", 2, true);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell("A", null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell("C", null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell(4, null, 0, 0));
+
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(1, result.Result);
+        }
+
+        [TestMethod]
+        public void HLookupShouldReturnResultFromMatchingRow()
+        {
+            var func = new HLookup();
+            var args = FunctionsHelper.CreateArgs(1, "A1:B2", 2);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(2, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell(5, null, 0, 0));
+
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(5, result.Result);
+        }
     }
 }

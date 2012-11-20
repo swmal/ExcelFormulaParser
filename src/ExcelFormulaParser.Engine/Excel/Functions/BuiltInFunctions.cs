@@ -64,6 +64,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             _functions["and"] = new And();
             _functions["or"] = new Or();
             // Reference and lookup
+            _functions["hlookup"] = new HLookup();
             _functions["vlookup"] = new VLookup();
             // Date
             _functions["date"] = new Date();
