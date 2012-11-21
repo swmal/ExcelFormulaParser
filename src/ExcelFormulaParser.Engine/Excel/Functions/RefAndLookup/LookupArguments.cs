@@ -26,6 +26,14 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             }
         }
 
+        public LookupArguments(object searchedValue, string rangeAddress, int lookupIndex, bool rangeLookup)
+        {
+            SearchedValue = searchedValue;
+            RangeAddress = rangeAddress;
+            LookupIndex = lookupIndex;
+            RangeLookup = rangeLookup;
+        }
+
         private readonly ArgumentParsers _argumentParsers;
 
         public object SearchedValue { get; private set; }

@@ -125,5 +125,25 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, parsingContext);
             Assert.AreEqual(5, result.Result);
         }
+
+        [TestMethod]
+        public void LookupShouldReturnResultFromMatchingRowArrayVertical()
+        {
+            var func = new Lookup();
+            var args = FunctionsHelper.CreateArgs(4, "A1:B3", 2);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell("A", null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell("B", null, 0, 0));
+            provider.Stub(x => x.GetCellValue(2, 0)).Return(new ExcelCell(5, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(2, 1)).Return(new ExcelCell("C", null, 0, 0));
+
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual("B", result.Result);
+        }
     }
 }
