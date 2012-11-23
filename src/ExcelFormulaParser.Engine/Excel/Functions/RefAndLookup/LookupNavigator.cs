@@ -81,10 +81,12 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             if (_direction == LookupDirection.Vertical)
             {
                 col += _arguments.LookupIndex - 1;
+                row += _arguments.LookupOffset;
             }
             else
             {
                 row += _arguments.LookupIndex - 1;
+                col += _arguments.LookupOffset;
             }
             var cellValue = _excelDataProvider.GetCellValue(row, col);
             return cellValue != null ? cellValue.Value : null;

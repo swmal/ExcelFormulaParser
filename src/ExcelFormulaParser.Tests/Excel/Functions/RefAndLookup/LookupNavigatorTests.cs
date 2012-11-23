@@ -76,5 +76,16 @@ namespace ExcelFormulaParser.Tests.Excel.Functions.RefAndLookup
             var navigator = new LookupNavigator(LookupDirection.Vertical, args, provider);
             Assert.AreEqual(4, navigator.GetLookupValue());
         }
+
+        [TestMethod]
+        public void GetLookupValueShouldReturnCorrespondingValueWithOffset()
+        {
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(2, 2)).Return(new ExcelCell(4, null, 0, 0));
+            var args = new LookupArguments(3, "A1:A4", 3, 2, false);
+            var navigator = new LookupNavigator(LookupDirection.Vertical, args, provider);
+            Assert.AreEqual(4, navigator.GetLookupValue());
+        }
     }
 }
