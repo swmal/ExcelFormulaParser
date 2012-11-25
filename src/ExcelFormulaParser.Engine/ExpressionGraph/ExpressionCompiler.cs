@@ -39,16 +39,22 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 var prec = FindLowestPrecedence();
                 compiledExpressions = HandlePrecedenceLevel(prec);
             }
-            return compiledExpressions.First().Compile();
+            if (_expressions.Any())
+            {
+                return compiledExpressions.First().Compile();
+            }
+            return CompileResult.Empty;
         }
 
         private IEnumerable<Expression> HandleGroupedExpressions()
         {
+            if (!_expressions.Any()) return Enumerable.Empty<Expression>();
             var first = _expressions.First();
             var groupedExpressions = _expressions.Where(x => x.IsGroupedExpression);
             foreach(var groupedExpression in groupedExpressions)
             {
                 var result = groupedExpression.Compile();
+                if (result == CompileResult.Empty) continue;
                 var newExp = _expressionConverter.FromCompileResult(result);
                 newExp.Operator = groupedExpression.Operator;
                 newExp.Prev = groupedExpression.Prev;

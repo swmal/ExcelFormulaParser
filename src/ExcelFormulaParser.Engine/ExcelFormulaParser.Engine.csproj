@@ -63,6 +63,8 @@
     <Compile Include="Excel\Functions\FunctionsModule.cs" />
     <Compile Include="Excel\Functions\HiddenValuesHandlingFunction.cs" />
     <Compile Include="Excel\Functions\IntArgumentParser.cs" />
+    <Compile Include="Excel\Functions\Logical\False.cs" />
+    <Compile Include="Excel\Functions\Logical\True.cs" />
     <Compile Include="Excel\Functions\Math\Cos.cs" />
     <Compile Include="Excel\Functions\Math\Cosh.cs" />
     <Compile Include="Excel\Functions\Math\Sin.cs" />

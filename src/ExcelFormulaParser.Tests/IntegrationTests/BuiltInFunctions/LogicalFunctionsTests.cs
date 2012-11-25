@@ -61,5 +61,19 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             result = _parser.Parse("OR(true, true, 1, false)");
             Assert.IsTrue((bool)result);
         }
+
+        [TestMethod]
+        public void TrueShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("True()");
+            Assert.IsTrue((bool)result);
+        }
+
+        [TestMethod]
+        public void FalseShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("False()");
+            Assert.IsFalse((bool)result);
+        }
     }
 }
