@@ -53,7 +53,13 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             }
         }
 
-        public bool MoveNext()
+        public int Index
+        {
+            get;
+            private set;
+        }
+
+        public virtual bool MoveNext()
         {
             if (!HasNext()) return false;
             if (_direction == LookupDirection.Vertical)
@@ -64,6 +70,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             {
                 _currentCol++;
             }
+            Index++;
             SetCurrentValue();
             return true;
         }
@@ -74,7 +81,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             private set;
         }
 
-        public object GetLookupValue()
+        public virtual object GetLookupValue()
         {
             var row = _currentRow;
             var col = _currentCol;

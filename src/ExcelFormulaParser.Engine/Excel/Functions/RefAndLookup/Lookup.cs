@@ -31,8 +31,9 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
         {
             var searchedValue = arguments.ElementAt(0).Value;
             Require.That(arguments.ElementAt(1).Value).Named("firstAddress").IsNotNull();
-            var firstAddress = arguments.ElementAt(1).Value.ToString();
-            var address = GetRangeAddress(context.ExcelDataProvider, firstAddress);
+            var firstAddress = ArgToString(arguments, 1);
+            var rangeAddressFactory = new RangeAddressFactory(context.ExcelDataProvider);
+            var address = rangeAddressFactory.Create(firstAddress);
             var nRows = address.ToRow - address.FromRow;
             var nCols = address.ToCol - address.FromCol;
             var lookupIndex = nCols + 1;
@@ -52,30 +53,22 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             var searchedValue = arguments.ElementAt(0).Value;
             Require.That(arguments.ElementAt(1).Value).Named("firstAddress").IsNotNull();
             Require.That(arguments.ElementAt(2).Value).Named("secondAddress").IsNotNull();
-            var firstAddress = arguments.ElementAt(1).Value.ToString();
-            var secondAddress = arguments.ElementAt(2).Value.ToString();
-            var address1 = GetRangeAddress(context.ExcelDataProvider, firstAddress);
-            var address2 = GetRangeAddress(context.ExcelDataProvider, secondAddress);
-            var nRows = address1.ToRow - address1.FromRow;
-            var nCols = address1.ToCol - address1.FromCol;
+            var firstAddress = ArgToString(arguments, 1);
+            var secondAddress = ArgToString(arguments, 2);
+            var rangeAddressFactory = new RangeAddressFactory(context.ExcelDataProvider);
+            var address1 = rangeAddressFactory.Create(firstAddress);
+            var address2 = rangeAddressFactory.Create(secondAddress);
             var lookupIndex = (address2.FromCol - address1.FromCol) + 1;
             var lookupOffset = address2.FromRow - address1.FromRow;
-            var lookupDirection = LookupDirection.Vertical;
-            if (nCols > nRows)
+            var lookupDirection = GetLookupDirection(address1);
+            if (lookupDirection == LookupDirection.Horizontal)
             {
                 lookupIndex = (address2.FromRow - address1.FromRow) + 1;
                 lookupOffset = address2.FromCol - address1.FromCol;
-                lookupDirection = LookupDirection.Horizontal;
             }
             var lookupArgs = new LookupArguments(searchedValue, firstAddress, lookupIndex, lookupOffset,  true);
             var navigator = new LookupNavigator(lookupDirection, lookupArgs, context.ExcelDataProvider);
             return Lookup(navigator, lookupArgs);
-        }
-
-        private static RangeAddress GetRangeAddress(ExcelDataProvider excelDataProvider, string address)
-        {
-            var factory = new RangeAddressFactory(excelDataProvider);
-            return factory.Create(address);
         }
     }
 }

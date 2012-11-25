@@ -35,6 +35,13 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             return _valueMatcher.IsMatch(o1, o2);
         }
 
+        protected LookupDirection GetLookupDirection(RangeAddress rangeAddress)
+        {
+            var nRows = rangeAddress.ToRow - rangeAddress.FromRow;
+            var nCols = rangeAddress.ToCol - rangeAddress.FromCol;
+            return nCols > nRows ? LookupDirection.Horizontal : LookupDirection.Vertical;
+        }
+
         protected CompileResult Lookup(LookupNavigator navigator, LookupArguments lookupArgs)
         {
             object lastValue = null;

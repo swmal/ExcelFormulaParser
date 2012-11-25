@@ -205,5 +205,69 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, parsingContext);
             Assert.AreEqual("B", result.Result);
         }
+
+        [TestMethod]
+        public void MatchShouldReturnIndexOfMatchingValHorizontal_MatchTypeExact()
+        {
+            var func = new Match();
+            var args = FunctionsHelper.CreateArgs(3, "A1:C1", 0);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 2)).Return(new ExcelCell(5, null, 0, 0));
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(2, result.Result);
+        }
+
+        [TestMethod]
+        public void MatchShouldReturnIndexOfMatchingValVertical_MatchTypeExact()
+        {
+            var func = new Match();
+            var args = FunctionsHelper.CreateArgs(3, "A1:A3", 0);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(2, 0)).Return(new ExcelCell(5, null, 0, 0));
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(2, result.Result);
+        }
+
+        [TestMethod]
+        public void MatchShouldReturnIndexOfMatchingValHorizontal_MatchTypeClosestBelow()
+        {
+            var func = new Match();
+            var args = FunctionsHelper.CreateArgs(4, "A1:C1", 1);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 2)).Return(new ExcelCell(5, null, 0, 0));
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(2, result.Result);
+        }
+
+        [TestMethod]
+        public void MatchShouldReturnIndexOfMatchingValHorizontal_MatchTypeClosestAbove()
+        {
+            var func = new Match();
+            var args = FunctionsHelper.CreateArgs(6, "A1:C1", -1);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(10, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(8, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 2)).Return(new ExcelCell(5, null, 0, 0));
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+            Assert.AreEqual(2, result.Result);
+        }
     }
 }

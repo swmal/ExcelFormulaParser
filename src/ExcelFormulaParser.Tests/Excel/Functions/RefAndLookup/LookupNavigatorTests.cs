@@ -67,6 +67,19 @@ namespace ExcelFormulaParser.Tests.Excel.Functions.RefAndLookup
         }
 
         [TestMethod]
+        public void MoveNextShouldIncreaseIndex()
+        {
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(4, null, 0, 0));
+            var args = GetArgs(6, "A1:B2", 1);
+            var navigator = new LookupNavigator(LookupDirection.Vertical, args, provider);
+            Assert.AreEqual(0, navigator.Index);
+            navigator.MoveNext();
+            Assert.AreEqual(1, navigator.Index);
+        }
+
+        [TestMethod]
         public void GetLookupValueShouldReturnCorrespondingValue()
         {
             var provider = MockRepository.GenerateStub<ExcelDataProvider>();

@@ -16,7 +16,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             if (o1 == null && o2 == null) return 0;
             if (o1 is string && o2 is string)
             {
-                return o1.ToString().CompareTo(o2);
+                return CompareStringToString(o1.ToString(), o2.ToString());
             }
             else if( o1.GetType() == typeof(string))
             {
@@ -29,7 +29,12 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             return Convert.ToDouble(o1).CompareTo(Convert.ToDouble(o2));
         }
 
-        private int CompareStringToObject(string o1, object o2)
+        protected virtual int CompareStringToString(string s1, string s2)
+        {
+            return s1.CompareTo(s2);
+        }
+
+        protected virtual int CompareStringToObject(string o1, object o2)
         {
             double d1;
             if (double.TryParse(o1, out d1))
@@ -39,7 +44,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             return IncompatibleOperands;
         }
 
-        private int CompareObjectToString(object o1, string o2)
+        protected virtual int CompareObjectToString(object o1, string o2)
         {
             double d2;
             if (double.TryParse(o2, out d2))

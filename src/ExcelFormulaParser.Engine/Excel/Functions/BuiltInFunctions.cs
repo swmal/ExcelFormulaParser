@@ -11,79 +11,72 @@ using ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
-    public class BuiltInFunctions : IFunctionModule
+    public class BuiltInFunctions : FunctionsModule
     {
         public BuiltInFunctions()
         {
-            _functions = new Dictionary<string, ExcelFunction>();
             // Text
-            _functions["text"] = new CStr();
-            _functions["len"] = new Len();
-            _functions["lower"] = new Lower();
-            _functions["upper"] = new Upper();
-            _functions["left"] = new Left();
-            _functions["right"] = new Right();
-            _functions["mid"] = new Mid();
-            _functions["replace"] = new Replace();
-            _functions["substitute"] = new Substitute();
-            _functions["concatenate"] = new Concatenate();
+            Functions["text"] = new CStr();
+            Functions["len"] = new Len();
+            Functions["lower"] = new Lower();
+            Functions["upper"] = new Upper();
+            Functions["left"] = new Left();
+            Functions["right"] = new Right();
+            Functions["mid"] = new Mid();
+            Functions["replace"] = new Replace();
+            Functions["substitute"] = new Substitute();
+            Functions["concatenate"] = new Concatenate();
             // Numbers
-            _functions["int"] = new CInt();
+            Functions["int"] = new CInt();
             // Math
-            _functions["cos"] = new Cos();
-            _functions["cosh"] = new Cosh();
-            _functions["power"] = new Power();
-            _functions["sqrt"] = new Sqrt();
-            _functions["pi"] = new Pi();
-            _functions["product"] = new Product();
-            _functions["ceiling"] = new Ceiling();
-            _functions["count"] = new Count();
-            _functions["counta"] = new CountA();
-            _functions["floor"] = new Floor();
-            _functions["sin"] = new Sin();
-            _functions["sinh"] = new Sinh();
-            _functions["sum"] = new Sum();
-            _functions["stdev"] = new Stdev();
-            _functions["stdevp"] = new StdevP();
-            _functions["subtotal"] = new Subtotal();
-            _functions["exp"] = new Exp();
-            _functions["max"] = new Max();
-            _functions["min"] = new Min();
-            _functions["mod"] = new Mod();
-            _functions["average"] = new Average();
-            _functions["round"] = new Round();
-            _functions["rand"] = new Rand();
-            _functions["randbetween"] = new RandBetween();
-            _functions["tan"] = new Tan();
-            _functions["tanh"] = new Tanh();
-            _functions["var"] = new Var();
-            _functions["varp"] = new VarP();
+            Functions["cos"] = new Cos();
+            Functions["cosh"] = new Cosh();
+            Functions["power"] = new Power();
+            Functions["sqrt"] = new Sqrt();
+            Functions["pi"] = new Pi();
+            Functions["product"] = new Product();
+            Functions["ceiling"] = new Ceiling();
+            Functions["count"] = new Count();
+            Functions["counta"] = new CountA();
+            Functions["floor"] = new Floor();
+            Functions["sin"] = new Sin();
+            Functions["sinh"] = new Sinh();
+            Functions["sum"] = new Sum();
+            Functions["stdev"] = new Stdev();
+            Functions["stdevp"] = new StdevP();
+            Functions["subtotal"] = new Subtotal();
+            Functions["exp"] = new Exp();
+            Functions["max"] = new Max();
+            Functions["min"] = new Min();
+            Functions["mod"] = new Mod();
+            Functions["average"] = new Average();
+            Functions["round"] = new Round();
+            Functions["rand"] = new Rand();
+            Functions["randbetween"] = new RandBetween();
+            Functions["tan"] = new Tan();
+            Functions["tanh"] = new Tanh();
+            Functions["var"] = new Var();
+            Functions["varp"] = new VarP();
             // Logical
-            _functions["if"] = new If();
-            _functions["not"] = new Not();
-            _functions["and"] = new And();
-            _functions["or"] = new Or();
+            Functions["if"] = new If();
+            Functions["not"] = new Not();
+            Functions["and"] = new And();
+            Functions["or"] = new Or();
             // Reference and lookup
-            _functions["hlookup"] = new HLookup();
-            _functions["vlookup"] = new VLookup();
+            Functions["hlookup"] = new HLookup();
+            Functions["vlookup"] = new VLookup();
+            Functions["lookup"] = new Lookup();
             // Date
-            _functions["date"] = new Date();
-            _functions["today"] = new Today();
-            _functions["now"] = new Now();
-            _functions["day"] = new Day();
-            _functions["month"] = new Month();
-            _functions["year"] = new Year();
-            _functions["time"] = new Time();
-            _functions["hour"] = new Hour();
-            _functions["minute"] = new Minute();
-            _functions["second"] = new Second();
-        }
-
-        private readonly Dictionary<string, ExcelFunction> _functions;
-
-        public IDictionary<string, ExcelFunction> Functions
-        {
-            get { return _functions; }
+            Functions["date"] = new Date();
+            Functions["today"] = new Today();
+            Functions["now"] = new Now();
+            Functions["day"] = new Day();
+            Functions["month"] = new Month();
+            Functions["year"] = new Year();
+            Functions["time"] = new Time();
+            Functions["hour"] = new Hour();
+            Functions["minute"] = new Minute();
+            Functions["second"] = new Second();
         }
     }
 }
