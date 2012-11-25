@@ -79,5 +79,15 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("LOOKUP(4, " + lookupAddress + ")");
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void MatchShouldReturnIndexOfMatchingValue()
+        {
+            var lookupAddress = "A1:A2";
+            _excelDataProvider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            _excelDataProvider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(5, null, 0, 0));
+            var result = _parser.Parse("MATCH(3, " + lookupAddress + ")");
+            Assert.AreEqual(1, result);
+        }
     }
 }

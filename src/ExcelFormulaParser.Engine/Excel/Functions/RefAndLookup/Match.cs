@@ -40,21 +40,23 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
                 var matchResult = IsMatch(navigator.CurrentValue, searchedValue);
                 if (matchType == MatchType.ClosestBelow && matchResult >= 0)
                 {
-                    if (!lastMatchResult.HasValue)
+                    if (!lastMatchResult.HasValue && matchResult > 0)
                     {
                         // TODO: error handling. This happens only if the first item is
                         // below the searched value.
                     }
-                    return CreateResult(navigator.Index, DataType.Integer);
+                    var index = matchResult == 0 ? navigator.Index + 1 : navigator.Index;
+                    return CreateResult(index, DataType.Integer);
                 }
                 if (matchType == MatchType.ClosestAbove && matchResult <= 0)
                 {
-                    if (!lastMatchResult.HasValue)
+                    if (!lastMatchResult.HasValue && matchResult < 0)
                     {
                         // TODO: error handling. This happens only if the first item is
                         // above the searched value
                     }
-                    return CreateResult(navigator.Index, DataType.Integer);
+                    var index = matchResult == 0 ? navigator.Index + 1 : navigator.Index;
+                    return CreateResult(index, DataType.Integer);
                 }
                 if (matchType == MatchType.ExactMatch && matchResult == 0)
                 {
