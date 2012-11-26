@@ -72,6 +72,7 @@
     <Compile Include="Excel\Functions\Math\Sinh.cs" />
     <Compile Include="Excel\Functions\Math\Tan.cs" />
     <Compile Include="Excel\Functions\Math\Tanh.cs" />
+    <Compile Include="Excel\Functions\RefAndLookup\Column.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\HLookup.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Lookup.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\LookupArguments.cs" />

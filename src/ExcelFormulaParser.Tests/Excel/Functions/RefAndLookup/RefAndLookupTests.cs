@@ -307,5 +307,26 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(FunctionsHelper.CreateArgs("A3"), parsingContext);
             Assert.AreEqual(3, result.Result);
         }
+
+        [TestMethod]
+        public void ColumnShouldReturnRowFromCurrentScopeIfNoAddressIsSupplied()
+        {
+            var func = new Column();
+            var parsingContext = ParsingContext.Create();
+            var rangeAddressFactory = new RangeAddressFactory(MockRepository.GenerateStub<ExcelDataProvider>());
+            parsingContext.Scopes.NewScope(rangeAddressFactory.Create("B2"));
+            var result = func.Execute(Enumerable.Empty<FunctionArgument>(), parsingContext);
+            Assert.AreEqual(2, result.Result);
+        }
+
+        [TestMethod]
+        public void ColumnShouldReturnRowSuppliedAddress()
+        {
+            var func = new Column();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            var result = func.Execute(FunctionsHelper.CreateArgs("E3"), parsingContext);
+            Assert.AreEqual(5, result.Result);
+        }
     }
 }
