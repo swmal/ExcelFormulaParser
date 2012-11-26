@@ -47,6 +47,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["subtotal"] = new Subtotal();
             Functions["exp"] = new Exp();
             Functions["max"] = new Max();
+            Functions["maxa"] = new Maxa();
             Functions["min"] = new Min();
             Functions["mod"] = new Mod();
             Functions["average"] = new Average();

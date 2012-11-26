@@ -186,6 +186,33 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void MaxaShouldCalculateCorrectResult()
+        {
+            var func = new Maxa();
+            var args = FunctionsHelper.CreateArgs(-1, 0, 1);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1d, result.Result);
+        }
+
+        [TestMethod]
+        public void MaxaShouldCalculateCorrectResultUsingBool()
+        {
+            var func = new Maxa();
+            var args = FunctionsHelper.CreateArgs(-1, 0, true);
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(1d, result.Result);
+        }
+
+        [TestMethod]
+        public void MaxaShouldCalculateCorrectResultUsingString()
+        {
+            var func = new Maxa();
+            var args = FunctionsHelper.CreateArgs(-1, "test");
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(0d, result.Result);
+        }
+
+        [TestMethod]
         public void MinShouldCalculateCorrectResult()
         {
             var func = new Min();

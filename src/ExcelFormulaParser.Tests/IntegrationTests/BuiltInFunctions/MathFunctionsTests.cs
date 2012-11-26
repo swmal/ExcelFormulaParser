@@ -106,6 +106,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         }
 
         [TestMethod]
+        public void MaxaShouldReturnAResult()
+        {
+            var result = _parser.Parse("Maxa(4, 5)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
         public void MinShouldReturnAResult()
         {
             var result = _parser.Parse("min(4, 5)");
