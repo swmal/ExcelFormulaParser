@@ -13,7 +13,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
         {
             ValidateArguments(arguments, 3);
             var lookupArgs = new LookupArguments(arguments);
-            var navigator = new LookupNavigator(LookupDirection.Vertical, lookupArgs, context.ExcelDataProvider);
+            var navigator = new LookupNavigator(LookupDirection.Vertical, lookupArgs, context);
             return Lookup(navigator, lookupArgs);
         }
     }

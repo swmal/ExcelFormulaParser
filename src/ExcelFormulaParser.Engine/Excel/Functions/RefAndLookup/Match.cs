@@ -33,7 +33,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
             var matchType = GetMatchType(arguments);
             var args = new LookupArguments(searchedValue, address, 0, 0, false);
             var lookupDirection = GetLookupDirection(rangeAddress);
-            var navigator = new LookupNavigator(lookupDirection, args, context.ExcelDataProvider);
+            var navigator = new LookupNavigator(lookupDirection, args, context);
             int? lastMatchResult = default(int?);
             do
             {

@@ -28,15 +28,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
                 }
                 else if (arg.Value is string)
                 {
-                    double val;
-                    if (double.TryParse(arg.Value.ToString(), out val))
-                    {
-                        argList.Add(val);
-                    }
-                    else
-                    {
-                        argList.Add(0d);
-                    }
+                    argList.Add(0d);
                 }
             });
         }

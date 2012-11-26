@@ -69,6 +69,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["vlookup"] = new VLookup();
             Functions["lookup"] = new Lookup();
             Functions["match"] = new Match();
+            Functions["row"] = new Row();
             // Date
             Functions["date"] = new Date();
             Functions["today"] = new Today();

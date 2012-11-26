@@ -44,7 +44,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
                 lookupDirection = LookupDirection.Horizontal;
             }
             var lookupArgs = new LookupArguments(searchedValue, firstAddress, lookupIndex, 0, true);
-            var navigator = new LookupNavigator(lookupDirection, lookupArgs, context.ExcelDataProvider);
+            var navigator = new LookupNavigator(lookupDirection, lookupArgs, context);
             return Lookup(navigator, lookupArgs);
         }
 
@@ -67,7 +67,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
                 lookupOffset = address2.FromCol - address1.FromCol;
             }
             var lookupArgs = new LookupArguments(searchedValue, firstAddress, lookupIndex, lookupOffset,  true);
-            var navigator = new LookupNavigator(lookupDirection, lookupArgs, context.ExcelDataProvider);
+            var navigator = new LookupNavigator(lookupDirection, lookupArgs, context);
             return Lookup(navigator, lookupArgs);
         }
     }

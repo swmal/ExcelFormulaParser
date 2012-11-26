@@ -11,24 +11,25 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
     {
         private readonly LookupDirection _direction;
         private readonly LookupArguments _arguments;
-        private readonly ExcelDataProvider _excelDataProvider;
+        private readonly ParsingContext _parsingContext;
         private RangeAddress _rangeAddress;
         private int _currentRow;
         private int _currentCol;
 
-        public LookupNavigator(LookupDirection direction, LookupArguments arguments, ExcelDataProvider excelDataProvider)
+        public LookupNavigator(LookupDirection direction, LookupArguments arguments, ParsingContext parsingContext)
         {
             Require.That(arguments).Named("arguments").IsNotNull();
-            Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
+            Require.That(parsingContext).Named("parsingContext").IsNotNull();
+            Require.That(parsingContext.ExcelDataProvider).Named("parsingContext.ExcelDataProvider").IsNotNull();
             _direction = direction;
             _arguments = arguments;
-            _excelDataProvider = excelDataProvider;
+            _parsingContext = parsingContext;
             Initialize();
         }
 
         private void Initialize()
         {
-            var factory = new RangeAddressFactory(_excelDataProvider);
+            var factory = new RangeAddressFactory(_parsingContext.ExcelDataProvider);
             _rangeAddress = factory.Create(_arguments.RangeAddress);
             _currentCol = _rangeAddress.FromCol;
             _currentRow = _rangeAddress.FromRow;
@@ -37,8 +38,19 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
 
         private void SetCurrentValue()
         {
-            var cellValue = _excelDataProvider.GetCellValue(_currentRow, _currentCol);
-            CurrentValue = cellValue != null ? cellValue.Value : null;
+            var cellValue = _parsingContext.ExcelDataProvider.GetCellValue(_currentRow, _currentCol);
+            if (cellValue.Value != null)
+            {
+                CurrentValue = cellValue.Value;
+            }
+            else if (!string.IsNullOrEmpty(cellValue.Formula))
+            {
+                CurrentValue = _parsingContext.Parser.Parse(cellValue.Formula);
+            }
+            else
+            {
+                CurrentValue = null;
+            }
         }
 
         private bool HasNext()
@@ -95,7 +107,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
                 row += _arguments.LookupIndex - 1;
                 col += _arguments.LookupOffset;
             }
-            var cellValue = _excelDataProvider.GetCellValue(row, col);
+            var cellValue = _parsingContext.ExcelDataProvider.GetCellValue(row, col);
             return cellValue != null ? cellValue.Value : null;
         }
     }

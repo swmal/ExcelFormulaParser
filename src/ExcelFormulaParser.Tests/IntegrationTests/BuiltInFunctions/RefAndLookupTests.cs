@@ -89,5 +89,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("MATCH(3, " + lookupAddress + ")");
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void RowShouldReturnRowNumber()
+        {
+            _excelDataProvider.Stub(x => x.GetRangeValues("A4")).Return(new List<ExcelCell> { new ExcelCell(null, "Row()", 0, 0) });
+            var result = _parser.ParseAt("A4");
+            Assert.AreEqual(4, result);
+        }
     }
 }

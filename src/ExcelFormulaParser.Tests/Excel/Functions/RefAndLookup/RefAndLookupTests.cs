@@ -8,6 +8,7 @@ using ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup;
 using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Tests.TestHelpers;
 using Rhino.Mocks;
+using ExcelFormulaParser.Engine.ExcelUtilities;
 
 namespace ExcelFormulaParser.Tests.Excel.Functions
 {
@@ -284,6 +285,27 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             parsingContext.ExcelDataProvider = provider;
             var result = func.Execute(args, parsingContext);
             Assert.AreEqual(1, result.Result);
+        }
+
+        [TestMethod]
+        public void RowShouldReturnRowFromCurrentScopeIfNoAddressIsSupplied()
+        {
+            var func = new Row();
+            var parsingContext = ParsingContext.Create();
+            var rangeAddressFactory = new RangeAddressFactory(MockRepository.GenerateStub<ExcelDataProvider>());
+            parsingContext.Scopes.NewScope(rangeAddressFactory.Create("A2"));
+            var result = func.Execute(Enumerable.Empty<FunctionArgument>(), parsingContext);
+            Assert.AreEqual(2, result.Result);
+        }
+
+        [TestMethod]
+        public void RowShouldReturnRowSuppliedAddress()
+        {
+            var func = new Row();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            var result = func.Execute(FunctionsHelper.CreateArgs("A3"), parsingContext);
+            Assert.AreEqual(3, result.Result);
         }
     }
 }
