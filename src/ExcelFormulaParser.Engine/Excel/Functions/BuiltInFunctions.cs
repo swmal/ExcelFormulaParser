@@ -70,7 +70,9 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["lookup"] = new Lookup();
             Functions["match"] = new Match();
             Functions["row"] = new Row();
+            Functions["rows"] = new Rows();
             Functions["column"] = new Column();
+            Functions["columns"] = new Columns();
             // Date
             Functions["date"] = new Date();
             Functions["today"] = new Today();

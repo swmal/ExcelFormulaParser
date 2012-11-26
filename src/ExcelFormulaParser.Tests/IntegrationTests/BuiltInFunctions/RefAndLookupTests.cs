@@ -105,5 +105,21 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.ParseAt("B4");
             Assert.AreEqual(2, result);
         }
+
+        [TestMethod]
+        public void RowsShouldReturnNbrOfRows()
+        {
+            _excelDataProvider.Stub(x => x.GetRangeValues("A4")).Return(new List<ExcelCell> { new ExcelCell(null, "Rows(A5:B7)", 0, 0) });
+            var result = _parser.ParseAt("A4");
+            Assert.AreEqual(3, result);
+        }
+
+        [TestMethod]
+        public void ColumnsShouldReturnNbrOfCols()
+        {
+            _excelDataProvider.Stub(x => x.GetRangeValues("A4")).Return(new List<ExcelCell> { new ExcelCell(null, "Columns(A5:B7)", 0, 0) });
+            var result = _parser.ParseAt("A4");
+            Assert.AreEqual(2, result);
+        }
     }
 }

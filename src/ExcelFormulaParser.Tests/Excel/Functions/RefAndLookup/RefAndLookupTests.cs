@@ -328,5 +328,36 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(FunctionsHelper.CreateArgs("E3"), parsingContext);
             Assert.AreEqual(5, result.Result);
         }
+
+        [TestMethod]
+        public void RowsShouldReturnNbrOfRowsSuppliedRange()
+        {
+            var func = new Rows();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            var result = func.Execute(FunctionsHelper.CreateArgs("A1:B3"), parsingContext);
+            Assert.AreEqual(3, result.Result);
+        }
+
+        [TestMethod]
+        public void RowsShouldReturnNbrOfRowsForEntireColumn()
+        {
+            var func = new Rows();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            parsingContext.ExcelDataProvider.Stub(x => x.ExcelMaxRows).Return(1000);
+            var result = func.Execute(FunctionsHelper.CreateArgs("A:B"), parsingContext);
+            Assert.AreEqual(1000, result.Result);
+        }
+
+        [TestMethod]
+        public void ColumnssShouldReturnNbrOfRowsSuppliedRange()
+        {
+            var func = new Columns();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            var result = func.Execute(FunctionsHelper.CreateArgs("A1:E3"), parsingContext);
+            Assert.AreEqual(5, result.Result);
+        }
     }
 }
