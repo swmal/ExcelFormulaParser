@@ -244,5 +244,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Tanh(2)");
             Assert.IsInstanceOfType(result, typeof(double));
         }
+
+        [TestMethod]
+        public void LogShouldReturnAResult()
+        {
+            var result = _parser.Parse("Log(2, 2)");
+            Assert.AreEqual(1d, result);
+        }
     }
 }
