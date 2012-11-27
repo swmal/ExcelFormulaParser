@@ -46,9 +46,23 @@ namespace ExcelFormulaParser.Tests.Excel
         }
 
         [TestMethod]
-        public void OperatorEqShouldReturnTruefSuppliedValuesDiffer()
+        public void OperatorEqShouldReturnFalsefSuppliedValuesDiffer()
         {
             var result = Operator.Eq.Apply(new CompileResult(11, DataType.Integer), new CompileResult(12, DataType.Integer));
+            Assert.IsFalse((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void OperatorNotEqualToShouldReturnTruefSuppliedValuesDiffer()
+        {
+            var result = Operator.NotEqualsTo.Apply(new CompileResult(11, DataType.Integer), new CompileResult(12, DataType.Integer));
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void OperatorNotEqualToShouldReturnFalsefSuppliedValuesAreEqual()
+        {
+            var result = Operator.NotEqualsTo.Apply(new CompileResult(11, DataType.Integer), new CompileResult(11, DataType.Integer));
             Assert.IsFalse((bool)result.Result);
         }
 

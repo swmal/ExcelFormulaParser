@@ -19,6 +19,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             Add(">=", Operator.GreaterThanOrEqual);
             Add("<", Operator.LessThan);
             Add("<=", Operator.LessThanOrEqual);
+            Add("<>", Operator.NotEqualsTo);
             Add("&", Operator.Concat);
             Add("mod", Operator.Modulus);
         }

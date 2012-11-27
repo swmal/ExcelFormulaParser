@@ -67,6 +67,7 @@
     <Compile Include="Excel\Functions\Logical\True.cs" />
     <Compile Include="Excel\Functions\Math\Cos.cs" />
     <Compile Include="Excel\Functions\Math\Cosh.cs" />
+    <Compile Include="Excel\Functions\Math\Log.cs" />
     <Compile Include="Excel\Functions\Math\Maxa.cs" />
     <Compile Include="Excel\Functions\Math\Sin.cs" />
     <Compile Include="Excel\Functions\Math\Sinh.cs" />
