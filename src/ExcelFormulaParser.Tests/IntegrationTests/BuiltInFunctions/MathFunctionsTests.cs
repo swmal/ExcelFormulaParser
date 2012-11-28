@@ -251,5 +251,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Log(2, 2)");
             Assert.AreEqual(1d, result);
         }
+
+        [TestMethod]
+        public void Log10ShouldReturnAResult()
+        {
+            var result = _parser.Parse("Log10(2)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
     }
 }

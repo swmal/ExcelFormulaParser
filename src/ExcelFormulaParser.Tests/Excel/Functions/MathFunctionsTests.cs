@@ -563,5 +563,15 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(1d, result.Result);
         }
+
+        [TestMethod]
+        public void Log10ShouldReturnCorrectResult()
+        {
+            var func = new Log10();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(0.301029996d, roundedResult);
+        }
     }
 }
