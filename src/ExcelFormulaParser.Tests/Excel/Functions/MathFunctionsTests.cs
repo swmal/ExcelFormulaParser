@@ -573,5 +573,15 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var roundedResult = Math.Round((double)result.Result, 9);
             Assert.AreEqual(0.301029996d, roundedResult);
         }
+
+        [TestMethod]
+        public void SqrtPiShouldReturnCorrectResult()
+        {
+            var func = new SqrtPi();
+            var args = FunctionsHelper.CreateArgs(2);
+            var result = func.Execute(args, _parsingContext);
+            var roundedResult = Math.Round((double)result.Result, 9);
+            Assert.AreEqual(2.506628275d, roundedResult);
+        }
     }
 }

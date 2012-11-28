@@ -134,6 +134,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         }
 
         [TestMethod]
+        public void SqrtPiShouldReturnAResult()
+        {
+            var result = _parser.Parse("SqrtPi(2.2)");
+            Assert.IsInstanceOfType(result, typeof(double));
+        }
+
+        [TestMethod]
         public void IntShouldReturnAResult()
         {
             var result = _parser.Parse("Int(2.9)");

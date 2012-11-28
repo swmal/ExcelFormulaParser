@@ -33,6 +33,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["cosh"] = new Cosh();
             Functions["power"] = new Power();
             Functions["sqrt"] = new Sqrt();
+            Functions["sqrtpi"] = new SqrtPi();
             Functions["pi"] = new Pi();
             Functions["product"] = new Product();
             Functions["ceiling"] = new Ceiling();
