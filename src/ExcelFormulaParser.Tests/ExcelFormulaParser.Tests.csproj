@@ -53,6 +53,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelUtilities\NumericExpressionEvaluatorTests.cs" />
     <Compile Include="ExcelUtilities\AddressTranslatorTests.cs" />
     <Compile Include="ExcelUtilities\ExcelAddressInfoTests.cs" />
     <Compile Include="ExcelUtilities\IndexToAddressTranslatorTests.cs" />

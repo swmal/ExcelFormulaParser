@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelUtilities\NumericExpressionEvaluator.cs" />
     <Compile Include="ExcelCell.cs" />
     <Compile Include="ExcelDataProvider.cs" />
     <Compile Include="ExcelUtilities\AddressTranslator.cs" />

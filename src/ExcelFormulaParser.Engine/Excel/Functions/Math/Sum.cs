@@ -28,13 +28,9 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             {
                 return retVal;
             }
-            if (arg.Value is double)
+            if (arg.Value is double || arg.Value is int)
             {
-                retVal += Convert.ToDouble((double)arg.Value);
-            }
-            else if (arg.Value is int)
-            {
-                retVal += Convert.ToDouble((int)arg.Value);
+                retVal += Convert.ToDouble(arg.Value);
             }
             else if (arg.Value is System.DateTime)
             {
