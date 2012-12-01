@@ -135,6 +135,24 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void SumIfShouldCalculateWithExpressionFromSumRange()
+        {
+            var func = new SumIf();
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(3, 4, 5), ">3", (FunctionsHelper.CreateArgs(3, 2, 1)));
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(3d, result.Result);
+        }
+
+        [TestMethod]
+        public void SumIfShouldCalculateWithExpressionFromSumRangeWithNumericCriteria()
+        {
+            var func = new SumIf();
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(3, 4, 5), 3, (FunctionsHelper.CreateArgs(4, 2, 1)));
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(4d, result.Result);
+        }
+
+        [TestMethod]
         public void StdevShouldCalculateCorrectResult()
         {
             var func = new Stdev();

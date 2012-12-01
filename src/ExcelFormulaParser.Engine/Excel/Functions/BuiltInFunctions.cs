@@ -43,6 +43,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["sin"] = new Sin();
             Functions["sinh"] = new Sinh();
             Functions["sum"] = new Sum();
+            Functions["sumif"] = new SumIf();
             Functions["stdev"] = new Stdev();
             Functions["stdevp"] = new StdevP();
             Functions["subtotal"] = new Subtotal();

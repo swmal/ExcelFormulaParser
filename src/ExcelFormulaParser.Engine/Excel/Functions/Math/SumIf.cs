@@ -28,7 +28,38 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
         {
             ValidateArguments(arguments, 2);
             var args = arguments.ElementAt(0).Value as IEnumerable<FunctionArgument>;
-            var expression = arguments.ElementAt(1).Value;
+            var criteria = arguments.ElementAt(1).Value;
+            var retVal = 0d;
+            if (arguments.Count() > 2)
+            {
+                var sumRange = arguments.ElementAt(2).Value as IEnumerable<FunctionArgument>;
+                retVal = CalculateWithSumRange(args, criteria, sumRange);
+            }
+            else
+            {
+                retVal = CalculateSingleRange(args, criteria);
+            }
+            return CreateResult(retVal, DataType.Decimal);
+        }
+
+        private double CalculateWithSumRange(IEnumerable<FunctionArgument> range, object criteria, IEnumerable<FunctionArgument> sumRange)
+        {
+            var retVal = 0d;
+            var flattenedRange = ArgsToDoubleEnumerable(range);
+            var flattenedSumRange = ArgsToDoubleEnumerable(sumRange);
+            for (var x = 0; x < flattenedRange.Count(); x++)
+            {
+                var candidate = flattenedSumRange.ElementAt(x);
+                if (_evaluator.Evaluate(flattenedRange.ElementAt(x), criteria.ToString()))
+                {
+                    retVal += Convert.ToDouble(candidate);
+                }
+            }
+            return retVal;
+        }
+
+        private double CalculateSingleRange(IEnumerable<FunctionArgument> args, object expression)
+        {
             var retVal = 0d;
             if (args != null)
             {
@@ -37,7 +68,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
                     retVal += Calculate(arg, expression);
                 }
             }
-            return CreateResult(retVal, DataType.Decimal);
+            return retVal;
         }
 
         private double Calculate(FunctionArgument arg, object expression)
