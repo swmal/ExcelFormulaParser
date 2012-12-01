@@ -117,6 +117,24 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         }
 
         [TestMethod]
+        public void SumIfShouldCalculateMatchingValuesOnly()
+        {
+            var func = new SumIf();
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(3, 4, 5), "4");
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(4d, result.Result);
+        }
+
+        [TestMethod]
+        public void SumIfShouldCalculateWithExpression()
+        {
+            var func = new SumIf();
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(3, 4, 5), ">3");
+            var result = func.Execute(args, _parsingContext);
+            Assert.AreEqual(9d, result.Result);
+        }
+
+        [TestMethod]
         public void StdevShouldCalculateCorrectResult()
         {
             var func = new Stdev();

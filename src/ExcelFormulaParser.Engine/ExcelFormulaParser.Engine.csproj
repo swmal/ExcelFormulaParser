@@ -74,6 +74,7 @@
     <Compile Include="Excel\Functions\Math\Sin.cs" />
     <Compile Include="Excel\Functions\Math\Sinh.cs" />
     <Compile Include="Excel\Functions\Math\SqrtPi.cs" />
+    <Compile Include="Excel\Functions\Math\SumIf.cs" />
     <Compile Include="Excel\Functions\Math\Tan.cs" />
     <Compile Include="Excel\Functions\Math\Tanh.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Column.cs" />
