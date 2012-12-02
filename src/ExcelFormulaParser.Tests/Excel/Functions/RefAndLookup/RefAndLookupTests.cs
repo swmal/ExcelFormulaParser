@@ -359,5 +359,14 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(FunctionsHelper.CreateArgs("A1:E3"), parsingContext);
             Assert.AreEqual(5, result.Result);
         }
+
+        [TestMethod]
+        public void ChooseShouldReturnItemByIndex()
+        {
+            var func = new Choose();
+            var parsingContext = ParsingContext.Create();
+            var result = func.Execute(FunctionsHelper.CreateArgs(1, "A", "B"), parsingContext);
+            Assert.AreEqual("A", result.Result);
+        }
     }
 }

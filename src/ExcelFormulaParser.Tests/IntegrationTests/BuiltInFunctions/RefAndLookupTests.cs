@@ -121,5 +121,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.ParseAt("A4");
             Assert.AreEqual(2, result);
         }
+
+        [TestMethod]
+        public void ChooseShouldReturnCorrectResult()
+        {
+            var result = _parser.Parse("Choose(1, 'A', 'B')");
+            Assert.AreEqual("A", result);
+        }
     }
 }

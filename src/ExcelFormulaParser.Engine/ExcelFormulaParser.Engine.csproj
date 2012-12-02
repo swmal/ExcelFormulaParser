@@ -77,6 +77,7 @@
     <Compile Include="Excel\Functions\Math\SumIf.cs" />
     <Compile Include="Excel\Functions\Math\Tan.cs" />
     <Compile Include="Excel\Functions\Math\Tanh.cs" />
+    <Compile Include="Excel\Functions\RefAndLookup\Choose.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Column.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Columns.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\HLookup.cs" />
