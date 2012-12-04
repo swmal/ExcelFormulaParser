@@ -17,7 +17,7 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
             Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
             _excelDataProvider = excelDataProvider;
             _addressTranslator = new AddressTranslator(excelDataProvider);
-            _indexToAddressTranslator = new IndexToAddressTranslator(excelDataProvider);
+            _indexToAddressTranslator = new IndexToAddressTranslator(excelDataProvider, ExcelReferenceType.RelativeRowAndColumn);
         }
 
         public RangeAddress Create(int col, int row)

@@ -368,5 +368,48 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(FunctionsHelper.CreateArgs(1, "A", "B"), parsingContext);
             Assert.AreEqual("A", result.Result);
         }
+
+        [TestMethod]
+        public void AddressShouldReturnAddressByIndexWithDefaultRefType()
+        {
+            var func = new Address();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            parsingContext.ExcelDataProvider.Stub(x => x.ExcelMaxRows).Return(10);
+            var result = func.Execute(FunctionsHelper.CreateArgs(1, 2), parsingContext);
+            Assert.AreEqual("$B$1", result.Result);
+        }
+
+        [TestMethod]
+        public void AddressShouldReturnAddressByIndexWithRelativeType()
+        {
+            var func = new Address();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            parsingContext.ExcelDataProvider.Stub(x => x.ExcelMaxRows).Return(10);
+            var result = func.Execute(FunctionsHelper.CreateArgs(1, 2, (int)ExcelReferenceType.RelativeRowAndColumn), parsingContext);
+            Assert.AreEqual("B1", result.Result);
+        }
+
+        [TestMethod]
+        public void AddressShouldReturnAddressByWithSpecifiedWorksheet()
+        {
+            var func = new Address();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            parsingContext.ExcelDataProvider.Stub(x => x.ExcelMaxRows).Return(10);
+            var result = func.Execute(FunctionsHelper.CreateArgs(1, 2, (int)ExcelReferenceType.RelativeRowAndColumn, "Worksheet1"), parsingContext);
+            Assert.AreEqual("Worksheet1!B1", result.Result);
+        }
+
+        [TestMethod, ExpectedException(typeof(InvalidOperationException))]
+        public void AddressShouldThrowIfR1C1FormatIsSpecified()
+        {
+            var func = new Address();
+            var parsingContext = ParsingContext.Create();
+            parsingContext.ExcelDataProvider = MockRepository.GenerateStub<ExcelDataProvider>();
+            parsingContext.ExcelDataProvider.Stub(x => x.ExcelMaxRows).Return(10);
+            var result = func.Execute(FunctionsHelper.CreateArgs(1, 2, (int)ExcelReferenceType.RelativeRowAndColumn, false), parsingContext);
+        }
     }
 }

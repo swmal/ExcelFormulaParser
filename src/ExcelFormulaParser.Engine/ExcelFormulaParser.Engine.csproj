@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelUtilities\ExcelReferenceType.cs" />
     <Compile Include="ExcelUtilities\NumericExpressionEvaluator.cs" />
     <Compile Include="ExcelCell.cs" />
     <Compile Include="ExcelDataProvider.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Excel\Functions\Math\SumIf.cs" />
     <Compile Include="Excel\Functions\Math\Tan.cs" />
     <Compile Include="Excel\Functions\Math\Tanh.cs" />
+    <Compile Include="Excel\Functions\RefAndLookup\Address.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Choose.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Column.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\Columns.cs" />
