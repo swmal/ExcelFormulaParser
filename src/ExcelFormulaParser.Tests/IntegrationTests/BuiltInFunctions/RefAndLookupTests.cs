@@ -128,5 +128,13 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("Choose(1, 'A', 'B')");
             Assert.AreEqual("A", result);
         }
+
+        [TestMethod]
+        public void AddressShouldReturnCorrectResult()
+        {
+            _excelDataProvider.Stub(x => x.ExcelMaxRows).Return(12345);
+            var result = _parser.Parse("Address(1, 1)");
+            Assert.AreEqual("$A$1", result);
+        }
     }
 }

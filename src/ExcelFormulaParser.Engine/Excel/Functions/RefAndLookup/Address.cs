@@ -11,6 +11,11 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
+            /*
+             * TODO: Throw Value error if:
+             * - Third argument is not between 1 and 4.
+             * - If row or col is below 1.
+             */
             ValidateArguments(arguments, 2);
             var row = ArgToInt(arguments, 0) - 1;
             var col = ArgToInt(arguments, 1) - 1;

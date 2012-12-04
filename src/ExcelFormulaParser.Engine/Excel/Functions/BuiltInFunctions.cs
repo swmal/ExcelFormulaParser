@@ -69,6 +69,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["or"] = new Or();
             Functions["true"] = new True();
             // Reference and lookup
+            Functions["address"] = new Address();
             Functions["hlookup"] = new HLookup();
             Functions["vlookup"] = new VLookup();
             Functions["lookup"] = new Lookup();
