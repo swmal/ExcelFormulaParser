@@ -8,6 +8,7 @@ using ExcelFormulaParser.Engine.Excel.Functions.Logical;
 using ExcelFormulaParser.Engine.Excel.Functions.DateTime;
 using ExcelFormulaParser.Engine.Excel.Functions.Numeric;
 using ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup;
+using ExcelFormulaParser.Engine.Excel.Functions.Information;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
@@ -62,6 +63,8 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["tanh"] = new Tanh();
             Functions["var"] = new Var();
             Functions["varp"] = new VarP();
+            // Information
+            Functions["isblank"] = new IsBlank();
             // Logical
             Functions["if"] = new If();
             Functions["not"] = new Not();

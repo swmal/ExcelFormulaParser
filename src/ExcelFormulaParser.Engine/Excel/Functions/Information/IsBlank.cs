@@ -17,7 +17,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Information
             var result = true;
             foreach (var arg in arguments)
             {
-                if (arg.Value != null)
+                if (arg.Value != null && (arg.Value.ToString() != string.Empty))
                 {
                     result = false;
                     break;

@@ -28,5 +28,14 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, _context);
             Assert.IsTrue((bool)result.Result);
         }
+
+        [TestMethod]
+        public void IsBlankShouldReturnTrueIfFirstArgIsEmptyString()
+        {
+            var func = new IsBlank();
+            var args = FunctionsHelper.CreateArgs(string.Empty);
+            var result = func.Execute(args, _context);
+            Assert.IsTrue((bool)result.Result);
+        }
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="FormulaDependencyTests.cs" />
     <Compile Include="FormulaParserTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\DateAndTimeFunctionsTests.cs" />
+    <Compile Include="IntegrationTests\BuiltInFunctions\InformationFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\LogicalFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\MathFunctionsTests.cs" />
     <Compile Include="IntegrationTests\BuiltInFunctions\RefAndLookupTests.cs" />

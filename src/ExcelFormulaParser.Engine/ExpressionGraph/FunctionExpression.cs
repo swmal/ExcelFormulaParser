@@ -33,8 +33,8 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             foreach (var child in Children)
             {
                 child.ParentIsLookupFunction = function.IsLookupFuction;
-                var arg = child.Compile().Result;
-                BuildFunctionArguments(arg, args);
+                var arg = child.Compile();
+                BuildFunctionArguments(arg != null ? arg.Result : null, args);
             }
             return function.Execute(args, _parsingContext);
         }
