@@ -65,6 +65,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             Functions["varp"] = new VarP();
             // Information
             Functions["isblank"] = new IsBlank();
+            Functions["isnumber"] = new IsNumber();
             // Logical
             Functions["if"] = new If();
             Functions["not"] = new Not();

@@ -24,5 +24,12 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
             var result = _parser.Parse("ISBLANK(A1)");
             Assert.IsTrue((bool)result);
         }
+
+        [TestMethod]
+        public void IsNumberShouldReturnCorrectValue()
+        {
+            var result = _parser.Parse("ISNUMBER(1)");
+            Assert.IsTrue((bool)result);
+        }
     }
 }

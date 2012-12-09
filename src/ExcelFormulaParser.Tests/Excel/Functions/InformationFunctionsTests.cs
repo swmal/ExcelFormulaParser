@@ -37,5 +37,23 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, _context);
             Assert.IsTrue((bool)result.Result);
         }
+
+        [TestMethod]
+        public void IsNumberShouldReturnTrueWhenArgIsNumeric()
+        {
+            var func = new IsNumber();
+            var args = FunctionsHelper.CreateArgs(1d);
+            var result = func.Execute(args, _context);
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void IsNumberShouldReturnfalseWhenArgIsNonNumeric()
+        {
+            var func = new IsNumber();
+            var args = FunctionsHelper.CreateArgs("1");
+            var result = func.Execute(args, _context);
+            Assert.IsFalse((bool)result.Result);
+        }
     }
 }
