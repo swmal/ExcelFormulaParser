@@ -38,6 +38,14 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             } 
         }
 
+        public virtual bool IsErrorHandlingFunction
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         protected void ValidateArguments(IEnumerable<FunctionArgument> arguments, int minLength)
         {
             Require.That(arguments).Named("arguments").IsNotNull();

@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Tests.TestHelpers;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
 {
@@ -28,7 +30,14 @@ namespace ExcelFormulaParser.Tests.IntegrationTests.BuiltInFunctions
         [TestMethod]
         public void IsNumberShouldReturnCorrectValue()
         {
-            var result = _parser.Parse("ISNUMBER(1)");
+            var result = _parser.Parse("ISNUMBER(10/2)");
+            Assert.IsTrue((bool)result);
+        }
+
+        [TestMethod]
+        public void IsErrorShouldReturnTrueWhenDivBy0()
+        {
+            var result = _parser.Parse("ISERROR(10/0)");
             Assert.IsTrue((bool)result);
         }
     }

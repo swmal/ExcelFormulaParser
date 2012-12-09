@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExcelFormulaParser.Engine.Excel.Functions.Information;
 using ExcelFormulaParser.Tests.TestHelpers;
 using ExcelFormulaParser.Engine;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Tests.Excel.Functions
 {
@@ -52,6 +53,24 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
         {
             var func = new IsNumber();
             var args = FunctionsHelper.CreateArgs("1");
+            var result = func.Execute(args, _context);
+            Assert.IsFalse((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void IsErrorShouldReturnTrueIfArgIsAnErrorCode()
+        {
+            var args = FunctionsHelper.CreateArgs(ExcelErrorCodes.Value.Code);
+            var func = new IsError();
+            var result = func.Execute(args, _context);
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void IsErrorShouldReturnFalseIfArgIsNotAnError()
+        {
+            var args = FunctionsHelper.CreateArgs("A", 1);
+            var func = new IsError();
             var result = func.Execute(args, _context);
             Assert.IsFalse((bool)result.Result);
         }

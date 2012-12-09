@@ -187,7 +187,12 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             }
             else
             {
-                parent.Children.Last().Operator = op;
+                var candidate = parent.Children.Last();
+                if (candidate is FunctionArgumentExpression)
+                {
+                    candidate = candidate.Children.Last();
+                }
+                candidate.Operator = op;
             }
         }
     }

@@ -42,6 +42,22 @@ namespace ExcelFormulaParser.Engine.Exceptions
             return !c1.Code.Equals(c2.Code);
         }
 
+        private static readonly IEnumerable<string> Codes = new List<string> { Value.Code, Name.Code, NoValueAvaliable.Code };
+
+        public static bool IsErrorCode(object valueToTest)
+        {
+            if (valueToTest == null)
+            {
+                return false;
+            }
+            var candidate = valueToTest.ToString();
+            if (Codes.FirstOrDefault(x => x == candidate) != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static ExcelErrorCodes Value
         {
             get { return new ExcelErrorCodes("#VALUE!"); }

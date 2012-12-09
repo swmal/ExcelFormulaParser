@@ -8,6 +8,7 @@ namespace ExcelFormulaParser.Engine.Excel
     [Flags]
     public enum ExcelCellState
     {
-        HiddenCell = 1
+        HiddenCell = 1,
+        ContainsError = 2
     }
 }

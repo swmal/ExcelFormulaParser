@@ -62,9 +62,11 @@
     <Compile Include="Excel\Functions\CollectionFlattener.cs" />
     <Compile Include="Excel\Functions\DoubleArgumentParser.cs" />
     <Compile Include="Excel\Functions\DoubleEnumerableArgConverter.cs" />
+    <Compile Include="Excel\Functions\ErrorHandlingFunction.cs" />
     <Compile Include="Excel\Functions\FunctionsModule.cs" />
     <Compile Include="Excel\Functions\HiddenValuesHandlingFunction.cs" />
     <Compile Include="Excel\Functions\Information\IsBlank.cs" />
+    <Compile Include="Excel\Functions\Information\IsError.cs" />
     <Compile Include="Excel\Functions\Information\IsNumber.cs" />
     <Compile Include="Excel\Functions\IntArgumentParser.cs" />
     <Compile Include="Excel\Functions\Logical\False.cs" />
@@ -121,6 +123,11 @@
     <Compile Include="ExpressionGraph\ExpressionGraph.cs" />
     <Compile Include="ExpressionGraph\ExpressionGraphBuilder.cs" />
     <Compile Include="ExpressionGraph\FunctionArgumentExpression.cs" />
+    <Compile Include="ExpressionGraph\FunctionCompilers\DefaultCompiler.cs" />
+    <Compile Include="ExpressionGraph\FunctionCompilers\ErrorHandlingFunctionCompiler.cs" />
+    <Compile Include="ExpressionGraph\FunctionCompilers\FunctionCompiler.cs" />
+    <Compile Include="ExpressionGraph\FunctionCompilers\FunctionCompilerFactory.cs" />
+    <Compile Include="ExpressionGraph\FunctionCompilers\LookupFunctionCompiler.cs" />
     <Compile Include="ExpressionGraph\FunctionExpression.cs" />
     <Compile Include="ExpressionGraph\GroupExpression.cs" />
     <Compile Include="ExpressionGraph\IExpressionCompiler.cs" />

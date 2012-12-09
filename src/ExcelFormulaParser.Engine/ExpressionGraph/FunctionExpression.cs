@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.Excel;
 using ExcelFormulaParser.Engine.Excel.Functions;
+using ExcelFormulaParser.Engine.ExpressionGraph.FunctionCompilers;
 
 namespace ExcelFormulaParser.Engine.ExpressionGraph
 {
@@ -16,6 +17,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         }
 
         private readonly ParsingContext _parsingContext;
+        private readonly FunctionCompilerFactory _functionCompilerFactory = new FunctionCompilerFactory();
 
         public override bool IsFunctionExpression
         {
@@ -27,34 +29,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
 
         public override CompileResult Compile()
         {
-            var args = new List<FunctionArgument>();
             var function = _parsingContext.Configuration.FunctionRepository.GetFunction(ExpressionString);
-            function.BeforeInvoke(_parsingContext);
-            foreach (var child in Children)
-            {
-                child.ParentIsLookupFunction = function.IsLookupFuction;
-                var arg = child.Compile();
-                BuildFunctionArguments(arg != null ? arg.Result : null, args);
-            }
-            return function.Execute(args, _parsingContext);
+            var compiler = _functionCompilerFactory.Create(function);
+            return compiler.Compile(Children, _parsingContext);
         }
 
-        private static void BuildFunctionArguments(object result, List<FunctionArgument> args)
-        {
-            if (result is IEnumerable<object>)
-            {
-                var argList = new List<FunctionArgument>();
-                foreach (var arg in ((IEnumerable<object>)result))
-                {
-                    BuildFunctionArguments(arg, argList);
-                }
-                args.Add(new FunctionArgument(argList));
-            }
-            else
-            {
-                args.Add(new FunctionArgument(result));
-            }
-        }
 
         public override Expression MergeWithNext()
         {
