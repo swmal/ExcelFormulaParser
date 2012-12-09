@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.Utilities;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
@@ -23,7 +24,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             }
             if (!int.TryParse(obj.ToString(), out result))
             {
-                throw new ArgumentException("Could not parse " + obj.ToString() + " to int");
+                throw new ExcelFunctionException("Could not parse " + obj.ToString() + " to int", ExcelErrorCodes.Value);
             }
             return result;
         }

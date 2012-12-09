@@ -64,6 +64,7 @@
     <Compile Include="Excel\Functions\DoubleEnumerableArgConverter.cs" />
     <Compile Include="Excel\Functions\FunctionsModule.cs" />
     <Compile Include="Excel\Functions\HiddenValuesHandlingFunction.cs" />
+    <Compile Include="Excel\Functions\Information\IsBlank.cs" />
     <Compile Include="Excel\Functions\IntArgumentParser.cs" />
     <Compile Include="Excel\Functions\Logical\False.cs" />
     <Compile Include="Excel\Functions\Logical\True.cs" />
@@ -95,6 +96,8 @@
     <Compile Include="Excel\Functions\RefAndLookup\Rows.cs" />
     <Compile Include="Excel\Functions\RefAndLookup\VLookup.cs" />
     <Compile Include="Exceptions\CircularReferenceException.cs" />
+    <Compile Include="Exceptions\ExcelErrorCodes.cs" />
+    <Compile Include="Exceptions\ExcelFunctionException.cs" />
     <Compile Include="Exceptions\UnrecognizedTokenException.cs" />
     <Compile Include="ExpressionGraph\AtomicExpression.cs" />
     <Compile Include="ExpressionGraph\BooleanExpression.cs" />

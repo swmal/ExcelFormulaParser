@@ -9,6 +9,7 @@ using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Tests.TestHelpers;
 using Rhino.Mocks;
 using ExcelFormulaParser.Engine.ExcelUtilities;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Tests.Excel.Functions
 {
@@ -125,6 +126,40 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             parsingContext.ExcelDataProvider = provider;
             var result = func.Execute(args, parsingContext);
             Assert.AreEqual(5, result.Result);
+        }
+
+        [TestMethod, ExpectedException(typeof(ExcelFunctionException))]
+        public void HLookupShouldThrowIfNoMatchingRecordIsFoundWhenRangeLookupIsFalse()
+        {
+            var func = new HLookup();
+            var args = FunctionsHelper.CreateArgs(2, "A1:B2", 2, false);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(1, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(2, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell(5, null, 0, 0));
+
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
+        }
+
+        [TestMethod, ExpectedException(typeof(ExcelFunctionException))]
+        public void HLookupShouldThrowIfNoMatchingRecordIsFoundWhenRangeLookupIsTrue()
+        {
+            var func = new HLookup();
+            var args = FunctionsHelper.CreateArgs(1, "A1:B2", 2, true);
+            var parsingContext = ParsingContext.Create();
+
+            var provider = MockRepository.GenerateStub<ExcelDataProvider>();
+            provider.Stub(x => x.GetCellValue(0, 0)).Return(new ExcelCell(2, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(0, 1)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 0)).Return(new ExcelCell(3, null, 0, 0));
+            provider.Stub(x => x.GetCellValue(1, 1)).Return(new ExcelCell(5, null, 0, 0));
+
+            parsingContext.ExcelDataProvider = provider;
+            var result = func.Execute(args, parsingContext);
         }
 
         [TestMethod]

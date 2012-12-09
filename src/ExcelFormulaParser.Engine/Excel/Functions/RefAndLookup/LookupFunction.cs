@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExcelUtilities;
 using ExcelFormulaParser.Engine.ExpressionGraph;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
 {
@@ -46,6 +47,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
         {
             object lastValue = null;
             object lastLookupValue = null;
+            int? lastMatchResult = null;
             do
             {
                 var matchResult = IsMatch(navigator.CurrentValue, lookupArgs.SearchedValue);
@@ -55,17 +57,18 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
                 }
                 if (lookupArgs.RangeLookup)
                 {
-                    if (lastValue != null && matchResult > 0)
+                    if (lastValue != null && matchResult > 0 && lastMatchResult < 0)
                     {
                         return CreateResult(lastLookupValue, DataType.String);
                     }
+                    lastMatchResult = matchResult;
                     lastValue = navigator.CurrentValue;
                     lastLookupValue = navigator.GetLookupValue();
                 }
             }
             while (navigator.MoveNext());
 
-            return CreateResult(null, DataType.String);
+            throw new ExcelFunctionException("Lookupfunction failed to lookup value", ExcelErrorCodes.NoValueAvaliable);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using System.Globalization;
 using ExcelFormulaParser.Engine.Utilities;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
@@ -91,6 +92,19 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
         {
             message = string.Format(message, formats);
             ThrowArgumentExceptionIf(condition, message);
+        }
+
+        protected void ThrowExcelFunctionException(ExcelErrorCodes code)
+        {
+            throw new ExcelFunctionException("An excel function error occurred", code);
+        }
+
+        protected void ThrowExcelFunctionExceptionIf(Func<bool> condition, ExcelErrorCodes code)
+        {
+            if (condition())
+            {
+                throw new ExcelFunctionException("An excel function error occurred", code);
+            }
         }
 
         protected bool IsNumeric(object val)

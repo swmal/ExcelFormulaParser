@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 using ExcelFormulaParser.Engine.Utilities;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions
 {
@@ -20,7 +21,14 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             {
                 str = str.Replace('.', ',');
             }
-            return double.Parse(str);
+            try
+            {
+                return double.Parse(str);
+            }
+            catch (Exception e)
+            {
+                throw new ExcelFunctionException(str ?? "<null>" + " could not be parsed to a double", e, ExcelErrorCodes.Value);
+            }
         }
     }
 }

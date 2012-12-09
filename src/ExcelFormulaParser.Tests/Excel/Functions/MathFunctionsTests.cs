@@ -9,6 +9,7 @@ using ExcelFormulaParser.Engine;
 using ExcelFormulaParser.Tests.TestHelpers;
 using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine.Excel;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Tests.Excel.Functions
 {
@@ -141,6 +142,16 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(3, 4, 5), ">3", (FunctionsHelper.CreateArgs(3, 2, 1)));
             var result = func.Execute(args, _parsingContext);
             Assert.AreEqual(3d, result.Result);
+        }
+
+        [TestMethod, ExpectedException(typeof(ExcelFunctionException))]
+        public void SumIfShouldThrowIfCriteriaIsLargerThan255chars()
+        {
+            var longString = "a";
+            for (var x = 0; x < 256; x++) { longString = string.Concat(longString, "a"); }
+            var func = new SumIf();
+            var args = FunctionsHelper.CreateArgs(FunctionsHelper.CreateArgs(3, 4, 5), longString, (FunctionsHelper.CreateArgs(3, 2, 1)));
+            var result = func.Execute(args, _parsingContext);
         }
 
         [TestMethod]

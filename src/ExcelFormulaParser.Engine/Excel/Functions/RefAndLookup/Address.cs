@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.ExcelUtilities;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
 {
@@ -11,18 +12,16 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.RefAndLookup
     {
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
-            /*
-             * TODO: Throw Value error if:
-             * - Third argument is not between 1 and 4.
-             * - If row or col is below 1.
-             */
             ValidateArguments(arguments, 2);
             var row = ArgToInt(arguments, 0) - 1;
             var col = ArgToInt(arguments, 1) - 1;
+            ThrowExcelFunctionExceptionIf(() => row < 0 && col < 0, ExcelErrorCodes.Value);
             var referenceType = ExcelReferenceType.AbsoluteRowAndColumn;
             var worksheetSpec = string.Empty;
             if (arguments.Count() > 2)
             {
+                var arg3 = ArgToInt(arguments, 2);
+                ThrowExcelFunctionExceptionIf(() => arg3 < 1 || arg3 > 4, ExcelErrorCodes.Value);
                 referenceType = (ExcelReferenceType)ArgToInt(arguments, 2);
             }
             if (arguments.Count() > 3)

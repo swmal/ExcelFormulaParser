@@ -5,6 +5,7 @@ using System.Text;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.ExcelUtilities;
 using ExcelFormulaParser.Engine.Utilities;
+using ExcelFormulaParser.Engine.Exceptions;
 
 namespace ExcelFormulaParser.Engine.Excel.Functions.Math
 {
@@ -29,20 +30,21 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             ValidateArguments(arguments, 2);
             var args = arguments.ElementAt(0).Value as IEnumerable<FunctionArgument>;
             var criteria = arguments.ElementAt(1).Value;
+            ThrowExcelFunctionExceptionIf(() => criteria == null || criteria.ToString().Length > 255, ExcelErrorCodes.Value);
             var retVal = 0d;
             if (arguments.Count() > 2)
             {
                 var sumRange = arguments.ElementAt(2).Value as IEnumerable<FunctionArgument>;
-                retVal = CalculateWithSumRange(args, criteria, sumRange);
+                retVal = CalculateWithSumRange(args, criteria.ToString(), sumRange);
             }
             else
             {
-                retVal = CalculateSingleRange(args, criteria);
+                retVal = CalculateSingleRange(args, criteria.ToString());
             }
             return CreateResult(retVal, DataType.Decimal);
         }
 
-        private double CalculateWithSumRange(IEnumerable<FunctionArgument> range, object criteria, IEnumerable<FunctionArgument> sumRange)
+        private double CalculateWithSumRange(IEnumerable<FunctionArgument> range, string criteria, IEnumerable<FunctionArgument> sumRange)
         {
             var retVal = 0d;
             var flattenedRange = ArgsToDoubleEnumerable(range);
@@ -50,7 +52,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             for (var x = 0; x < flattenedRange.Count(); x++)
             {
                 var candidate = flattenedSumRange.ElementAt(x);
-                if (_evaluator.Evaluate(flattenedRange.ElementAt(x), criteria.ToString()))
+                if (_evaluator.Evaluate(flattenedRange.ElementAt(x), criteria))
                 {
                     retVal += Convert.ToDouble(candidate);
                 }
@@ -58,7 +60,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             return retVal;
         }
 
-        private double CalculateSingleRange(IEnumerable<FunctionArgument> args, object expression)
+        private double CalculateSingleRange(IEnumerable<FunctionArgument> args, string expression)
         {
             var retVal = 0d;
             if (args != null)
@@ -71,10 +73,10 @@ namespace ExcelFormulaParser.Engine.Excel.Functions.Math
             return retVal;
         }
 
-        private double Calculate(FunctionArgument arg, object expression)
+        private double Calculate(FunctionArgument arg, string expression)
         {
             var retVal = 0d;
-            if (ShouldIgnore(arg) || !_evaluator.Evaluate(arg.Value, expression.ToString()))
+            if (ShouldIgnore(arg) || !_evaluator.Evaluate(arg.Value, expression))
             {
                 return retVal;
             }
