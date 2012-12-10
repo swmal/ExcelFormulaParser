@@ -66,6 +66,7 @@ namespace ExcelFormulaParser.Engine.Excel.Functions
             // Information
             Functions["isblank"] = new IsBlank();
             Functions["isnumber"] = new IsNumber();
+            Functions["istext"] = new IsText();
             Functions["iserror"] = new IsError();
             // Logical
             Functions["if"] = new If();

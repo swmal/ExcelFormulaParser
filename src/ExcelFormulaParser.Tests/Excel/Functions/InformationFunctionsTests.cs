@@ -74,5 +74,23 @@ namespace ExcelFormulaParser.Tests.Excel.Functions
             var result = func.Execute(args, _context);
             Assert.IsFalse((bool)result.Result);
         }
+
+        [TestMethod]
+        public void IsTextShouldReturnTrueWhenFirstArgIsAString()
+        {
+            var args = FunctionsHelper.CreateArgs("1");
+            var func = new IsText();
+            var result = func.Execute(args, _context);
+            Assert.IsTrue((bool)result.Result);
+        }
+
+        [TestMethod]
+        public void IsTextShouldReturnFalseWhenFirstArgIsNotAString()
+        {
+            var args = FunctionsHelper.CreateArgs(1);
+            var func = new IsText();
+            var result = func.Execute(args, _context);
+            Assert.IsFalse((bool)result.Result);
+        }
     }
 }

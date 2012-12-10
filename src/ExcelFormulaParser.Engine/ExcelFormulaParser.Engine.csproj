@@ -68,6 +68,7 @@
     <Compile Include="Excel\Functions\Information\IsBlank.cs" />
     <Compile Include="Excel\Functions\Information\IsError.cs" />
     <Compile Include="Excel\Functions\Information\IsNumber.cs" />
+    <Compile Include="Excel\Functions\Information\IsText.cs" />
     <Compile Include="Excel\Functions\IntArgumentParser.cs" />
     <Compile Include="Excel\Functions\Logical\False.cs" />
     <Compile Include="Excel\Functions\Logical\True.cs" />
