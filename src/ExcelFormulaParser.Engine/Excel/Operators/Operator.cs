@@ -50,13 +50,15 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.Plus, PrecedenceAddSubtract, (l, r) =>
                 {
+                    l = l ?? new CompileResult(0, DataType.Integer);
+                    r = r ?? new CompileResult(0, DataType.Integer);
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((double)l.Result) + ((double)r.Result), DataType.Integer);
+                        return new CompileResult((Convert.ToDouble(l.Result)) + (Convert.ToDouble(r.Result)), DataType.Integer);
                     }
                     else if (l.IsNumeric && r.IsNumeric)
                     {
-                        return new CompileResult(((double)l.Result) + ((double)r.Result), DataType.Decimal);
+                        return new CompileResult((Convert.ToDouble(l.Result)) + (Convert.ToDouble(r.Result)), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 }); 
@@ -71,11 +73,11 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((double)l.Result) - ((double)r.Result), DataType.Integer);
+                        return new CompileResult((Convert.ToDouble(l.Result)) - (Convert.ToDouble(r.Result)), DataType.Integer);
                     }
                     else if (l.IsNumeric && r.IsNumeric)
                     {
-                        return new CompileResult(((double)l.Result) - ((double)r.Result), DataType.Decimal);
+                        return new CompileResult((Convert.ToDouble(l.Result)) - (Convert.ToDouble(r.Result)), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
@@ -90,11 +92,11 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.DataType == DataType.Integer && r.DataType == DataType.Integer)
                     {
-                        return new CompileResult(((double)l.Result) * ((double)r.Result), DataType.Integer);
+                        return new CompileResult((Convert.ToDouble(l.Result)) * (Convert.ToDouble(r.Result)), DataType.Integer);
                     }
                     if (l.IsNumeric && r.IsNumeric)
                     {
-                        return new CompileResult(((double)l.Result) * ((double)r.Result), DataType.Decimal);
+                        return new CompileResult((Convert.ToDouble(l.Result)) * (Convert.ToDouble(r.Result)), DataType.Decimal);
                     }
                     return new CompileResult(0, DataType.Integer);
                 });
@@ -107,8 +109,8 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.Divide, PrecedenceMultiplyDevide, (l, r) =>
                 {
-                    var left = (double)l.Result;
-                    var right = (double)r.Result;
+                    var left = Convert.ToDouble(l.Result);
+                    var right = Convert.ToDouble(r.Result);
                     if (right == 0d)
                     {
                         throw new DivideByZeroException(string.Format("left: {0}, right: {1}", left, right));
@@ -160,7 +162,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
             {
                 return new Operator(Operators.Modulus, PrecedenceModulus, (l, r) =>
                 {
-                    return new CompileResult((double)l.Result % (double)r.Result, DataType.Integer); ;
+                    return new CompileResult(Convert.ToDouble(l.Result) % Convert.ToDouble(r.Result), DataType.Integer); ;
                 });
             }
         }
@@ -173,7 +175,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                     {
                         if (l.IsNumeric && r.IsNumeric)
                         {
-                            return new CompileResult(((double)l.Result) > ((double)r.Result), DataType.Boolean);
+                            return new CompileResult((Convert.ToDouble(l.Result)) > (Convert.ToDouble(r.Result)), DataType.Boolean);
                         }
                         return new CompileResult(false, DataType.Boolean);
                     });
@@ -210,7 +212,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.IsNumeric && r.IsNumeric)
                     {
-                        return new CompileResult(((double)l.Result) >= ((double)r.Result), DataType.Boolean);
+                        return new CompileResult((Convert.ToDouble(l.Result)) >= (Convert.ToDouble(r.Result)), DataType.Boolean);
                     }
                     return new CompileResult(false, DataType.Boolean);
                 });
@@ -225,7 +227,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                     {
                         if (l.IsNumeric && r.IsNumeric)
                         {
-                            return new CompileResult(((double)l.Result) < ((double)r.Result), DataType.Boolean);
+                            return new CompileResult((Convert.ToDouble(l.Result)) < (Convert.ToDouble(r.Result)), DataType.Boolean);
                         }
                         return new CompileResult(false, DataType.Boolean);
                     });
@@ -240,7 +242,7 @@ namespace ExcelFormulaParser.Engine.Excel.Operators
                 {
                     if (l.IsNumeric && r.IsNumeric)
                     {
-                        return new CompileResult(((double)l.Result) <= ((double)r.Result), DataType.Boolean);
+                        return new CompileResult((Convert.ToDouble(l.Result)) <= (Convert.ToDouble(r.Result)), DataType.Boolean);
                     }
                     return new CompileResult(false, DataType.Boolean);
                 });

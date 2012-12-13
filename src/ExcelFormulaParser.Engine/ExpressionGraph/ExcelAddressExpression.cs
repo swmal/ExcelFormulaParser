@@ -72,14 +72,14 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             for (int x = 0; x < result.Count(); x++)
             {
                 var dataItem = result.ElementAt(x);
-                if (!string.IsNullOrEmpty(dataItem.Formula))
-                {
-                    var address = _rangeAddressFactory.Create(dataItem.ColIndex, dataItem.RowIndex);
-                    rangeValueList.Add(_parsingContext.Parser.Parse(dataItem.Formula, address));
-                }
-                else
+                if (dataItem.Value != null)
                 {
                     rangeValueList.Add(dataItem.Value);
+                }
+                else if (!string.IsNullOrEmpty(dataItem.Formula))
+                {
+                    var address = _rangeAddressFactory.Create(dataItem.ColIndex - 1, dataItem.RowIndex);
+                    rangeValueList.Add(_parsingContext.Parser.Parse(dataItem.Formula, address));
                 }
             }
             return rangeValueList;

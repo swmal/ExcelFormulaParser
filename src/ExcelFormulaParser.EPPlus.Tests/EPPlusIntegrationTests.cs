@@ -7,6 +7,7 @@ using OfficeOpenXml;
 using System.IO;
 using ExcelFormulaParser.Engine;
 using ExcelFormulaParser.Engine.Exceptions;
+using ExcelFormulaParser.EPPlus.Tests.Helpers;
 
 namespace ExcelFormulaParser.EPPlus.Tests
 {
@@ -133,5 +134,22 @@ namespace ExcelFormulaParser.EPPlus.Tests
                 Assert.AreEqual(2d, result);
             }
         }
+
+        [TestMethod, Timeout(TestTimeout.Infinite)]
+        public void LoadTestFromJan()
+        {
+            var fileInfo = new FileInfo("c:\\temp\\xl\\Kedjor-prestanda test.xlsx");
+            using(var package = new ExcelPackage(fileInfo))
+            {
+                var provider = new EPPlusExcelDataProvider(package);
+                var parser = new FormulaParser(provider);
+                var startTime = DateTime.Now;
+                var result = parser.ParseAt("B1");
+                var elapsed = DateTime.Now.Subtract(startTime);
+            }
+
+        }
+
+        
     }
 }

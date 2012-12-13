@@ -10,6 +10,7 @@ using ExcelFormulaParser.Engine.Excel;
 using ExcelFormulaParser.Engine.Excel.Functions;
 using ExcelFormulaParser.Engine.ExcelUtilities;
 using ExcelFormulaParser.Engine.Utilities;
+using System.Diagnostics;
 
 namespace ExcelFormulaParser.Engine
 {
@@ -40,7 +41,25 @@ namespace ExcelFormulaParser.Engine
                     .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _parsingContext))
                     .SetExpresionCompiler(new ExpressionCompiler())
                     .FunctionRepository.LoadModule(new BuiltInFunctions());
-            }); 
+            });
+            //try
+            //{
+            var sw = new Stopwatch();
+            sw.Start();
+                var chain = new CalculationChain.CalculationChainBuilder(_parsingContext).Build();
+                foreach (var cell in chain.Cells)
+                {
+                    var result = ParseAt(cell.Address);
+                    try
+                    {
+                        _excelDataProvider.SetCellValue(cell.Address, result);
+                    }
+                    catch { }
+                }
+                sw.Stop();
+            //}
+            //catch { }
+           
         }
 
         public void Configure(Action<ParsingConfiguration> configMethod)
@@ -83,8 +102,8 @@ namespace ExcelFormulaParser.Engine
         public virtual object ParseAt(string address)
         {
             Require.That(address).Named("address").IsNotNullOrEmpty();
-            var dataItem = _excelDataProvider.GetRangeValues(address).First();
-            if (dataItem.Value == null && dataItem.Formula == null) return null;
+            var dataItem = _excelDataProvider.GetRangeValues(address).FirstOrDefault();
+            if (dataItem == null || (dataItem.Value == null && dataItem.Formula == null)) return null;
             if (!string.IsNullOrEmpty(dataItem.Formula))
             {
                 return Parse(dataItem.Formula, _rangeAddressFactory.Create(address));

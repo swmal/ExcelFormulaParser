@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationChain\CalculationCell.cs" />
+    <Compile Include="CalculationChain\CalculationChain.cs" />
+    <Compile Include="CalculationChain\CalculationChainBuilder.cs" />
+    <Compile Include="CalculationChain\CalculationChains.cs" />
+    <Compile Include="CalculationChain\DependencyGraph.cs" />
+    <Compile Include="CalculationChain\DependencyGraphs.cs" />
     <Compile Include="ExcelUtilities\ExcelReferenceType.cs" />
     <Compile Include="ExcelUtilities\NumericExpressionEvaluator.cs" />
     <Compile Include="ExcelCell.cs" />

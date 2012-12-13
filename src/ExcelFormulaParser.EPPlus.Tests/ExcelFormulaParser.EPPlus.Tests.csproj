@@ -49,7 +49,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationChainTests.cs" />
     <Compile Include="FormulaParserExtensionMethodsTests.cs" />
+    <Compile Include="Helpers\ChainTestBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EPPlusIntegrationTests.cs" />
   </ItemGroup>
