@@ -15,7 +15,6 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         public Expression Prev { get; set; }
         public IOperator Operator { get; set; }
         public abstract bool IsGroupedExpression { get; }
-        public virtual bool IsFunctionExpression { get { return false; } }
 
         public Expression()
         {
@@ -32,6 +31,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         {
             get;
             set;
+        }
+
+        public virtual void  PrepareForNextChild()
+        {
+            AddChild(new GroupExpression());
         }
 
         public virtual Expression AddChild(Expression child)

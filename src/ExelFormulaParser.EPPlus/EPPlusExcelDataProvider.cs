@@ -21,6 +21,16 @@ namespace ExcelFormulaParser.EPPlus
             _rangeAddressFactory = new RangeAddressFactory(this);
         }
 
+        public override IEnumerable<string> GetWorksheetNames()
+        {
+            var names = new List<string>();
+            foreach(var ws in _package.Workbook.Worksheets)
+            {
+                names.Add(ws.Name);
+            }
+            return names;
+        }
+
         public override IDictionary<string, string> GetWorksheetFormulas(string sheetName)
         {
             var ws = _package.Workbook.Worksheets[sheetName];

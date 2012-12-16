@@ -42,8 +42,8 @@ namespace ExcelFormulaParser.Engine
                     .SetExpresionCompiler(new ExpressionCompiler())
                     .FunctionRepository.LoadModule(new BuiltInFunctions());
             });
-            //try
-            //{
+            try
+            {
             var sw = new Stopwatch();
             sw.Start();
                 var chain = new CalculationChain.CalculationChainBuilder(_parsingContext).Build();
@@ -57,8 +57,8 @@ namespace ExcelFormulaParser.Engine
                     catch { }
                 }
                 sw.Stop();
-            //}
-            //catch { }
+            }
+            catch { }
            
         }
 

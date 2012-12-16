@@ -25,6 +25,11 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             get { return false; }
         }
 
+        public override void PrepareForNextChild()
+        {
+
+        }
+
         public override CompileResult Compile()
         {
             var result = new List<object>();

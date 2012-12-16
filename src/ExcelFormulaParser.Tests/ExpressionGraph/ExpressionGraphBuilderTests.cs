@@ -223,8 +223,11 @@ namespace ExcelFormulaParser.Tests.ExpressionGraph
             };
 
             var result = _graphBuilder.Build(tokens);
+            var funcArgExpression = result.Expressions.First().Children.First();
+            Assert.IsInstanceOfType(funcArgExpression, typeof(FunctionArgumentExpression));
 
-            var enumerableExpression = result.Expressions.First().Children.First();
+            var enumerableExpression = funcArgExpression.Children.First();
+
             Assert.IsInstanceOfType(enumerableExpression, typeof(EnumerableExpression));
             Assert.AreEqual(2, enumerableExpression.Children.Count(), "Enumerable.Count was not 2");
         }

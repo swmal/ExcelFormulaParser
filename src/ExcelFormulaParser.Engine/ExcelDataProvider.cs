@@ -12,6 +12,11 @@ namespace ExcelFormulaParser.Engine
     public abstract class ExcelDataProvider : IDisposable
     {
         /// <summary>
+        /// Returns the names of all worksheet names
+        /// </summary>
+        /// <returns></returns>
+        public abstract IEnumerable<string> GetWorksheetNames();
+        /// <summary>
         /// Returns all formulas on a worksheet
         /// </summary>
         /// <param name="sheetName"></param>

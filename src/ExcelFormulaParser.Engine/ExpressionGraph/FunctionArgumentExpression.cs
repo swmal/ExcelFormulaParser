@@ -22,5 +22,10 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
                 }
             }
         }
+
+        public override Expression AddChild(Expression child)
+        {
+            return base.AddChild(child);
+        }
     }
 }

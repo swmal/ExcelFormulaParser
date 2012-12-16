@@ -19,14 +19,6 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
         private readonly ParsingContext _parsingContext;
         private readonly FunctionCompilerFactory _functionCompilerFactory = new FunctionCompilerFactory();
 
-        public override bool IsFunctionExpression
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         public override CompileResult Compile()
         {
             var function = _parsingContext.Configuration.FunctionRepository.GetFunction(ExpressionString);
@@ -34,6 +26,24 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             return compiler.Compile(Children, _parsingContext);
         }
 
+        public override void PrepareForNextChild()
+        {
+            base.AddChild(new FunctionArgumentExpression());
+        }
+
+        public override Expression AddChild(Expression child)
+        {
+            if (Children.Count() == 0)
+            {
+                var group = base.AddChild(new FunctionArgumentExpression());
+                group.AddChild(child);
+            }
+            else
+            {
+                Children.Last().AddChild(child);
+            }
+            return child;
+        }
 
         public override Expression MergeWithNext()
         {

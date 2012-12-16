@@ -53,6 +53,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationChainTests\CalculationChainBuilderTests.cs" />
     <Compile Include="ExcelUtilities\NumericExpressionEvaluatorTests.cs" />
     <Compile Include="ExcelUtilities\AddressTranslatorTests.cs" />
     <Compile Include="ExcelUtilities\ExcelAddressInfoTests.cs" />
@@ -119,6 +120,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

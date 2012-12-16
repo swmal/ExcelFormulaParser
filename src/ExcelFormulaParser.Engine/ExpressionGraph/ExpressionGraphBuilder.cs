@@ -101,17 +101,7 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             if (IsWaste(token)) return;
             if (parent != null && token.TokenType == TokenType.Comma)
             {
-                if (parent.GetType() != typeof(EnumerableExpression))
-                {
-                    if (parent.IsFunctionExpression)
-                    {
-                        parent.AddChild(new FunctionArgumentExpression());
-                    }
-                    else
-                    {
-                        parent.AddChild(new GroupExpression());
-                    }
-                }
+                parent.PrepareForNextChild();
                 return;
             }
             if (_negateNextExpression)
@@ -123,18 +113,6 @@ namespace ExcelFormulaParser.Engine.ExpressionGraph
             if (parent == null)
             {
                 _graph.Add(expression);
-            }
-            else if (parent.IsFunctionExpression)
-            {
-                if (parent.Children.Count() == 0)
-                {
-                    var group = parent.AddChild(new FunctionArgumentExpression());
-                    group.AddChild(expression);
-                }
-                else
-                {
-                    parent.Children.Last().AddChild(expression);
-                }
             }
             else
             {

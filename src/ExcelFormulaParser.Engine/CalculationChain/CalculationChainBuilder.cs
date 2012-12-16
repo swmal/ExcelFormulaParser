@@ -20,12 +20,17 @@ namespace ExcelFormulaParser.Engine.CalculationChain
 
         public virtual CalculationChain Build()
         {
-            return Build("Test");
+            var firstWs = _parsingContext.ExcelDataProvider.GetWorksheetNames().FirstOrDefault();
+            return Build(firstWs);
         }
 
         public virtual CalculationChain Build(string worksheetName)
         {
             var graphs = new DependencyGraphs();
+            if (string.IsNullOrEmpty(worksheetName))
+            {
+                return new CalculationChain();
+            }
             var lexer = _parsingContext.Configuration.Lexer;
             var cells = string.IsNullOrEmpty(worksheetName) ?
                 _parsingContext.ExcelDataProvider.GetWorkbookFormulas() :
