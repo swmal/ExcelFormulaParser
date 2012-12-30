@@ -5,12 +5,15 @@ using System.Text;
 using ExcelFormulaParser.Engine.LexicalAnalysis;
 using ExcelFormulaParser.Engine.ExpressionGraph;
 using ExcelFormulaParser.Engine.Excel.Functions;
+using ExcelFormulaParser.Engine.Utilities;
 
 namespace ExcelFormulaParser.Engine
 {
     public class ParsingConfiguration
     {
         public virtual ILexer Lexer { get; private set; }
+
+        public virtual IdProvider IdProvider { get; private set; }
 
         public IExpressionGraphBuilder GraphBuilder { get; private set; }
 
@@ -26,6 +29,12 @@ namespace ExcelFormulaParser.Engine
         internal static ParsingConfiguration Create()
         {
             return new ParsingConfiguration();
+        }
+
+        public ParsingConfiguration SetIdProvider(IdProvider idProvider)
+        {
+            IdProvider = idProvider;
+            return this;
         }
 
         public ParsingConfiguration SetLexer(ILexer lexer)

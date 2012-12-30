@@ -13,11 +13,20 @@ namespace ExcelFormulaParser.Engine.ExcelUtilities
         private readonly IndexToAddressTranslator _indexToAddressTranslator;
 
         public RangeAddressFactory(ExcelDataProvider excelDataProvider)
+            : this(excelDataProvider, new AddressTranslator(excelDataProvider), new IndexToAddressTranslator(excelDataProvider, ExcelReferenceType.RelativeRowAndColumn))
+        {
+           
+            
+        }
+
+        public RangeAddressFactory(ExcelDataProvider excelDataProvider, AddressTranslator addressTranslator, IndexToAddressTranslator indexToAddressTranslator)
         {
             Require.That(excelDataProvider).Named("excelDataProvider").IsNotNull();
+            Require.That(addressTranslator).Named("addressTranslator").IsNotNull();
+            Require.That(indexToAddressTranslator).Named("indexToAddressTranslator").IsNotNull();
             _excelDataProvider = excelDataProvider;
-            _addressTranslator = new AddressTranslator(excelDataProvider);
-            _indexToAddressTranslator = new IndexToAddressTranslator(excelDataProvider, ExcelReferenceType.RelativeRowAndColumn);
+            _addressTranslator = addressTranslator;
+            _indexToAddressTranslator = indexToAddressTranslator;
         }
 
         public RangeAddress Create(int col, int row)

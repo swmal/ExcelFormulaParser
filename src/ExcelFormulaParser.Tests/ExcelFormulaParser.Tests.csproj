@@ -53,7 +53,11 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationChainTests\CalcCellRepositoryTests.cs" />
+    <Compile Include="CalculationChainTests\CalcCellTests.cs" />
+    <Compile Include="CalculationChainTests\CalcChainTests.cs" />
     <Compile Include="CalculationChainTests\CalculationChainBuilderTests.cs" />
+    <Compile Include="CalculationChainTests\CalculationChainSetup.cs" />
     <Compile Include="ExcelUtilities\NumericExpressionEvaluatorTests.cs" />
     <Compile Include="ExcelUtilities\AddressTranslatorTests.cs" />
     <Compile Include="ExcelUtilities\ExcelAddressInfoTests.cs" />

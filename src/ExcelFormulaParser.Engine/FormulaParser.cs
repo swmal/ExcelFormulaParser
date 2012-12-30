@@ -18,28 +18,28 @@ namespace ExcelFormulaParser.Engine
     {
         private readonly ParsingContext _parsingContext;
         private readonly ExcelDataProvider _excelDataProvider;
-        private readonly RangeAddressFactory _rangeAddressFactory;
 
         public FormulaParser(ExcelDataProvider excelDataProvider)
-            : this(excelDataProvider, ParsingContext.Create(), new RangeAddressFactory(excelDataProvider))
+            : this(excelDataProvider, ParsingContext.Create())
         {
            
         }
 
-        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext, RangeAddressFactory rangeAddressFactory)
+        public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
         {
             parsingContext.Parser = this;
             parsingContext.ExcelDataProvider = excelDataProvider;
             parsingContext.NameValueProvider = new NameValueProvider(excelDataProvider);
+            parsingContext.RangeAddressFactory = new RangeAddressFactory(excelDataProvider);
             _parsingContext = parsingContext;
             _excelDataProvider = excelDataProvider;
-            _rangeAddressFactory = rangeAddressFactory;
             Configure(configuration =>
             {
                 configuration
                     .SetLexer(new Lexer(_parsingContext.Configuration.FunctionRepository, _parsingContext.NameValueProvider))
                     .SetGraphBuilder(new ExpressionGraphBuilder(excelDataProvider, _parsingContext))
                     .SetExpresionCompiler(new ExpressionCompiler())
+                    .SetIdProvider(new IntegerIdProvider())
                     .FunctionRepository.LoadModule(new BuiltInFunctions());
             });
             try
@@ -91,7 +91,7 @@ namespace ExcelFormulaParser.Engine
 
         public virtual object Parse(string formula, string address)
         {
-            return Parse(formula, _rangeAddressFactory.Create(address));
+            return Parse(formula, _parsingContext.RangeAddressFactory.Create(address));
         }
 
         public virtual object Parse(string formula)
@@ -106,9 +106,9 @@ namespace ExcelFormulaParser.Engine
             if (dataItem == null || (dataItem.Value == null && dataItem.Formula == null)) return null;
             if (!string.IsNullOrEmpty(dataItem.Formula))
             {
-                return Parse(dataItem.Formula, _rangeAddressFactory.Create(address));
+                return Parse(dataItem.Formula, _parsingContext.RangeAddressFactory.Create(address));
             }
-            return Parse(dataItem.Value.ToString(), _rangeAddressFactory.Create(address));
+            return Parse(dataItem.Value.ToString(), _parsingContext.RangeAddressFactory.Create(address));
         }
     }
 }

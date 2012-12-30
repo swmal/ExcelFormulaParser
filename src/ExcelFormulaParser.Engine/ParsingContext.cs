@@ -16,6 +16,8 @@ namespace ExcelFormulaParser.Engine
 
         public ExcelDataProvider ExcelDataProvider { get; set; }
 
+        public RangeAddressFactory RangeAddressFactory { get; set; }
+
         public NameValueProvider NameValueProvider { get; set; }
 
         public ParsingConfiguration Configuration { get; set; }
